@@ -25,3 +25,5 @@ git config --global user.email "Email@gmail.com" | agregar email
 git config --global user.name "User_Name" | agregar nombre de usuario
 Para ignorar carpetas/archivos, se tiene que crear el archivo ".gitignore", dentro ponemos el nombre
 de los archivos que queremos ignorar
+
+.
