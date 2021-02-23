@@ -13,7 +13,6 @@ Nota Mòdul = 70% * NotaEx +30% * NotaPr
 Si la nota és més gran o igual que 5 arrodoneix i imprimeix el literal corresponent ( 5 Aprovat, 6 Bé, 7 8 Notable, 9 10 Excel·lent)
 Si està suspès demana si ha comprat un pernil al professor/a. Si és que sí imprimeix “aprovat perniler”.
 
-
 """
 
 acabat=False
