@@ -15,6 +15,7 @@ git branch | sirve para ver el proyecto(Normalmente se llama "master")
 git branch "Nombre" | hace una copia del proyecto pero con un nombre distinto
 git checkout "nombre del "proyecto" | Cambias el proyecto donde estás al denominado
 git push -u origin main | conectar i subir los archivos a el repositorio de github
+git pull | actualizar los cambios localmente que anteriormente fueron subidos al repositorio
 git remote add origin "https://github.com/Terminator-True/web.git" | Definir el repositorio donde se guardará
 
 =======================================
