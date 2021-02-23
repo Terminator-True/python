@@ -23,10 +23,7 @@ def anys2000():
     year=0
     while year<2000:    
         year=int(input("Posa un any: "))
-        if year<2000:
-            continue
-        else:
-            return year-2000
+    return year-2000
             
             
     input("\nPulsa return per continuar")
