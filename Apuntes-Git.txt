@@ -1,0 +1,26 @@
+=======================================
+Comandos básicos
+=======================================
+git init | inicializar repositorio en carpeta donde estamos
+git add "Nombre del archivo" | Meter arxivo en questión en el repositorio i agregar cambios(Truco: si en nombre del arxivo pones * se suben todos los archivos de la carpeta)
+git status | Saber los archivos agregados al repositorio pero que se tienen que subir.
+git commit -m "Mensaje" | Subir los archivos/ Hacer el "Guardado"
+git log | mirar cual versión está subida o guardada
+git checkout -- "Nombre del archivo" | Volver a la versión guardada/subida
+
+=======================================
+Comandos avanzados
+=======================================
+git branch | sirve para ver el proyecto(Normalmente se llama "master")
+git branch "Nombre" | hace una copia del proyecto pero con un nombre distinto
+git checkout "nombre del "proyecto" | Cambias el proyecto donde estás al denominado
+git push -u origin main | conectar i subir los archivos a el repositorio de github
+git remote add origin "https://github.com/Terminator-True/web.git" | Definir el repositorio donde se guardará
+
+=======================================
+Configuración inicial
+=======================================
+git config --global user.email "Email@gmail.com" | agregar email
+git config --global user.name "User_Name" | agregar nombre de usuario
+Para ignorar carpetas/archivos, se tiene que crear el archivo ".gitignore", dentro ponemos el nombre
+de los archivos que queremos ignorar
