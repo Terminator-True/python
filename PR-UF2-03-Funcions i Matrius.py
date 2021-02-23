@@ -26,19 +26,17 @@ import random
 acabat=False
 
 
-def matriu2d():
-    i=0
-    matriu=[]
-    num1=int(input("Posa un número: "))
-    num2=int(input("Posa un altre número"))
-    while i<(num1*num2):
-        randomNum=random.randint(1,100)
-        matriu.append(randomNum)
-        i+=1
-    for i in range(num1):
-        print(matriu[i])
-        for j in range(num2):
-            print(matriu[j])
+def matriu2d(n1,n2):
+    if n1>0 and n2>0:
+        m=[]
+        for i in range(n1):
+            fila=[]
+            for j in range(n2):
+                fila.append(random.randint(1,100))
+            m.append(fila)
+    else:
+        m=-1
+    return m    
 while not acabat:
 
     imprimir="    Exercicis       \n"+"==================\n"+"1. \n"+"2. \n"+"3. \n"+"4.\n"+"5. \n"+"6.\n"+"7. \n"+"8. \n"+"9. \n"+"10. \n"
@@ -46,4 +44,9 @@ while not acabat:
     User_input=int(input("Quin exercici vols?"))
 
     if User_input==1:
-        matriu2d()
+        num1=int(input("Posa un número: "))
+        num2=int(input("Posa un altre número"))
+
+        print("===========================")
+        for el in matriu2d(num1,num2):
+            print(" ".join(str(el2) for el2 in el))
