@@ -37,16 +37,22 @@ def matriu2d(n1,n2):
     else:
         m=-1
     return m    
+def printMatriu():
+    for el in matriu2d(num1,num2):
+        print( " ".join(str(el2) for el2 in el))
+
 while not acabat:
 
     imprimir="    Exercicis       \n"+"==================\n"+"1. \n"+"2. \n"+"3. \n"+"4.\n"+"5. \n"+"6.\n"+"7. \n"+"8. \n"+"9. \n"+"10. \n"
     print(imprimir)
-    User_input=int(input("Quin exercici vols?"))
+    User_input=int(input("Quin exercici vols? "))
 
     if User_input==1:
         num1=int(input("Posa un número: "))
-        num2=int(input("Posa un altre número"))
-
+        num2=int(input("Posa un altre número: "))
+        print(matriu2d(num1,num2))
         print("===========================")
-        for el in matriu2d(num1,num2):
-            print(" ".join(str(el2) for el2 in el))
+    if User_input==2:
+        printMatriu()
+    if User_input==3:
+        
