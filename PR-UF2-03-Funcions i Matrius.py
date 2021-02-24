@@ -25,8 +25,6 @@ Programa la funció diagonal que posa en les diagonals de la matriu quadrada q, 
 import random
 acabat=False
 
-
-
 def matriu2d(n1,n2):
     if n1>0 and n2>0:
         m=[]
@@ -42,10 +40,10 @@ def printMatriu():
     for el in matriu2d(num1,num2):
         print( " ".join(str(el2) for el2 in el))
 
-def llistaMultiples(e):
-
-    for el in matriu2d(num1,num2):
-        Multiples=[el2 for el2 in el if el2/e==0]
+def llistaMultiples(e,m):
+    Multiples=[]
+    for el in m:
+        Multiples+=[el2 for el2 in el if el2%e==0]
     return Multiples
         
 while not acabat:
@@ -63,4 +61,5 @@ while not acabat:
         printMatriu()
     if User_input==3:
         e=int(input("Posa un número entre 1-10: "))
-        print(llistaMultiples(e))
+        m=matriu2d(num1,num2)
+        print(llistaMultiples(e,m))
