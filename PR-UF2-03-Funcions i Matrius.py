@@ -53,10 +53,12 @@ def llistaUnitaria(m):
         
 def minMax(m):
     ll=[int(el2) for el in m for el2 in el]
-    nums=ll.pop(max(ll))
-    nums+=ll.pop(min(ll))
+    return min(ll),max(ll)
+def acabaEn(e,m):
+    ll=[str(el2) for el in m for el2 in el if el2-e==0 or (el2-e)%10==0] #Comproba si a el2 li restem e i dona 0 o es múltiple de 10, significa que el numero 
+    return ll                                                            #enmagatzemat en el2 acaba amb el numero enmagatzemat a e
+                                                                    
 
-    return nums
 while not acabat:
 
     imprimir="    Exercicis       \n"+"==================\n"+"1. \n"+"2. \n"+"3. \n"+"4.\n"+"5. \n"+"6.\n"+"7. \n"+"8. \n"+"9. \n"+"10. \n"
@@ -74,10 +76,13 @@ while not acabat:
     if User_input==3:
         e=1
         while e<10 and e>0:
-            e=int(input("Posa un número entre 1-10: "))
+            e=input("Posa un número entre 1-10: ")
         
         print(llistaMultiples(e,m))
     if User_input==4:
         print(llistaUnitaria(m))
     if User_input==5:
         print(minMax(m))
+    if User_input==6:
+        num=int(input("Posa un número entre l'1 i el 9: "))
+        print(acabaEn(num,m))
