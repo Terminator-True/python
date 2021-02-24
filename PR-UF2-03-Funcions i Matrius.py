@@ -37,8 +37,10 @@ def matriu2d(n1,n2):
         m=-1
     return m    
 def printMatriu():
+    imprimir=""
     for el in matriu2d(num1,num2):
-        print( " ".join(str(el2) for el2 in el))
+        imprimir+=" ".join(str(el2) for el2 in el)+"\n"
+    return imprimir
 
 def llistaMultiples(e,m):
     Multiples=[]
@@ -58,11 +60,14 @@ def acabaEn(e,m):
     ll=[el2 for el in m for el2 in el if el2-e==0 or (el2-e)%10==0] #Comproba si a el2 li restem e i dona 0 o es múltiple de 10, significa que el numero 
     return ll                                                       #enmagatzemat en el2 acaba amb el numero enmagatzemat a e
 def quadrat(s,c):
-    m=[]
+    imprimir=""
     for i in range (s):
-        print(s*c)
+        imprimir+=s*c+"\n"
 
+    return imprimir
 
+def inicialitza(c,m):
+    
                                                                     
 while not acabat:
 
@@ -76,7 +81,7 @@ while not acabat:
         print(matriu2d(num1,num2))
         m=matriu2d(num1,num2)
     if User_input==2:
-        print("===========================")
+        print(printMatriu())
         printMatriu()
     if User_input==3:
         e=1
@@ -94,4 +99,7 @@ while not acabat:
     if User_input==7:
         sencer=int(input("Posa un número entre el 10 i el 20: "))
         caracter=input("Posa un caracter: ")
-        quadrat(sencer,caracter)
+        print(quadrat(sencer,caracter))
+    if User_input==8:
+        caracter=input("Posa un caráctet")
+        print(inicialitza(caracter,m))
