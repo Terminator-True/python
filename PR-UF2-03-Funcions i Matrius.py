@@ -26,6 +26,7 @@ import random
 acabat=False
 
 
+
 def matriu2d(n1,n2):
     if n1>0 and n2>0:
         m=[]
@@ -41,6 +42,12 @@ def printMatriu():
     for el in matriu2d(num1,num2):
         print( " ".join(str(el2) for el2 in el))
 
+def llistaMultiples(e):
+
+    for el in matriu2d(num1,num2):
+        Multiples=[el2 for el2 in el if el2/e==0]
+    return Multiples
+        
 while not acabat:
 
     imprimir="    Exercicis       \n"+"==================\n"+"1. \n"+"2. \n"+"3. \n"+"4.\n"+"5. \n"+"6.\n"+"7. \n"+"8. \n"+"9. \n"+"10. \n"
@@ -51,8 +58,9 @@ while not acabat:
         num1=int(input("Posa un número: "))
         num2=int(input("Posa un altre número: "))
         print(matriu2d(num1,num2))
-        print("===========================")
     if User_input==2:
+        print("===========================")
         printMatriu()
     if User_input==3:
-        
+        e=int(input("Posa un número entre 1-10: "))
+        print(llistaMultiples(e))
