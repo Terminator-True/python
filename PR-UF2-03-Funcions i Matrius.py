@@ -45,7 +45,13 @@ def llistaMultiples(e,m):
     for el in m:
         Multiples+=[el2 for el2 in el if el2%e==0]
     return Multiples
+
+def llistaUnitaria(m):
+    ll=[el2 for el in m for el2 in el]
+    set(ll)
+    return list(ll)
         
+
 while not acabat:
 
     imprimir="    Exercicis       \n"+"==================\n"+"1. \n"+"2. \n"+"3. \n"+"4.\n"+"5. \n"+"6.\n"+"7. \n"+"8. \n"+"9. \n"+"10. \n"
@@ -56,10 +62,13 @@ while not acabat:
         num1=int(input("Posa un número: "))
         num2=int(input("Posa un altre número: "))
         print(matriu2d(num1,num2))
+        m=matriu2d(num1,num2)
     if User_input==2:
         print("===========================")
         printMatriu()
     if User_input==3:
         e=int(input("Posa un número entre 1-10: "))
-        m=matriu2d(num1,num2)
+        
         print(llistaMultiples(e,m))
+    if User_input==4:
+        print(llistaUnitaria(m))
