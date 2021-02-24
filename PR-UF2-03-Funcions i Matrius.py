@@ -51,7 +51,12 @@ def llistaUnitaria(m):
     set(ll)
     return list(ll)
         
+def minMax(m):
+    ll=[int(el2) for el in m for el2 in el]
+    nums=ll.pop(max(ll))
+    nums+=ll.pop(min(ll))
 
+    return nums
 while not acabat:
 
     imprimir="    Exercicis       \n"+"==================\n"+"1. \n"+"2. \n"+"3. \n"+"4.\n"+"5. \n"+"6.\n"+"7. \n"+"8. \n"+"9. \n"+"10. \n"
@@ -74,3 +79,5 @@ while not acabat:
         print(llistaMultiples(e,m))
     if User_input==4:
         print(llistaUnitaria(m))
+    if User_input==5:
+        print(minMax(m))
