@@ -67,7 +67,9 @@ while not acabat:
         print("===========================")
         printMatriu()
     if User_input==3:
-        e=int(input("Posa un número entre 1-10: "))
+        e=1
+        while e<10 and e>0:
+            e=int(input("Posa un número entre 1-10: "))
         
         print(llistaMultiples(e,m))
     if User_input==4:
