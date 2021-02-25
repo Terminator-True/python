@@ -72,16 +72,19 @@ def inicialitza(c,q):
         imprimir+= len(el)*c+"\n"
     return imprimir      
 def diagonal(c,q):
+    fila=""
     imprimir=""
+    j=0
+    k=-1
     for el in q:
-
+        fila=[]
         for i in range(len(el)):
-            
-            if len(el)==i:
-                imprimir+=fila+"\n" 
-            else:
-                if 
-                fila+="-"
+            fila.append("-")
+        fila[j]=c
+        fila[k]=c
+        j+=1
+        k-=1
+        imprimir+="".join(map(str,fila))+"\n"                 
             
     return imprimir
 
@@ -123,3 +126,5 @@ while not acabat:
     if User_input==9:
         caracter=input("Posa un carácter:")
         print(diagonal(caracter,m))
+    if User_input=10:
+        
