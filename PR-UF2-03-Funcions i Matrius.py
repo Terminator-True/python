@@ -66,9 +66,21 @@ def quadrat(s,c):
 
     return imprimir
 
-def inicialitza(c,m):
-    
-                                                                    
+def inicialitza(c,q):
+    imprimir=""
+    for el in q:
+        imprimir+= len(el)*c+"\n"
+    return imprimir      
+def diagonal(c,q):
+    imprimir=""
+    for el in q:
+        for j in range(len(el)):
+            if j==0:
+                imprimir+=c+("-"*(len(el)-1))+c
+            
+
+
+
 while not acabat:
 
     imprimir="    Exercicis       \n"+"==================\n"+"1. \n"+"2. \n"+"3. \n"+"4.\n"+"5. \n"+"6.\n"+"7. \n"+"8. \n"+"9. \n"+"10. \n"
@@ -101,5 +113,8 @@ while not acabat:
         caracter=input("Posa un caracter: ")
         print(quadrat(sencer,caracter))
     if User_input==8:
-        caracter=input("Posa un caráctet")
+        caracter=input("Posa un carácter:")
         print(inicialitza(caracter,m))
+    if User_input==9:
+        caracter=input("Posa un carácter:")
+        print(diagonal(caracter,m))
