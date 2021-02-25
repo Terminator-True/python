@@ -74,11 +74,16 @@ def inicialitza(c,q):
 def diagonal(c,q):
     imprimir=""
     for el in q:
-        for j in range(len(el)):
-            if j==0:
-                imprimir+=c+("-"*(len(el)-1))+c
-            
 
+        for i in range(len(el)):
+            
+            if len(el)==i:
+                imprimir+=fila+"\n" 
+            else:
+                if 
+                fila+="-"
+            
+    return imprimir
 
 
 while not acabat:
