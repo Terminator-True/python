@@ -66,12 +66,56 @@ def quadrat(s,c):
 
     return imprimir
 
-def inicialitza(c,m):
-    
-                                                                    
+def inicialitza(c,q):
+    imprimir=""
+    for el in q:
+        imprimir+= len(el)*c+"\n"
+    return imprimir      
+def diagonal(c,q):
+    imprimir=""
+    j=0
+    k=-1
+    for el in q:
+        fila=[]
+        for i in range(len(el)):
+            fila.append("-")
+        fila[j]=c
+        fila[k]=c
+        j+=1
+        k-=1
+        imprimir+="".join(map(str,fila))+"\n"                 
+            
+    return imprimir
+
+def creu (n,c):
+    imprimir=""
+    j=0
+    k=-1
+    x=0
+    for el in n:
+        fila=[]
+        x+=1
+        for i in range(len(el)):
+            if i==(len(el)//2):
+                fila.append(c)
+            else:   
+                if x==(len(n)//2)+1:
+                    fila.append(c)
+                else:
+                    fila.append("-")
+
+        fila[j]=c
+        fila[k]=c
+        j+=1
+        k-=1
+        imprimir+="".join(map(str,fila))+"\n"                 
+            
+    return imprimir
+
+
 while not acabat:
 
-    imprimir="    Exercicis       \n"+"==================\n"+"1. \n"+"2. \n"+"3. \n"+"4.\n"+"5. \n"+"6.\n"+"7. \n"+"8. \n"+"9. \n"+"10. \n"
+    imprimir="    Exercicis       \n"+"==================\n"+"1. \n"+"2. \n"+"3. \n"+"4.\n"+"5. \n"+"6.\n"+"7. \n"+"8. \n"+"9. \n"+"10. \n"+"0.Per sortir \n"
     print(imprimir)
     User_input=int(input("Quin exercici vols? "))
 
@@ -101,5 +145,13 @@ while not acabat:
         caracter=input("Posa un caracter: ")
         print(quadrat(sencer,caracter))
     if User_input==8:
-        caracter=input("Posa un caráctet")
+        caracter=input("Posa un carácter:")
         print(inicialitza(caracter,m))
+    if User_input==9:
+        caracter=input("Posa un carácter:")
+        print(diagonal(caracter,m))
+    if User_input==10:
+        caracter=input("Posa un carácter:")
+        print(creu(m,caracter))
+    if User_input<=0:
+        acabat=True
