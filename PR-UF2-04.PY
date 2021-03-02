@@ -25,7 +25,26 @@ el pas. La nostra funció retornarà una llista o una tupla amb els valors gener
 nova.
 
 """
+acabat=False
+llista=[1,2,3,4,5,6,7,8,9,0]
 
+def absolut(n):
+    if n<0:
+        n-=n*2
+    return n
+def elevar(x,y):
+    return x**y
+def longitud(ll):
+    i=0
+    for el in ll:
+        i+=1
+    return i
+def alreves(ll):
+    ll2=[]
+    for i in range(len(ll),0,-1):
+        print(i)
+        ll2.append(ll[i])
+    return ll2
 while not acabat:
 
     imprimir="    Exercicis       \n"+"==================\n"+"1. \n"+"2. \n"+"3. \n"+"4.\n"+"5. \n"+"6.\n"+"7. \n"+"8. \n"+"9. \n"+"10. \n"
@@ -33,3 +52,17 @@ while not acabat:
     User_input=int(input("Quin exercici vols? "))
 
     if User_input==1:
+        num=int(input("Posa un número: "))
+        print(absolut(num))
+    if User_input==2:
+        num1=int(input("Posa un número: "))
+        num2=int(input("Posa un altre número: "))
+        print(elevar(num1,num2))
+    if User_input==3:
+        print(llista)
+        print(longitud(llista))
+    if User_input==4:
+        print(llista)
+        print(alreves(llista))
+    
+    
