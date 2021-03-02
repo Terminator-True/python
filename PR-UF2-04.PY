@@ -27,7 +27,7 @@ nova.
 """
 acabat=False
 llista=[1,2,3,4,5,6,7,8,9,0]
-
+llistaD=[3,2,6,2,1,6,4,5,9,8,0]
 def absolut(n):
     if n<0:
         n-=n*2
@@ -40,11 +40,44 @@ def longitud(ll):
         i+=1
     return i
 def alreves(ll):
-    ll2=[]
-    for i in range(len(ll),0,-1):
-        print(i)
-        ll2.append(ll[i])
+    ll2=[ll[i] for i in range((longitud(ll)-1),-1,-1)]
     return ll2
+def elevar2(x,y,z):
+    return ((x**y)%z)
+
+def maxim(ll):
+    i=0
+    for el in ll:
+        if el>ll[i-1]:
+            maximo=el
+        i+=1
+    return maximo
+def suma(ll,n):
+    sumat=0
+    for el in ll:
+        sumat+=el
+    return sumat+n
+
+def ordenat(ll):
+    i=0
+    imprimir=[]
+    User_input=input("Vols que s'ordeni ascendent o descendent?(A/D)")
+    if User_input=="A" or User_input=="D":
+        while i < longitud(ll):
+            if i == 0 or ll[i] >= ll[i-1]:
+                i = i+1
+            else:
+                temp = ll[i-1]
+                ll[i-1] = ll[i]
+                ll[i] = temp
+                i = i-1
+        imprimir=ll.copy()
+    if User_input=="D":
+        ll2=[ll[i] for i in range((longitud(ll)-1),-1,-1)]
+        imprimir=ll2.copy()
+
+    return imprimir
+
 while not acabat:
 
     imprimir="    Exercicis       \n"+"==================\n"+"1. \n"+"2. \n"+"3. \n"+"4.\n"+"5. \n"+"6.\n"+"7. \n"+"8. \n"+"9. \n"+"10. \n"
@@ -64,5 +97,23 @@ while not acabat:
     if User_input==4:
         print(llista)
         print(alreves(llista))
+    if User_input==5:
+        num1=int(input("Posa un número: "))
+        num2=int(input("Posa un altre número: "))
+        num3=int(input("Posa un altre número: "))
+        print(elevar2(num1,num2,num3))
+    if User_input==6:
+        print(llista)
+        print(maxim(llista))
+    if User_input==7:
+        num=0
+        print(llista)
+        Resposta=input("Vols afegir algún valor? (S/N)")
+        if Resposta=="S":
+            num=int(input("Valor a afegir: "))        
+        print(suma(llista,num))
+    if User_input==8:
+        print(llistaD)
+        print(ordenat(llistaD))        
     
     
