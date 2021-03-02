@@ -78,6 +78,13 @@ def ordenat(ll):
 
     return imprimir
 
+def rang(n):
+    ll=[i for i in range(n)]
+    return ll
+
+def rang2(x,y,z):
+    ll=[i for i in range(x,y,z)]
+    return ll
 while not acabat:
 
     imprimir="    Exercicis       \n"+"==================\n"+"1. \n"+"2. \n"+"3. \n"+"4.\n"+"5. \n"+"6.\n"+"7. \n"+"8. \n"+"9. \n"+"10. \n"
@@ -115,5 +122,11 @@ while not acabat:
     if User_input==8:
         print(llistaD)
         print(ordenat(llistaD))        
-    
-    
+    if User_input==9:
+        num=int(input("Posa un número: "))
+        print(rang(num))
+    if User_input==10:
+        num1=int(input("Posa inici: "))
+        num2=int(input("Posa final: "))
+        num3=int(input("Posa pas: "))
+        print(rang2(num1,num2,num3))
