@@ -41,7 +41,8 @@ def longitud(ll):
         i+=1
     return i
 def alreves(ll):
-    return ll[::-1]
+    ll2=[ll[i] for i in range(longitud(ll)-1,-1,-1)]
+    return ll2
 def elevar2(x,y,z):
     return ((x**y)%z)
 
