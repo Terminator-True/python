@@ -59,11 +59,10 @@ def suma(ll,n):
         sumat+=el
     return sumat+n
 
-def ordenat(ll):
+def ordenat(ll,reverse=False):
     i=0
-    imprimir=[]
-    User_input=input("Vols que s'ordeni ascendent o descendent?(A/D)")
-    if User_input=="A" or User_input=="D":
+    imprimir=[]    
+    if reverse==True or reverse==False:
         while i < longitud(ll):
             if i == 0 or ll[i] >= ll[i-1]:
                 i = i+1
@@ -73,19 +72,27 @@ def ordenat(ll):
                 ll[i] = temp
                 i = i-1
         imprimir=ll.copy()
-    if User_input=="D":
+    if reverse==True:
         ll2=[ll[i] for i in range((longitud(ll)-1),-1,-1)]
         imprimir=ll2.copy()
 
     return imprimir
 
 def rang(n):
-    ll=[i for i in range(n)]
+    ll=[]
+    i=0
+    while i!=n:
+        ll.append(i)
+        i+=1
     return ll
 
-def rang2(x,y,z):
-    ll=[i for i in range(x,y,z)]
-    return ll
+def rang2(i,n,p):
+    ll=[]
+    while i!=n:
+        i+=p
+        ll.append(i)
+    return ll    
+    
 while not acabat:
 
     imprimir="    Exercicis       \n"+"==================\n"+"1. \n"+"2. \n"+"3. \n"+"4.\n"+"5. \n"+"6.\n"+"7. \n"+"8. \n"+"9. \n"+"10. \n"
@@ -122,12 +129,14 @@ while not acabat:
         print(suma(llista,num))
     if User_input==8:
         print(llistaD)
-        print(ordenat(llistaD))        
+        print(ordenat(llistaD,reverse=False)) 
+        print(ordenat(llistaD,reverse=True))        
+       
     if User_input==9:
-        num=int(input("Posa un número: "))
+        num=50
         print(rang(num))
     if User_input==10:
-        num1=int(input("Posa inici: "))
-        num2=int(input("Posa final: "))
-        num3=int(input("Posa pas: "))
+        num1=0
+        num2=30
+        num3=5
         print(rang2(num1,num2,num3))
