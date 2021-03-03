@@ -28,6 +28,7 @@ nova.
 acabat=False
 llista=[1,2,3,4,5,6,7,8,9,0]
 llistaD=[3,2,6,2,1,6,4,5,9,8,0]
+
 def absolut(n):
     if n<0:
         n-=n*2
@@ -40,8 +41,7 @@ def longitud(ll):
         i+=1
     return i
 def alreves(ll):
-    ll2=[ll[i] for i in range((longitud(ll)-1),-1,-1)]
-    return ll2
+    return ll[::-1]
 def elevar2(x,y,z):
     return ((x**y)%z)
 
