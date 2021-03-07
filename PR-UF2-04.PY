@@ -100,11 +100,11 @@ while not acabat:
     User_input=int(input("Quin exercici vols? "))
 
     if User_input==1:
-        num=int(input("Posa un número: "))
+        num=-15
         print(absolut(num))
     if User_input==2:
-        num1=int(input("Posa un número: "))
-        num2=int(input("Posa un altre número: "))
+        num1=5
+        num2=5
         print(elevar(num1,num2))
     if User_input==3:
         print(llista)
@@ -113,9 +113,9 @@ while not acabat:
         print(llista)
         print(alreves(llista))
     if User_input==5:
-        num1=int(input("Posa un número: "))
-        num2=int(input("Posa un altre número: "))
-        num3=int(input("Posa un altre número: "))
+        num1=13
+        num2=21
+        num3=12
         print(elevar2(num1,num2,num3))
     if User_input==6:
         print(llista)
