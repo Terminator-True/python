@@ -1,10 +1,13 @@
-"""print(list(range(20,2,-3)))"""
-n=8
-m=8
-
-for i in range(n):
-    for j in range(i):
-        print('* ', end="")
-        
-    print()
-
+def subrutina(): 
+    def sub_subrutina(): 
+        a = 5 
+        print(a) 
+        return 
+    global a 
+    a = 4 
+    sub_subrutina() 
+    print(a) 
+    return 
+a = 3 
+subrutina() 
+print(a) 
