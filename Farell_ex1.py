@@ -86,6 +86,5 @@ printMatriu(sumaMatrius(matriu1,matriu2))
 print("Producte escalar:")
 printMatriu(matriu1)
 printMatriu(producteEscalar(matriu1,10))
-
 printMatriu(matriu2)
 printMatriu(transposar(matriu2))
