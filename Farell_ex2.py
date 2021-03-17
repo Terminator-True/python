@@ -19,7 +19,9 @@ def esSimbol(c):
 
 def fesTrim(cadena):
     cadena=cadena.strip()
-    cadena=cadena.replace("  "," ")
+    for i in range (1,len(cadena)):
+        if esEspai(cadena[i]) and esEspai(cadena[i-1]):
+                cadena=cadena.replace(cadena[i],"")    
     return cadena
 
 def netejaCadena(cadena):
