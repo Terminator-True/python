@@ -4,4 +4,4 @@ def inicialitza (w,l,m,M):
 
 def demana_llista(n):
     return [input("Afegeix algun carácter: ") for i in range(n)] 
-    
+     
