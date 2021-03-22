@@ -6,7 +6,7 @@ import sys
 i=0
 vocals="A","E","I","O","U","a","e","i","o","u"
 User_input=sys.argv
-if User_input[1].isdigit != True:
+if User_input[1].isdigit is not True:
     for el in User_input[1]:
         if el in vocals:
             i+=1
