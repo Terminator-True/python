@@ -48,12 +48,13 @@ tab_control = ttk.Notebook(window)
 tab1 = ttk.Frame(tab_control)
 
 tab2 = ttk.Frame(tab_control)
+ 
 
 tab_control.add(tab1, text='encrypt')
 
 tab_control.add(tab2, text='Desencrypt')
 
-lbl1 = Label(tab1, text= 'label1')
+lbl1 = Label(tab1,)
 
 lbl1.grid(column=0, row=0)
 
@@ -63,8 +64,9 @@ lbl2.grid(column=0, row=0)
 
 tab_control.pack(expand=1, fill='both')
 
-txt1 = Entry(window,width=20)
+txt1 = Entry(tab1,width=20)
 
-btn1 = Button(window ,text="➤" ,command=clicked_encrypt) 
+btn1 = Button(window ,text="➤" ,command=clicked_encrypt)
+
 
 window.mainloop()
