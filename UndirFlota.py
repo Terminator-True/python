@@ -15,7 +15,7 @@ pot haver els següents valors:
 
 
 Funcions:
-creaTauler(c)
+creaTauler()
 imprimeixTauler(tauler,dev)
 tradueixIndex(fila,columna)
 aigual(tauler, fila, columna) 
@@ -31,6 +31,29 @@ tocatIEnfonsat(tauler,f,c)
 partidaAcabada(tauler)
 """
 
+def creaTauler():
+    x = 10
+    y = 10
+    m=[]
+    for i in range(x):
+        fila=[]
+        for j in range(y):
+                fila.append([False,"~"])
+        m.append(fila)
+    return m
 
+def imprimeixTauler(m):
+    lletres="ABCDEFGHIJ"
+    nums="0123456789"
+    s= " "
+    imprimir=""
+    for i in range(len(m)):
+        imprimir+=lletres[i]+s
+    imprimir+="\n"
+    i=0
+    for i in range(len(m)):
+        imprimir+=nums[i]+"\n"
+    imprimir.join
+    return imprimir
 
-dsds
+print(imprimeixTauler(creaTauler()))
