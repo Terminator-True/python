@@ -30,10 +30,13 @@ troba1acasellaV(tauler,x,y) i trobaVaixellV(tauler,x,y)
 tocatIEnfonsat(tauler,f,c)
 partidaAcabada(tauler)
 """
+#Constants
+x = 10
+y = 10
+lletres=" ABCDEFGHIJ"
+
 
 def creaTauler():
-    x = 10
-    y = 10
     m=[]
     for i in range(x):
         fila=[]
@@ -42,18 +45,47 @@ def creaTauler():
         m.append(fila)
     return m
 
-def imprimeixTauler(m):
-    lletres="ABCDEFGHIJ"
-    nums="0123456789"
-    s= " "
-    imprimir=""
+def imprimeixTauler(m,dev=True):
+    s= " "  
     for i in range(len(m)):
-        imprimir+=lletres[i]+s
-    imprimir+="\n"
-    i=0
-    for i in range(len(m)):
-        imprimir+=nums[i]+"\n"
-    imprimir.join
-    return imprimir
+        print(lletres[i],end=s)
+    print()
 
-print(imprimeixTauler(creaTauler()))
+    for j in range(len(m)):
+        print(j,end=s)
+        for k in range(len(m[0])):
+            if m[j][k][0] == False and not dev:
+                print("·",end=s)
+            else:
+                print(m[j][k][1],end=s)   
+        print() 
+
+def tradueixIndex(f,c):
+    for i in range(len(lletres)):
+        if lletres[i]==c:
+            return (f,i-1)
+
+def aigua(m,fc):
+    if m[f][c][1]=="~":
+        return True
+
+def comprovaAreaH(m,f,c,mida):
+    comprovacio=False
+    i=-1
+    while comprovacio not True:
+        if c==0:     
+            continue
+        else:
+            c-=1
+        if f==0:
+            continue
+        else:
+            f-=1
+            for i in range(m[f+i][c],m[f+i][c+(mida+1)]):
+                if m[f][i][0]=="@":
+                    return False
+        i+=1
+        if i==2:
+            comprovacio==True
+
+                
