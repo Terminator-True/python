@@ -63,29 +63,41 @@ def imprimeixTauler(m,dev=True):
 def tradueixIndex(f,c):
     for i in range(len(lletres)):
         if lletres[i]==c:
-            return (f,i-1)
+            return f,i-1
 
-def aigua(m,fc):
+def aigua(m,f,c):
     if m[f][c][1]=="~":
         return True
 
 def comprovaAreaH(m,f,c,mida):
-    comprovacio=False
-    i=-1
-    while comprovacio not True:
-        if c==0:     
-            continue
-        else:
-            c-=1
-        if f==0:
-            continue
-        else:
-            f-=1
-            for i in range(m[f+i][c],m[f+i][c+(mida+1)]):
-                if m[f][i][0]=="@":
-                    return False
-        i+=1
-        if i==2:
-            comprovacio==True
+    if c+mida>9:
+        return False
+    elif c+mida!=9:
+        mida+=1
+    if f!=0:
+        f-=1
+    if c!=0:
+        c-=1
+    for i in range(3):
+        for el in m[f][c],m[f][mida]:
+            if el[1]!="~":
+                return False
+        f+=1
+        if f==10:
+            return True
+    return True
+def colocaVaixellHoritzontal(tauler,f,c,mida):
+    T=tradueixIndex(f,c)
+    f,c=T
+    if comprovaAreaH(tauler,f,c,mida):
+      for i in range(c,c+mida):
+          tauler[f][i][1]="@"  
+    else:
+        return False
+    return True
 
-                
+m=creaTauler()
+imprimeixTauler(m)
+
+print(colocaVaixellHoritzontal(m,0,"D",2))
+imprimeixTauler(m)
