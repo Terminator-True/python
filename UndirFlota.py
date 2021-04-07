@@ -30,10 +30,14 @@ troba1acasellaV(tauler,x,y) i trobaVaixellV(tauler,x,y)
 tocatIEnfonsat(tauler,f,c)
 partidaAcabada(tauler)
 """
+#Imports
+
+import random
 #Constants
 x = 10
 y = 10
-lletres=" ABCDEFGHIJ"
+lletres=["A","B","C","D","E","F","G","H","I","J"]
+flota = [5,4,4,3,3,3,2,2]
 
 
 def creaTauler():
@@ -46,7 +50,8 @@ def creaTauler():
     return m
 
 def imprimeixTauler(m,dev=True):
-    s= " "  
+    s= " "
+    print("  ",end="")  
     for i in range(len(m)):
         print(lletres[i],end=s)
     print()
@@ -63,7 +68,7 @@ def imprimeixTauler(m,dev=True):
 def tradueixIndex(f,c):
     for i in range(len(lletres)):
         if lletres[i]==c:
-            return f,i-1
+            return f,i
 
 def aigua(m,f,c):
     if m[f][c][1]=="~":
@@ -72,7 +77,7 @@ def aigua(m,f,c):
 def comprovaAreaH(m,f,c,mida):
     if c+mida>9:
         return False
-    elif c+mida!=9:
+    if c+mida<=9:
         mida+=1
     if f!=0:
         f-=1
@@ -86,9 +91,8 @@ def comprovaAreaH(m,f,c,mida):
         if f==10:
             return True
     return True
+
 def colocaVaixellHoritzontal(tauler,f,c,mida):
-    T=tradueixIndex(f,c)
-    f,c=T
     if comprovaAreaH(tauler,f,c,mida):
       for i in range(c,c+mida):
           tauler[f][i][1]="@"  
@@ -96,8 +100,59 @@ def colocaVaixellHoritzontal(tauler,f,c,mida):
         return False
     return True
 
+def comprovaAreaV(m,f,c,mida):
+    if f+mida>9:
+        return False
+    if f!=0:
+        f-=0
+    if c!=0:
+        c-=1
+    for i in range(f,f+mida):
+        for el in m[f][c],m[f][c]:
+            if el[1]!="~":
+                return False
+            j+=1
+            if j==3:
+
+        f+=1
+        if f==10:
+            return True
+    return True
+def colocaVaixellVertical(tauler,f,c,mida):
+    if comprovaAreaV(tauler,f,c,mida):
+      for i in range(f,f+mida):
+          tauler[i][c][1]="@"  
+    else:
+        return False
+    return True
+
+def colocaFlota(m,flota):
+    AvsH=random.randint(0,1)
+    for el in flota:
+        if AvsH==1 :
+            acabat=False
+            while not acabat:
+                f=random.randint(0,9)
+                c=random.choice(lletres)
+                T=tradueixIndex(f,c)
+                f,c=T
+                if aigua(m,f,c):
+                    acabat=colocaVaixellHoritzontal(m,f,c,el)
+        
+        elif AvsH==0:
+            acabat=False
+            while not acabat:
+                f=random.randint(0,9)
+                c=random.choice(lletres)
+                T=tradueixIndex(f,c)
+                f,c=T
+                if aigua(m,f,c):
+                    acabat=colocaVaixellVertical(m,f,c,el)
+
+
 m=creaTauler()
 imprimeixTauler(m)
 
-print(colocaVaixellHoritzontal(m,0,"D",2))
+
+colocaFlota(m,flota)
 imprimeixTauler(m)
