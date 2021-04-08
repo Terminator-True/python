@@ -75,17 +75,24 @@ def aigua(m,f,c):
         return True
 
 def comprovaAreaH(m,f,c,mida):
-    if c+mida>9:
+    principi=c
+    final=mida
+    voltes=3
+    if c+mida>10:
         return False
-    if c+mida<=9:
-        mida+=1
+    if c+mida<8:
+        final=mida+1
     if f!=0:
         f-=1
+    else:
+        voltes=2
     if c!=0:
-        c-=1
-    for i in range(3):
-        for el in m[f][c],m[f][mida]:
-            if el[1]!="~":
+        principi=c-1
+    for i in range(voltes):
+        print("mida: ",principi,"-",c+final)
+        for i in range(principi,c+final):
+            print(m[f][i][1])
+            if m[f][i][1]!="~":
                 return False
         f+=1
         if f==10:
@@ -101,20 +108,27 @@ def colocaVaixellHoritzontal(tauler,f,c,mida):
     return True
 
 def comprovaAreaV(m,f,c,mida):
-    if f+mida>9:
+    if f+mida>10:
         return False
-    if f!=0:
-        f-=0
-    if c!=0:
-        c-=1
-    for i in range(f,f+mida):
-        for el in m[f][c],m[f][c]:
-            if el[1]!="~":
-                return False
-            j+=1
-            if j==3:
+    if f+mida<9:
+        final=mida+1
 
-        f+=1
+    else:
+        
+    if f!=0:
+        principi=f-1
+    if c!=0:
+        x=c-1
+    else:
+        x=c
+    if c+3>9:
+        y=c+2
+    for i in range(c,final):
+        print("mida: ",principi,"-",f+final)
+        for j in range(x,y):
+            print(m[i][j][1])
+            if m[i][j][1]!="~":
+                return False
         if f==10:
             return True
     return True
@@ -125,6 +139,7 @@ def colocaVaixellVertical(tauler,f,c,mida):
     else:
         return False
     return True
+"""
 
 def colocaFlota(m,flota):
     AvsH=random.randint(0,1)
@@ -136,6 +151,7 @@ def colocaFlota(m,flota):
                 c=random.choice(lletres)
                 T=tradueixIndex(f,c)
                 f,c=T
+                print(f,c)
                 if aigua(m,f,c):
                     acabat=colocaVaixellHoritzontal(m,f,c,el)
         
@@ -146,13 +162,23 @@ def colocaFlota(m,flota):
                 c=random.choice(lletres)
                 T=tradueixIndex(f,c)
                 f,c=T
+                print(f,c)
                 if aigua(m,f,c):
                     acabat=colocaVaixellVertical(m,f,c,el)
 
-
+"""
 m=creaTauler()
+
 imprimeixTauler(m)
-
-
-colocaFlota(m,flota)
+""" print(i)
+        print("fila: ",f)
+        print("columna",c)
+        print("mida: ",mida)
+        """
+print(len(m[9]))
+print(colocaVaixellHoritzontal(m,3,4,3))
+print(colocaVaixellHoritzontal(m,3,8,2))
+print(colocaVaixellVertical(m,5,4,3))
+print(colocaVaixellVertical(m,5,8,2))
+#colocaFlota(m,flota)
 imprimeixTauler(m)
