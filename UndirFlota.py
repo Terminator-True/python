@@ -166,8 +166,20 @@ def colocaFlota(m,flota):
                 f,c=T
                 if aigua(m,f,c):
                     acabat=colocaVaixellVertical(m,f,c,el)
+"""
+def tret(m,f,c):
+    f,c=tradueixIndex(f, c)
+    tauler[f][c][0]= True
+    if aigua(m,f,c):
+        imprimir=("~  "*6)+"\n"+"     AIGUA    "+"\n"+("~  "*6)    
+    else:
+        m[f][c][1]=="X"
+        if tocatIEnfonsat(m,f,c):
+            imprimir=("=  "*6)+"\n"+"     ENFONSAT    "+"\n"+("=  "*6)
+        else:
+            imprimir=("-  "*6)+"\n"+"     TOCAT   "+"\n"+("-  "*6)
 
-
+"""
 
 m=creaTauler()
 
@@ -183,5 +195,7 @@ imprimeixTauler(m)
 #print(colocaVaixellHoritzontal(m,1,7,2))
 
 
+imprimir=("~  "*6)+"\n"+"     AIGUA    "+"\n"+("~  "*6)
+print(imprimir)
 colocaFlota(m,flota)
 imprimeixTauler(m)
