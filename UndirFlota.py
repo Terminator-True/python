@@ -80,8 +80,10 @@ def comprovaAreaH(m,f,c,mida):
     voltes=3
     if c+mida>10:
         return False
-    if c+mida<8:
+    if c+mida<=9:
         final=mida+1
+    else:
+        final=mida
     if f!=0:
         f-=1
     else:
@@ -89,13 +91,11 @@ def comprovaAreaH(m,f,c,mida):
     if c!=0:
         principi=c-1
     for i in range(voltes):
-        print("mida: ",principi,"-",c+final)
-        for i in range(principi,c+final):
-            print(m[f][i][1])
-            if m[f][i][1]!="~":
+        for j in range(principi,c+final):
+            if m[f][j][1]!="~":
                 return False
         f+=1
-        if f==10:
+        if f>=10:
             return True
     return True
 
@@ -108,30 +108,31 @@ def colocaVaixellHoritzontal(tauler,f,c,mida):
     return True
 
 def comprovaAreaV(m,f,c,mida):
-    if f+mida>10:
+    if f+mida>9:
         return False
-    if f+mida<9:
-        final=mida+1
-
+    if c!=0:
+        voltesP=c-1
     else:
-        
+        voltesP=c
+
+    if voltesP+2<=9:
+        voltesF=c+2
+    else:
+        voltesF=c+1
     if f!=0:
         principi=f-1
-    if c!=0:
-        x=c-1
     else:
-        x=c
-    if c+3>9:
-        y=c+2
-    for i in range(c,final):
-        print("mida: ",principi,"-",f+final)
-        for j in range(x,y):
-            print(m[i][j][1])
+        principi=f
+    if f+mida<=9:
+        final=f+mida+1
+    else:
+        final=f+mida
+    for i in range(principi,final):
+        for j in range(voltesP,voltesF):
             if m[i][j][1]!="~":
                 return False
-        if f==10:
-            return True
     return True
+
 def colocaVaixellVertical(tauler,f,c,mida):
     if comprovaAreaV(tauler,f,c,mida):
       for i in range(f,f+mida):
@@ -139,19 +140,20 @@ def colocaVaixellVertical(tauler,f,c,mida):
     else:
         return False
     return True
-"""
+
 
 def colocaFlota(m,flota):
-    AvsH=random.randint(0,1)
     for el in flota:
+        AvsH=random.randint(0,1)
+        i=0
         if AvsH==1 :
             acabat=False
             while not acabat:
+                i+=1
                 f=random.randint(0,9)
                 c=random.choice(lletres)
                 T=tradueixIndex(f,c)
                 f,c=T
-                print(f,c)
                 if aigua(m,f,c):
                     acabat=colocaVaixellHoritzontal(m,f,c,el)
         
@@ -162,11 +164,11 @@ def colocaFlota(m,flota):
                 c=random.choice(lletres)
                 T=tradueixIndex(f,c)
                 f,c=T
-                print(f,c)
                 if aigua(m,f,c):
                     acabat=colocaVaixellVertical(m,f,c,el)
 
-"""
+
+
 m=creaTauler()
 
 imprimeixTauler(m)
@@ -174,11 +176,12 @@ imprimeixTauler(m)
         print("fila: ",f)
         print("columna",c)
         print("mida: ",mida)
-        """
-print(len(m[9]))
-print(colocaVaixellHoritzontal(m,3,4,3))
-print(colocaVaixellHoritzontal(m,3,8,2))
-print(colocaVaixellVertical(m,5,4,3))
-print(colocaVaixellVertical(m,5,8,2))
-#colocaFlota(m,flota)
+         """
+
+#print(colocaVaixellVertical(m,3,9,3))
+#print(colocaVaixellVertical(m,3,8,3))
+#print(colocaVaixellHoritzontal(m,1,7,2))
+
+
+colocaFlota(m,flota)
 imprimeixTauler(m)
