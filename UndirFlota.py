@@ -71,8 +71,7 @@ def tradueixIndex(f,c):
             return f,i
 
 def aigua(m,f,c):
-    if m[f][c][1]=="~":
-        return True
+        return m[f][c][1]=="~"
 
 def comprovaAreaH(m,f,c,mida):
     principi=c
@@ -114,7 +113,6 @@ def comprovaAreaV(m,f,c,mida):
         voltesP=c-1
     else:
         voltesP=c
-
     if voltesP+2<=9:
         voltesF=c+2
     else:
