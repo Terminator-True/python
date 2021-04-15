@@ -68,7 +68,7 @@ def imprimeixTauler(m,dev=True):
 def tradueixIndex(f,c):
     for i in range(len(lletres)):
         if lletres[i]==c:
-            return f,i
+            return int(f),int(i)
 
 def aigua(m,f,c):
         return m[f][c][1]=="~"
@@ -142,9 +142,9 @@ def colocaVaixellVertical(tauler,f,c,mida):
 
 def colocaFlota(m,flota):
     for el in flota:
-        AvsH=random.randint(0,1)
+        VvsH=random.randint(0,1)
         i=0
-        if AvsH==1 :
+        if VvsH==1 :
             acabat=False
             while not acabat:
                 i+=1
@@ -155,7 +155,7 @@ def colocaFlota(m,flota):
                 if aigua(m,f,c):
                     acabat=colocaVaixellHoritzontal(m,f,c,el)
         
-        elif AvsH==0:
+        elif VvsH==0:
             acabat=False
             while not acabat:
                 f=random.randint(0,9)
@@ -164,10 +164,9 @@ def colocaFlota(m,flota):
                 f,c=T
                 if aigua(m,f,c):
                     acabat=colocaVaixellVertical(m,f,c,el)
-"""
+
 def tret(m,f,c):
-    f,c=tradueixIndex(f, c)
-    tauler[f][c][0]= True
+    m[f][c][0]=True
     if aigua(m,f,c):
         imprimir=("~  "*6)+"\n"+"     AIGUA    "+"\n"+("~  "*6)    
     else:
@@ -176,24 +175,107 @@ def tret(m,f,c):
             imprimir=("=  "*6)+"\n"+"     ENFONSAT    "+"\n"+("=  "*6)
         else:
             imprimir=("-  "*6)+"\n"+"     TOCAT   "+"\n"+("-  "*6)
+    print(imprimir)
 
-"""
 
+def troba1acasellaH(m,x,y):
+    principi=y
+    final=0
+    for i in range(principi,final,-1):
+        if m[x][i][1]=="~":
+            return x,i+1
+        elif i==0:
+            return x,i
+
+def trobaVaixellH(m,x,y):
+    mida=0
+    principi=y
+    final=len(m[x])
+    for i in range(principi,final):
+        if m[x][i][1]=="@" or m[x][i][1]=="X" :
+            mida+=1
+    return (x,y),mida
+
+def troba1acasellaV(m,x,y):
+    principi=x
+    final=0
+    for i in range(principi,final,-1):
+        if m[i][y][1]=="~":
+            print(i+1,y)
+            return i+1,y
+        elif i==0:
+            return i,y
+
+def trobaVaixellV(m,x,y):
+    mida=0
+    principi=x
+    final=len(m[x])
+    for i in range(principi,final):
+        if m[i][y][1]=="@" or m[i][y][1]=="X" :
+            mida+=1
+    return (x,y),mida
+
+def orientacio(m,f,c):
+    if c==0 and not aigua(m,f,c+1):
+        return True
+    elif c==9 and not aigua(m,f,c-1):
+        return True
+    elif (c!=0 and c!=9) and (not aigua(m,f,c-1) or not aigua(m,f,c+1)):
+        return True
+    return False
+        
+def tocatIEnfonsat(m,f,c):
+    tocats=0
+    if orientacio(m,f,c):
+        T=troba1acasellaH(m,f,c)
+        print(T)
+        x=T[0]
+        y=T[1]
+        vaixell=trobaVaixellH(m,x,y)
+        print(vaixell)
+        for i in range (vaixell[0][1],vaixell[1]):
+            if m[x][i][1]=="X":
+                tocats+=1
+        if tocats==vaixell[1]:
+            return True
+            for i in range (vaixell[0][1],vaixell[1]):
+                m[x][i][1]=="#"
+        else:
+            return False
+    else:
+        T=troba1acasellaV(m,f,c)
+        print(T)
+        x=T[0]
+        y=T[1]
+        vaixell=trobaVaixellV(m,x,y)
+        print(vaixell)
+        for i in range (vaixell[0][1],vaixell[1]):
+            if m[i][y][1]=="X":
+                tocats+=1
+        if tocats==vaixell[1]:
+            return True
+            for i in range (vaixell[1][1],vaixell[2]):
+                m[i][y][1]=="#"
+        else:
+            return False
+
+def partidaAcabada(m):
+    for fila in m:
+        for el in fila:
+            if el[1]=="@":
+                return False
+            else:
+                return True
 m=creaTauler()
-
-imprimeixTauler(m)
-""" print(i)
-        print("fila: ",f)
-        print("columna",c)
-        print("mida: ",mida)
-         """
-
-#print(colocaVaixellVertical(m,3,9,3))
-#print(colocaVaixellVertical(m,3,8,3))
-#print(colocaVaixellHoritzontal(m,1,7,2))
-
-
-imprimir=("~  "*6)+"\n"+"     AIGUA    "+"\n"+("~  "*6)
-print(imprimir)
 colocaFlota(m,flota)
-imprimeixTauler(m)
+acabat=False
+while acabat is False:
+    imprimeixTauler(m)
+    print("Coordenades del tret")
+    f=input("Fila: ")
+    c=input("Columna: ")
+    T=tradueixIndex(f,c)
+    x,y=T
+    tret(m,x,y)
+    if partidaAcabada(m):
+        acabat=True
