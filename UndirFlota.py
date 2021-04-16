@@ -170,17 +170,16 @@ def tret(m,f,c):
     if aigua(m,f,c):
         imprimir=("~  "*6)+"\n"+"     AIGUA    "+"\n"+("~  "*6)    
     else:
-        m[f][c][1]=="X"
+        m[f][c][1]="X"
         if tocatIEnfonsat(m,f,c):
             imprimir=("=  "*6)+"\n"+"     ENFONSAT    "+"\n"+("=  "*6)
         else:
             imprimir=("-  "*6)+"\n"+"     TOCAT   "+"\n"+("-  "*6)
     print(imprimir)
 
-
 def troba1acasellaH(m,x,y):
     principi=y
-    final=0
+    final=-1
     for i in range(principi,final,-1):
         if m[x][i][1]=="~":
             return x,i+1
@@ -194,14 +193,14 @@ def trobaVaixellH(m,x,y):
     for i in range(principi,final):
         if m[x][i][1]=="@" or m[x][i][1]=="X" :
             mida+=1
-    return (x,y),mida
+        elif m[x][i][1]=="~" or i==len(m[x]):
+            return x,y,mida
 
 def troba1acasellaV(m,x,y):
     principi=x
-    final=0
+    final=-1
     for i in range(principi,final,-1):
         if m[i][y][1]=="~":
-            print(i+1,y)
             return i+1,y
         elif i==0:
             return i,y
@@ -213,7 +212,8 @@ def trobaVaixellV(m,x,y):
     for i in range(principi,final):
         if m[i][y][1]=="@" or m[i][y][1]=="X" :
             mida+=1
-    return (x,y),mida
+        elif m[i][y][1]=="~" or i==len(m[x]):
+            return x,y,mida
 
 def orientacio(m,f,c):
     if c==0 and not aigua(m,f,c+1):
@@ -227,55 +227,50 @@ def orientacio(m,f,c):
 def tocatIEnfonsat(m,f,c):
     tocats=0
     if orientacio(m,f,c):
-        T=troba1acasellaH(m,f,c)
-        print(T)
-        x=T[0]
-        y=T[1]
+        x,y=troba1acasellaH(m,f,c)
         vaixell=trobaVaixellH(m,x,y)
-        print(vaixell)
-        for i in range (vaixell[0][1],vaixell[1]):
+        for i in range (vaixell[1],(vaixell[1]+vaixell[2])):
+            print(m[x][i][1])
             if m[x][i][1]=="X":
                 tocats+=1
-        if tocats==vaixell[1]:
+        if tocats==vaixell[2]:
+            for i in range (vaixell[1],(vaixell[1]+vaixell[2])):
+                m[x][i][1]="#"
             return True
-            for i in range (vaixell[0][1],vaixell[1]):
-                m[x][i][1]=="#"
         else:
             return False
     else:
-        T=troba1acasellaV(m,f,c)
-        print(T)
-        x=T[0]
-        y=T[1]
+        x,y=troba1acasellaV(m,f,c)
         vaixell=trobaVaixellV(m,x,y)
-        print(vaixell)
-        for i in range (vaixell[0][1],vaixell[1]):
+        for i in range (vaixell[0],(vaixell[0]+vaixell[2])):
             if m[i][y][1]=="X":
                 tocats+=1
-        if tocats==vaixell[1]:
+        if tocats==vaixell[2]:
+            for i in range (vaixell[0],(vaixell[0]+vaixell[2])):
+                m[i][y][1]="#"
             return True
-            for i in range (vaixell[1][1],vaixell[2]):
-                m[i][y][1]=="#"
         else:
             return False
 
 def partidaAcabada(m):
+    Quantitat=0
     for fila in m:
         for el in fila:
-            if el[1]=="@":
-                return False
-            else:
-                return True
+            if el[1]=="#":
+                Quantitat+=1
+    return Quantitat==sum(flota)
+
+
 m=creaTauler()
 colocaFlota(m,flota)
-acabat=False
-while acabat is False:
+
+while partidaAcabada(m) is not True:
     imprimeixTauler(m)
     print("Coordenades del tret")
     f=input("Fila: ")
     c=input("Columna: ")
     T=tradueixIndex(f,c)
-    x,y=T
-    tret(m,x,y)
-    if partidaAcabada(m):
-        acabat=True
+    f,c=T
+    tret(m,f,c)
+imprimeixTauler(m)
+
