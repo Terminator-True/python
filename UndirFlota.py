@@ -273,4 +273,7 @@ while partidaAcabada(m) is not True:
     f,c=T
     tret(m,f,c)
 imprimeixTauler(m)
+imprimir=("$  "*6)+"\n"+"     GOOD ENDING \n     YOU WON    "+"\n"+("$  "*6)    
+print(imprimir)
+
 
