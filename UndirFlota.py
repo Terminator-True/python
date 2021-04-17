@@ -14,7 +14,7 @@ pot haver els següents valors:
 “#” que representa una casella d’un vaixell tocat i enfonsat
 
 
-Funcions:
+Funcions a fer:
 creaTauler()
 imprimeixTauler(tauler,dev)
 tradueixIndex(fila,columna)
@@ -27,6 +27,7 @@ tret(tauler,f,c)
 troba1acasellaH(tauler,x,y) 
 trobaVaixellH(tauler,x,y)
 troba1acasellaV(tauler,x,y) i trobaVaixellV(tauler,x,y)
+orientacio(m,f,c)
 tocatIEnfonsat(tauler,f,c)
 partidaAcabada(tauler)
 """
@@ -131,7 +132,6 @@ def colocaVaixellVertical(tauler,f,c,mida):
         return False
     return True
 
-
 def colocaFlota(m,flota):
     for el in flota:
         VvsH=random.randint(0,1)
@@ -188,11 +188,10 @@ def trobaVaixellH(m,x,y):
         if m[x][i][1]=="@" or m[x][i][1]=="X":
             mida+=1
         elif m[x][i][1]=="~":
-            break
+            return x,y,mida
         elif i==final:
             mida+=1
-            break
-    return x,y,mida
+            return x,y,mida
 
 def troba1acasellaV(m,x,y):
     principi=x
@@ -211,13 +210,11 @@ def trobaVaixellV(m,x,y):
         if m[i][y][1]=="@" or m[i][y][1]=="X" :
             mida+=1
         elif m[i][y][1]=="~":
-            break
+            return x,y,mida
         elif i==final:
             mida+=1
-            break
-    return x,y,mida
-
-
+            return x,y,mida
+#Funció que retorna true si el vaixell és horitzontal o False si es vertical
 def orientacio(m,f,c):
     return c==0 and not aigua(m,f,c+1) or c==9 and not aigua(m,f,c-1) or (c!=0 and c!=9) and (not aigua(m,f,c-1) or not aigua(m,f,c+1))
         
@@ -247,7 +244,8 @@ def tocatIEnfonsat(m,f,c):
             return True
         else:
             return False
-
+#Va sumant els # dels vaixells enfonsats i quan la suma d'aquests és igual
+#a la suma de totes les mides de la flota sencera, retorna True
 def partidaAcabada(m):
     Quantitat=0
     for fila in m:
