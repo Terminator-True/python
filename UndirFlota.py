@@ -40,14 +40,7 @@ lletres=["A","B","C","D","E","F","G","H","I","J"]
 flota = [5,4,4,3,3,3,2,2]
 #Funcions
 def creaTauler():
-    m=[]
-    for i in range(x):
-        fila=[]
-        for j in range(y):
-                fila.append([False,"~"])
-        m.append(fila)
-    return m
-
+    return [[[False,"~"] for j in range(y)] for i in range(x)]
 def imprimeixTauler(m,dev=False):
     s= " "
     print("  ",end="")  
@@ -226,13 +219,7 @@ def trobaVaixellV(m,x,y):
 
 
 def orientacio(m,f,c):
-    if c==0 and not aigua(m,f,c+1):
-        return True
-    elif c==9 and not aigua(m,f,c-1):
-        return True
-    elif (c!=0 and c!=9) and (not aigua(m,f,c-1) or not aigua(m,f,c+1)):
-        return True
-    return False
+    return c==0 and not aigua(m,f,c+1) or c==9 and not aigua(m,f,c-1) or (c!=0 and c!=9) and (not aigua(m,f,c-1) or not aigua(m,f,c+1))
         
 def tocatIEnfonsat(m,f,c):
     tocats=0
