@@ -49,7 +49,7 @@ def creaTauler():
         m.append(fila)
     return m
 
-def imprimeixTauler(m,dev=True):
+def imprimeixTauler(m,dev=False):
     s= " "
     print("  ",end="")  
     for i in range(len(m)):
@@ -170,11 +170,16 @@ def tret(m,f,c):
     if aigua(m,f,c):
         imprimir=("~  "*6)+"\n"+"     AIGUA    "+"\n"+("~  "*6)    
     else:
-        m[f][c][1]="X"
-        if tocatIEnfonsat(m,f,c):
-            imprimir=("=  "*6)+"\n"+"     ENFONSAT    "+"\n"+("=  "*6)
+        if  m[f][c][1]=="X":
+            imprimir="Aquesta posició ja ha estat elegida"
+        elif m[f][c][1]=="#":
+            imprimir="Aquest vaixell ja ha estat enfonsat"
         else:
-            imprimir=("-  "*6)+"\n"+"     TOCAT   "+"\n"+("-  "*6)
+            m[f][c][1]="X"
+            if tocatIEnfonsat(m,f,c):
+                imprimir=("=  "*6)+"\n"+"     ENFONSAT    "+"\n"+("=  "*6)
+            else:
+                imprimir=("-  "*6)+"\n"+"     TOCAT   "+"\n"+("-  "*6)
     print(imprimir)
 
 def troba1acasellaH(m,x,y):
@@ -191,10 +196,15 @@ def trobaVaixellH(m,x,y):
     principi=y
     final=len(m[x])
     for i in range(principi,final):
-        if m[x][i][1]=="@" or m[x][i][1]=="X" :
+        print(i,"/",final)
+        if m[x][i][1]=="@" or m[x][i][1]=="X":
             mida+=1
-        elif m[x][i][1]=="~" or i==len(m[x]):
-            return x,y,mida
+        elif m[x][i][1]=="~":
+            break
+        elif i==final:
+            mida+=1
+            break
+    return x,y,mida
 
 def troba1acasellaV(m,x,y):
     principi=x
@@ -212,8 +222,13 @@ def trobaVaixellV(m,x,y):
     for i in range(principi,final):
         if m[i][y][1]=="@" or m[i][y][1]=="X" :
             mida+=1
-        elif m[i][y][1]=="~" or i==len(m[x]):
-            return x,y,mida
+        elif m[i][y][1]=="~":
+            break
+        elif i==final:
+            mida+=1
+            break
+    return x,y,mida
+
 
 def orientacio(m,f,c):
     if c==0 and not aigua(m,f,c+1):
@@ -263,7 +278,6 @@ def partidaAcabada(m):
 
 m=creaTauler()
 colocaFlota(m,flota)
-
 while partidaAcabada(m) is not True:
     imprimeixTauler(m)
     print("Coordenades del tret")
@@ -273,7 +287,7 @@ while partidaAcabada(m) is not True:
     f,c=T
     tret(m,f,c)
 imprimeixTauler(m)
-imprimir=("$  "*6)+"\n"+"     GOOD ENDING \n     YOU WON    "+"\n"+("$  "*6)    
+imprimir=("$  "*6)+"\n"+"\tGOOD ENDING \n YOU WON    "+"\n"+("$  "*6)    
 print(imprimir)
 
 
