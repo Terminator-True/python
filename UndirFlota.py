@@ -38,8 +38,7 @@ x = 10
 y = 10
 lletres=["A","B","C","D","E","F","G","H","I","J"]
 flota = [5,4,4,3,3,3,2,2]
-
-
+#Funcions
 def creaTauler():
     m=[]
     for i in range(x):
@@ -143,15 +142,12 @@ def colocaVaixellVertical(tauler,f,c,mida):
 def colocaFlota(m,flota):
     for el in flota:
         VvsH=random.randint(0,1)
-        i=0
         if VvsH==1 :
             acabat=False
             while not acabat:
-                i+=1
                 f=random.randint(0,9)
                 c=random.choice(lletres)
-                T=tradueixIndex(f,c)
-                f,c=T
+                f,c=tradueixIndex(f,c)
                 if aigua(m,f,c):
                     acabat=colocaVaixellHoritzontal(m,f,c,el)
         
@@ -160,8 +156,7 @@ def colocaFlota(m,flota):
             while not acabat:
                 f=random.randint(0,9)
                 c=random.choice(lletres)
-                T=tradueixIndex(f,c)
-                f,c=T
+                f,c=tradueixIndex(f,c)
                 if aigua(m,f,c):
                     acabat=colocaVaixellVertical(m,f,c,el)
 
@@ -245,7 +240,6 @@ def tocatIEnfonsat(m,f,c):
         x,y=troba1acasellaH(m,f,c)
         vaixell=trobaVaixellH(m,x,y)
         for i in range (vaixell[1],(vaixell[1]+vaixell[2])):
-            print(m[x][i][1])
             if m[x][i][1]=="X":
                 tocats+=1
         if tocats==vaixell[2]:
@@ -275,7 +269,7 @@ def partidaAcabada(m):
                 Quantitat+=1
     return Quantitat==sum(flota)
 
-
+#Programa Principal
 m=creaTauler()
 colocaFlota(m,flota)
 while partidaAcabada(m) is not True:
@@ -283,11 +277,8 @@ while partidaAcabada(m) is not True:
     print("Coordenades del tret")
     f=input("Fila: ")
     c=input("Columna: ")
-    T=tradueixIndex(f,c)
-    f,c=T
+    f,c=tradueixIndex(f,c)
     tret(m,f,c)
 imprimeixTauler(m)
 imprimir=("$  "*6)+"\n"+"\tGOOD ENDING \n YOU WON    "+"\n"+("$  "*6)    
 print(imprimir)
-
-
