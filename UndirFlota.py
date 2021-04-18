@@ -42,7 +42,7 @@ flota = [5,4,4,3,3,3,2,2]
 #Funcions
 def creaTauler():
     return [[[False,"~"] for j in range(y)] for i in range(x)]
-def imprimeixTauler(m,dev=False):
+def imprimeixTauler(m,dev=True):
     s= " "
     print("  ",end="")  
     for i in range(len(m)):
@@ -184,7 +184,6 @@ def trobaVaixellH(m,x,y):
     principi=y
     final=len(m[x])
     for i in range(principi,final):
-        print(i,"/",final)
         if m[x][i][1]=="@" or m[x][i][1]=="X":
             mida+=1
         elif m[x][i][1]=="~":
@@ -214,7 +213,8 @@ def trobaVaixellV(m,x,y):
         elif i==final:
             mida+=1
             return x,y,mida
-#Funció que retorna true si el vaixell és horitzontal o False si es vertical
+#Funció que retorna true si el vaixell és horitzontal o False si es vertical. Va comparant l'alrededor de
+#la posició f,c pero saber-ho
 def orientacio(m,f,c):
     return c==0 and not aigua(m,f,c+1) or c==9 and not aigua(m,f,c-1) or (c!=0 and c!=9) and (not aigua(m,f,c-1) or not aigua(m,f,c+1))
         
