@@ -14,7 +14,7 @@ pot haver els següents valors:
 “#” que representa una casella d’un vaixell tocat i enfonsat
 
 
-Funcions:
+Funcions a fer:
 creaTauler()
 imprimeixTauler(tauler,dev)
 tradueixIndex(fila,columna)
@@ -27,6 +27,7 @@ tret(tauler,f,c)
 troba1acasellaH(tauler,x,y) 
 trobaVaixellH(tauler,x,y)
 troba1acasellaV(tauler,x,y) i trobaVaixellV(tauler,x,y)
+orientacio(m,f,c)
 tocatIEnfonsat(tauler,f,c)
 partidaAcabada(tauler)
 """
@@ -38,17 +39,9 @@ x = 10
 y = 10
 lletres=["A","B","C","D","E","F","G","H","I","J"]
 flota = [5,4,4,3,3,3,2,2]
-
-
+#Funcions
 def creaTauler():
-    m=[]
-    for i in range(x):
-        fila=[]
-        for j in range(y):
-                fila.append([False,"~"])
-        m.append(fila)
-    return m
-
+    return [[[False,"~"] for j in range(y)] for i in range(x)]
 def imprimeixTauler(m,dev=True):
     s= " "
     print("  ",end="")  
@@ -68,11 +61,10 @@ def imprimeixTauler(m,dev=True):
 def tradueixIndex(f,c):
     for i in range(len(lletres)):
         if lletres[i]==c:
-            return f,i
+            return int(f),int(i)
 
 def aigua(m,f,c):
-    if m[f][c][1]=="~":
-        return True
+        return m[f][c][1]=="~"
 
 def comprovaAreaH(m,f,c,mida):
     principi=c
@@ -114,7 +106,6 @@ def comprovaAreaV(m,f,c,mida):
         voltesP=c-1
     else:
         voltesP=c
-
     if voltesP+2<=9:
         voltesF=c+2
     else:
@@ -141,47 +132,138 @@ def colocaVaixellVertical(tauler,f,c,mida):
         return False
     return True
 
-
 def colocaFlota(m,flota):
     for el in flota:
-        AvsH=random.randint(0,1)
-        i=0
-        if AvsH==1 :
+        VvsH=random.randint(0,1)
+        if VvsH==1 :
             acabat=False
             while not acabat:
-                i+=1
                 f=random.randint(0,9)
                 c=random.choice(lletres)
-                T=tradueixIndex(f,c)
-                f,c=T
+                f,c=tradueixIndex(f,c)
                 if aigua(m,f,c):
                     acabat=colocaVaixellHoritzontal(m,f,c,el)
         
-        elif AvsH==0:
+        elif VvsH==0:
             acabat=False
             while not acabat:
                 f=random.randint(0,9)
                 c=random.choice(lletres)
-                T=tradueixIndex(f,c)
-                f,c=T
+                f,c=tradueixIndex(f,c)
                 if aigua(m,f,c):
                     acabat=colocaVaixellVertical(m,f,c,el)
 
+def tret(m,f,c):
+    m[f][c][0]=True
+    if aigua(m,f,c):
+        imprimir=("~  "*6)+"\n"+"     AIGUA    "+"\n"+("~  "*6)    
+    else:
+        if  m[f][c][1]=="X":
+            imprimir="Aquesta posició ja ha estat elegida"
+        elif m[f][c][1]=="#":
+            imprimir="Aquest vaixell ja ha estat enfonsat"
+        else:
+            m[f][c][1]="X"
+            if tocatIEnfonsat(m,f,c):
+                imprimir=("=  "*6)+"\n"+"     ENFONSAT    "+"\n"+("=  "*6)
+            else:
+                imprimir=("-  "*6)+"\n"+"     TOCAT   "+"\n"+("-  "*6)
+    print(imprimir)
 
+def troba1acasellaH(m,x,y):
+    principi=y
+    final=-1
+    for i in range(principi,final,-1):
+        if m[x][i][1]=="~":
+            return x,i+1
+        elif i==0:
+            return x,i
 
+def trobaVaixellH(m,x,y):
+    mida=0
+    principi=y
+    final=len(m[x])
+    for i in range(principi,final):
+        if m[x][i][1]=="@" or m[x][i][1]=="X":
+            mida+=1
+        elif m[x][i][1]=="~":
+            return x,y,mida
+        elif i==final:
+            mida+=1
+            return x,y,mida
+
+def troba1acasellaV(m,x,y):
+    principi=x
+    final=-1
+    for i in range(principi,final,-1):
+        if m[i][y][1]=="~":
+            return i+1,y
+        elif i==0:
+            return i,y
+
+def trobaVaixellV(m,x,y):
+    mida=0
+    principi=x
+    final=len(m[x])
+    for i in range(principi,final):
+        if m[i][y][1]=="@" or m[i][y][1]=="X" :
+            mida+=1
+        elif m[i][y][1]=="~":
+            return x,y,mida
+        elif i==final:
+            mida+=1
+            return x,y,mida
+#Funció que retorna true si el vaixell és horitzontal o False si es vertical. Va comparant l'alrededor de
+#la posició f,c pero saber-ho
+def orientacio(m,f,c):
+    return c==0 and not aigua(m,f,c+1) or c==9 and not aigua(m,f,c-1) or (c!=0 and c!=9) and (not aigua(m,f,c-1) or not aigua(m,f,c+1))
+        
+def tocatIEnfonsat(m,f,c):
+    tocats=0
+    if orientacio(m,f,c):
+        x,y=troba1acasellaH(m,f,c)
+        vaixell=trobaVaixellH(m,x,y)
+        for i in range (vaixell[1],(vaixell[1]+vaixell[2])):
+            if m[x][i][1]=="X":
+                tocats+=1
+        if tocats==vaixell[2]:
+            for i in range (vaixell[1],(vaixell[1]+vaixell[2])):
+                m[x][i][1]="#"
+            return True
+        else:
+            return False
+    else:
+        x,y=troba1acasellaV(m,f,c)
+        vaixell=trobaVaixellV(m,x,y)
+        for i in range (vaixell[0],(vaixell[0]+vaixell[2])):
+            if m[i][y][1]=="X":
+                tocats+=1
+        if tocats==vaixell[2]:
+            for i in range (vaixell[0],(vaixell[0]+vaixell[2])):
+                m[i][y][1]="#"
+            return True
+        else:
+            return False
+#Va sumant els # dels vaixells enfonsats i quan la suma d'aquests és igual
+#a la suma de totes les mides de la flota sencera, retorna True
+def partidaAcabada(m):
+    Quantitat=0
+    for fila in m:
+        for el in fila:
+            if el[1]=="#":
+                Quantitat+=1
+    return Quantitat==sum(flota)
+
+#Programa Principal
 m=creaTauler()
-
-imprimeixTauler(m)
-""" print(i)
-        print("fila: ",f)
-        print("columna",c)
-        print("mida: ",mida)
-         """
-
-#print(colocaVaixellVertical(m,3,9,3))
-#print(colocaVaixellVertical(m,3,8,3))
-#print(colocaVaixellHoritzontal(m,1,7,2))
-
-
 colocaFlota(m,flota)
+while partidaAcabada(m) is not True:
+    imprimeixTauler(m)
+    print("Coordenades del tret")
+    f=input("Fila: ")
+    c=input("Columna: ")
+    f,c=tradueixIndex(f,c)
+    tret(m,f,c)
 imprimeixTauler(m)
+imprimir=("$  "*6)+"\n"+"\tGOOD ENDING \n YOU WON    "+"\n"+("$  "*6)    
+print(imprimir)
