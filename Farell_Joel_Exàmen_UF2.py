@@ -1,6 +1,6 @@
 
 import sys
-
+        
 O="D"
 def creaMatriu(x,y):
     m=[]
