@@ -5,7 +5,7 @@ Fes un programa que afegeixi una línia més al fitxer de text "text.txt" i el m
 """
 try:
     f=open("text/text.txt","a+t")
-    f.write("Quarta línea")
+    f.write("Quarta línea \n")
     f.seek(0)
     print(f.read())
 finally:
