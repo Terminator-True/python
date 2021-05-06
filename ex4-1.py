@@ -39,19 +39,21 @@ def acaba_por(file,lletra):
                         break
                     else:
                         break
-    return files  
-
-def compta_paraules(file,lletra):
+    return files    
+def compta_paraules(file,lletra=""):
     paraules=0
     with open(file,"r") as f:
         Arxiu=f.readlines()
         for i in range(len(Arxiu)):
             paraula = Arxiu[i].split()
             for el in paraula:
-                if lletra in el:
+                if lletra=="":
                     paraules+=1
+                else:
+                    if lletra in el:
+                        paraules+=1
     return paraules
 
-
-User_input=sys.argv()
+User_input=sys.argv
+User_input.pop(0)
 print(User_input)
