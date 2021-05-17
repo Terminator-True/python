@@ -30,6 +30,11 @@ troba1acasellaV(tauler,x,y) i trobaVaixellV(tauler,x,y)
 orientacio(m,f,c)
 tocatIEnfonsat(tauler,f,c)
 partidaAcabada(tauler)
+
+Video del Funcionament:
+===========================================
+https://www.youtube.com/watch?v=Wh6iXf0zb3k
+===========================================
 """
 #Imports
 

@@ -1,6 +1,4 @@
-Dict={'1':'Pepe','2':'jorge'}
+cosa="21312312"
 
-print(len(Dict))
-
-
-print(type(Dict))
+if cosa.isdigit():
+    print("cosa")
