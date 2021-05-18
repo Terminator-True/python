@@ -41,7 +41,7 @@ aquest apartat és per a qui vulgui nota!!!!!!
 """
 llista_informacio=["Nom","Cognom","Numero Telefon","Correu","Usuari Telegram"]
 def comprovaFitxer(llista):
-	with open ("Agenda.txt	","r+") as f:
+	with open ("Agenda.txt","r+") as f:
 		for linia in f:
 			if llista[3] in linia:
 				return "01"
@@ -64,12 +64,12 @@ def informacio():
 		S_N=input(str(llista)+"\n"+"Informació correcte?")
 	return llista
 def Alta():
-	with open ("Agenda.txt	","a+") as f:
+	with open ("Agenda.txt","a+") as f:
 		f.writelines(",".join(informacio()))
 		f.write("\n")
 
 def modifica():
-	with open ("Agenda.txt	","r+") as f:
+	with open ("Agenda.txt","r+") as f:
 		lineas=f.readlines()
 		for i in range (len(lineas)):
 			print("\n",i," ",lineas[i])
@@ -86,21 +86,21 @@ def modifica():
 					print(liniallista)
 					lineas[linea]=",".join(liniallista)
 					print(lineas)
-					with open ("Agenda.txt	","w") as fi:
+					with open ("Agenda.txt","w") as fi:
 						fi.writelines(lineas)
 		except ValueError:
 			print("Ha de ser un número")
 		except IndexError:
 			print("Error, linia no existent")
 def elimina():
-	with open ("Agenda.txt	","r+") as f:
+	with open ("Agenda.txt","r+") as f:
 		lineas=f.readlines()
 		for i in range (len(lineas)):
 			print("\n",i," ",lineas[i])
 	try:
 		linea=int(input("Línea a Esborrar: "))
 		lineas.pop(linea)		
-		with open ("Agenda.txt	","w") as fi:
+		with open ("Agenda.txt","w") as fi:
 			fi.writelines(lineas)
 
 	except ValueError:
@@ -108,7 +108,7 @@ def elimina():
 	except IndexError:
 		print("Error, linia no existent")
 def Consulta():
-	with open ("Agenda.txt	","r") as f:
+	with open ("Agenda.txt","r") as f:
 		camp=input("Buscar: ")
 		for el in f:
 			if camp in el:
@@ -132,5 +132,5 @@ while acabat is not True:
 			elimina()
 		elif User_input==4:
 			Consulta()
-	except ValueError():
+	except ValueError:
 		print("Ha de ser un número")		
