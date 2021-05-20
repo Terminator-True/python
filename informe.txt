@@ -1,0 +1,6 @@
+Nombre de línies: 31
+Nombre de paraules: 312
+Nombre de carácters: 1815
+Número de vocals: 643
+Paraula mes llarga: nom_arxiu-numerat.extensio
+Paraula mes curta: i

@@ -132,4 +132,4 @@ while acabat is not True:
 		elif User_input==4:
 			Consulta()
 	except ValueError:
-		print("Ha de ser un número")		
+			print("Ha de ser un número")		
