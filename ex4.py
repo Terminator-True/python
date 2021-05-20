@@ -102,4 +102,7 @@ if Filtre_Errors(User_input):
                 f.write(imprimir) 
         if "--help" in User_input:
             imprimir+="Sintaxi: $python3 ex4.py /path/file [c] [-i -w -f -p -P] [--help]\n"+"\nArguments:\n\n"+"file:nom d'arxiu\n"+"c: carácter\n"+"-i:invers\n"+"-p: principi línia/paraula\n"+"-P:final línia/paraula\n"+"-w: Paraules amb el [c] \n"+"-f: sotida a un fitxer anomenat sortida.txt \n"+"\n--help: Ajuda"+"\n\nExemple de Crida\n"+"python3 ex4.py a -w -p -i"
+else:
+    imprimir+="Sintaxi: $python3 ex4.py /path/file [c] [-i -w -f -p -P] [--help]\n"+"\nArguments:\n\n"+"file:nom d'arxiu\n"+"c: carácter\n"+"-i:invers\n"+"-p: principi línia/paraula\n"+"-P:final línia/paraula\n"+"-w: Paraules amb el [c] \n"+"-f: sotida a un fitxer anomenat sortida.txt \n"+"\n--help: Ajuda"+"\n\nExemple de Crida\n"+"python3 ex4.py a -w -p -i"
+
 print(imprimir)     
