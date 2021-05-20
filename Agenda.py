@@ -61,12 +61,12 @@ def informacio():
 			Sobrescriure=input("Sobrescriure?")
 			if Sobrescriure=="N":
 				llista[4]=input("Usuari Telegram: ")
-		S_N=input(str(llista)+"\n"+"Informació correcte?")
+		S_N=input(",".join(llista)+"\n"+"Informació correcte?")
 	return llista
 def Alta():
 	with open ("Agenda.txt","a+") as f:
 		f.writelines(",".join(informacio()))
-		f.write("\n")
+		f.write(" \n")
 
 def modifica():
 	with open ("Agenda.txt","r+") as f:
@@ -77,15 +77,15 @@ def modifica():
 			linea=int(input("Línea a modificar: "))
 			modificacio=lineas[linea]
 			liniallista=modificacio.split(",")
-			print(liniallista,"\n",str(llista_informacio))
+			print("|".join(liniallista),"|".join(llista_informacio))
 			camp=input("Quins camp vols modificar?")
 			for i in range(len(llista_informacio)):
 				if camp==llista_informacio[i]:
 					print("Camp a modificar: ",liniallista[i])
 					liniallista[i]=input("Modificació:")
-					print(liniallista)
 					lineas[linea]=",".join(liniallista)
-					print(lineas)
+					if camp==llista_informacio[len(llista_informacio)-1]:
+						lineas[linea]+=(" \n")
 					with open ("Agenda.txt","w") as fi:
 						fi.writelines(lineas)
 		except ValueError:
@@ -102,7 +102,6 @@ def elimina():
 		lineas.pop(linea)		
 		with open ("Agenda.txt","w") as fi:
 			fi.writelines(lineas)
-
 	except ValueError:
 		print("Ha de ser un número")
 	except IndexError:
