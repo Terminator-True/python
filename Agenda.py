@@ -37,8 +37,8 @@ procediu com en modifica, però ara elimineu la línia corresponent de la llista
 
 recuperar segons un camp:
 aquest apartat és per a qui vulgui nota!!!!!!
-
 """
+
 llista_informacio=["Nom","Cognom","Numero Telefon","Correu","Usuari Telegram"]
 def comprovaFitxer(llista):
 	with open ("Agenda.txt","r+") as f:
@@ -46,23 +46,30 @@ def comprovaFitxer(llista):
 			if llista[3] in linia:
 				return "01"
 			if llista[4] in linia:
-				return "02"	
+				return "02"
+
 def informacio():
 	S_N=""
+	Sobrescriure=""
 	while S_N!="S":
 		llista=[input(el+":") for el in llista_informacio]
-		if comprovaFitxer(llista)=="01":
-			print("Correu es igual a un altre de la agenda")
-			Sobrescriure=input("Sobrescriure?")
-			if Sobrescriure=="N":
-				llista[3]=input("Correu: ")
-		if comprovaFitxer(llista)=="02":
-			print("Usuari de telegram es igual a un altre de la agenda")
-			Sobrescriure=input("Sobrescriure?")
-			if Sobrescriure=="N":
-				llista[4]=input("Usuari Telegram: ")
+		while comprovaFitxer(llista)=="01" and Sobrescriure!="S":
+			if comprovaFitxer(llista)=="01":
+				print("Correu es igual a un altre de la agenda")
+				Sobrescriure=input("Sobrescriure?")
+				if Sobrescriure=="N":
+					llista[3]=input("Correu: ")
+
+		while comprovaFitxer(llista)=="02" and Sobrescriure!="S":
+			if comprovaFitxer(llista)=="02":
+				print("Usuari de telegram es igual a un altre de la agenda")
+				Sobrescriure=input("Sobrescriure?")
+				if Sobrescriure=="N":
+					llista[4]=input("Usuari Telegram: ")
 		S_N=input(",".join(llista)+"\n"+"Informació correcte?")
+
 	return llista
+
 def Alta():
 	with open ("Agenda.txt","a+") as f:
 		f.writelines(",".join(informacio()))
@@ -112,7 +119,6 @@ def Consulta():
 		for el in f:
 			if camp in el:
 				print(el)
-		
 acabat=False
 imprimir=""
 imprimir+="==================================================\n"+"\n░█████╗░░██████╗░███████╗███╗░░██╗██████╗░░█████╗░\n"+"██╔══██╗██╔════╝░██╔════╝████╗░██║██╔══██╗██╔══██╗\n"+"██╔══██║██║░░╚██╗██╔══╝░░██║╚████║██║░░██║██╔══██║\n"+"██║░░██║╚██████╔╝███████╗██║░╚███║██████╔╝██║░░██║\n"+"╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░╚══╝╚═════╝░╚═╝░░╚═╝\n"+"==================================================\n"
