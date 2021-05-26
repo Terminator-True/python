@@ -1,42 +1,43 @@
 """
-Hola, us faig 5 cèntims de com encarar la pràctica.
-1r teniu clar com és l'arxiu de dades:
-per exemple, una línia seria:
-"Pepet, Nosurt, 666777888, pepet@nosurt.com, @pepetnosurt"
+==========================
+Joel Farell, Jordi Oliveda
+==========================
+una línia seria:
+	"Pepet, Nosurt, 666777888, pepet@nosurt.com, @pepetnosurt"
 1r feu el menú:
-per exemple implementat de manera senxilla
-i anar fent
-alta és una funció que:
-demana les dades amb inputs
-construeix la línia separada per comes (no oblideu el salt de línia)
-i l’afegeix a l’arxiu
-opcional: si el correu electrònic o l’usuari de telegram ja existeix, es demanarà a l’usuari si desitja sobreescriure el contacte
+	per exemple implementat de manera senxilla
+	i anar fent
+alta:
+	demana les dades amb inputs
+	construeix la línia separada per comes (no oblideu el salt de línia)
+	i l’afegeix a l’arxiu
+	opcional: si el correu electrònic o l’usuari de telegram ja existeix, es demanarà a l’usuari si desitja sobreescriure el contacte
 
 llistat:
-obrir l’arxiu en mode lectura
-imprimir cada línia
-(una idea seria posar un número davant de cada línia)
+	obrir l’arxiu en mode lectura
+	imprimir cada línia
+	(una idea seria posar un número davant de cada línia)
 
 modifica:
-utilitzeu llistat per mostrar les dades
-i podeu demanar quina entrada es vol modificar (si heu afegit el número)
-deseu les dades de l’arxiu en una llista i treballeu amb la llista
-ara podeu demanar quin camp es vol modificar
-feu les modificacions i torneu a construir la línia (podeu fer servir els mètodes split que ens converteix un text en una llista indicant el separador
+	utilitzeu llistat per mostrar les dades
+	i podeu demanar quina entrada es vol modificar (si heu afegit el número)
+	deseu les dades de l’arxiu en una llista i treballeu amb la llista
+	ara podeu demanar quin camp es vol modificar
+	feu les modificacions i torneu a construir la línia (podeu fer servir els mètodes split que ens converteix un text en una llista indicant el separador
 	donada una linia = "Pepet, Nosurt, 666777888, pepet@nosurt.com, @pepetnosurt"
 
-liniaLista = [“Pepet”, “Nosurt”, “666777888”, “pepet@nosurt.com”, “@pepetnosurt”]
+	liniaLista = [“Pepet”, “Nosurt”, “666777888”, “pepet@nosurt.com”, “@pepetnosurt”]
 
-us pot anar bé per modificar el camp que vulgueu
-torneu a transformar la llista en una cadena (ajuntant cada camp separant per comes)
-substituïu a la llista principal amb totes les dades
-deseu la llista sencera a l’arxiu (obriu en modus w i utilitzeu el mètode writelines)
+	us pot anar bé per modificar el camp que vulgueu
+	torneu a transformar la llista en una cadena (ajuntant cada camp separant per comes)
+	substituïu a la llista principal amb totes les dades
+	deseu la llista sencera a l’arxiu (obriu en modus w i utilitzeu el mètode writelines)
 
 elimina:
-procediu com en modifica, però ara elimineu la línia corresponent de la llista
+	procediu com en modifica, però ara elimineu la línia corresponent de la llista
 
 recuperar segons un camp:
-aquest apartat és per a qui vulgui nota!!!!!!
+	aquest apartat és per a qui vulgui nota!!!!!!
 """
 
 llista_informacio=["Nom","Cognom","Numero Telefon","Correu","Usuari Telegram"]
@@ -52,6 +53,8 @@ def comprovaFitxer(llista):
 		print("Agenda no existent")
 	except FileNotFoundError:
 		print("Agenda no trobada")
+	except:
+		print("Error desconegut")
 def comprovaCorreu(correu):
 	correuDividit=correu.split("@")
 	return len(correuDividit)==2 and "." in correuDividit[1] 
@@ -76,7 +79,7 @@ def informacio():
 					elimina(Consulta(llista[3],For_User=False),For_user=False)
 
 			while llista[4][0]!="@" and llista[4]!="" :
-				print("Usuari de telegram incorrecte")
+				print("Usuari de telegram incorrecte Falta: '@'")
 				llista[4]=input("Usuari Telegram: ")
 
 			if comprovaFitxer(llista)=="02":
@@ -86,7 +89,6 @@ def informacio():
 					llista[4]=input("Usuari Telegram: ")
 				else:
 					elimina(Consulta(llista[4],For_User=False),For_user=False)
-
 
 		S_N=input(",".join(llista)+"\n"+"Informació correcte?")
 
@@ -125,6 +127,8 @@ def modifica():
 			print("Agenda no existent")
 		except FileNotFoundError:
 			print("Agenda no trobada")
+		except:
+			print("Error desconegut")
 def elimina(linea=-1,For_user=True):
 	try:
 		with open ("Agenda.txt","r+") as f:
@@ -144,6 +148,9 @@ def elimina(linea=-1,For_user=True):
 		print("Agenda no existent")
 	except FileNotFoundError:
 		print("Agenda no trobada")
+	except:
+		print("Error desconegut")
+
 def Consulta(camp,For_User=True):
 	i=0
 	try:
@@ -158,28 +165,40 @@ def Consulta(camp,For_User=True):
 		print("Agenda no existent")
 	except FileNotFoundError:
 		print("Agenda no trobada")
+	except:
+		print("Error desconegut")
+	
 
+def ProgramaPrincipal(User_input):
+	if User_input==5:
+		return True
+	elif User_input==1:
+		Alta()
+	elif User_input==2:
+		modifica()
+	elif User_input==3:
+		elimina()
+	elif User_input==4:
+		camp=input("Buscar: ")
+		print(Consulta(camp))
+	else:
+		print("Opció no existent")
+		return False
+def printMenu():
+	imprimir=""
+	imprimir+="==================================================\n"+"\n░█████╗░░██████╗░███████╗███╗░░██╗██████╗░░█████╗░\n"+"██╔══██╗██╔════╝░██╔════╝████╗░██║██╔══██╗██╔══██╗\n"+"██╔══██║██║░░╚██╗██╔══╝░░██║╚████║██║░░██║██╔══██║\n"+"██║░░██║╚██████╔╝███████╗██║░╚███║██████╔╝██║░░██║\n"+"╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░╚══╝╚═════╝░╚═╝░░╚═╝\n"+"==================================================\n"
+	print(imprimir)
+	print("1: Alta\n"+"2: Modifica\n"+"3: Elimina\n"+"4: Consulta\n"+"5: Sortir\n")
 acabat=False
-imprimir=""
-imprimir+="==================================================\n"+"\n░█████╗░░██████╗░███████╗███╗░░██╗██████╗░░█████╗░\n"+"██╔══██╗██╔════╝░██╔════╝████╗░██║██╔══██╗██╔══██╗\n"+"██╔══██║██║░░╚██╗██╔══╝░░██║╚████║██║░░██║██╔══██║\n"+"██║░░██║╚██████╔╝███████╗██║░╚███║██████╔╝██║░░██║\n"+"╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░╚══╝╚═════╝░╚═╝░░╚═╝\n"+"==================================================\n"
-print(imprimir)
 while acabat is not True:
 	try:
-		print("1: Alta\n"+"2: Modifica\n"+"3: Elimina\n"+"4: Consulta\n"+"5: Sortir\n")
+		printMenu()
 		User_input=int(input("Opció a elegir: "))
-		if User_input==5:
-			acabat=True
-		elif User_input==1:
-			Alta()
-		elif User_input==2:
-			modifica()
-		elif User_input==3:
-			elimina()
-		elif User_input==4:
-			camp=input("Buscar: ")
-			print(Consulta(camp))
+		acabat=ProgramaPrincipal(User_input)
 	except ValueError:
-			print("Ha de ser un número")
+		print("Ha de ser un número")
 	except KeyboardInterrupt:
 		print("Adeu!")
-		acabat=True		
+		acabat=True
+	except:
+		print("Error desconegut")
