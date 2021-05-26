@@ -62,7 +62,7 @@ def informacio():
 	while S_N!="S":
 		llista=[input(el+":") for el in llista_informacio]
 		while comprovaFitxer(llista)=="01" and Sobrescriure!="S" or comprovaFitxer(llista)=="02" and Sobrescriure!="S":
-			
+
 			while comprovaCorreu(llista[3])==False and llista[3]!="" :
 				print("Correu incorrecte")
 				llista[3]=input("Correu: ")
@@ -179,4 +179,7 @@ while acabat is not True:
 			camp=input("Buscar: ")
 			print(Consulta(camp))
 	except ValueError:
-			print("Ha de ser un número")		
+			print("Ha de ser un número")
+	except KeyboardInterrupt:
+		print("Adeu!")
+		acabat=True		
