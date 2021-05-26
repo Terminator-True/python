@@ -1,7 +1,5 @@
-from tkinter import *
+"""from tkinter import *
 root = Tk()
-
-"""
 
 while acabat is not True:
 
@@ -16,3 +14,10 @@ while acabat is not True:
     if User_input==3:
         acabat=True
 """
+telegram="joel,farl,321312312,joel@pepe.coc,terminamelamamahuebo"
+correuDividit=telegram.split(",")
+print(correuDividit[4][0])
+if correuDividit[4][0]=="@":
+    print("Correcte")
+else:
+    print("No es")
