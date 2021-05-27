@@ -78,7 +78,10 @@ if Filtre_Errors(User_input):
     if len(User_input)==1:
         imprimir+="Hi han "+str(lineas(arxiu))+" linies que compleixen amb el criteri de búsqueda \n"
     elif len(User_input)>=2:
-        imprimir+="Hi han "+str(caracter(arxiu,User_input[1]))+" linies que compleixen amb el criteri de búsqueda \n"
+        if "-i" in User_input:
+            imprimir+="Hi han "+str(lineas(arxiu)-caracter(arxiu,User_input[1]))+" linies que compleixen amb el criteri de búsqueda \n"
+        else:
+            imprimir+="Hi han "+str(caracter(arxiu,User_input[1]))+" linies que compleixen amb el criteri de búsqueda \n"
         if len(User_input)>2:
             for i in range(2,len(User_input)):
                 if User_input[i]=="-p":

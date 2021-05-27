@@ -43,7 +43,7 @@ recuperar segons un camp:
 llista_informacio=["Nom","Cognom","Numero Telefon","Correu","Usuari Telegram"]
 def comprovaFitxer(llista):
 	try:
-		with open ("Agenda.txt","r+") as f:
+		with open ("Agenda.txt","r") as f:
 			for linia in f:
 				if llista[3] in linia and llista[3]!="":
 					return "01"
@@ -131,7 +131,7 @@ def modifica():
 			print("Error desconegut")
 def elimina(linea=-1,For_user=True):
 	try:
-		with open ("Agenda.txt","r+") as f:
+		with open ("Agenda.txt","r") as f:
 			lineas=f.readlines()
 			if For_user==True:
 				for i in range (len(lineas)):
@@ -189,6 +189,7 @@ def printMenu():
 	imprimir+="==================================================\n"+"\n░█████╗░░██████╗░███████╗███╗░░██╗██████╗░░█████╗░\n"+"██╔══██╗██╔════╝░██╔════╝████╗░██║██╔══██╗██╔══██╗\n"+"██╔══██║██║░░╚██╗██╔══╝░░██║╚████║██║░░██║██╔══██║\n"+"██║░░██║╚██████╔╝███████╗██║░╚███║██████╔╝██║░░██║\n"+"╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░╚══╝╚═════╝░╚═╝░░╚═╝\n"+"==================================================\n"
 	print(imprimir)
 	print("1: Alta\n"+"2: Modifica\n"+"3: Elimina\n"+"4: Consulta\n"+"5: Sortir\n")
+	
 acabat=False
 while acabat is not True:
 	try:
