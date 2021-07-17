@@ -43,7 +43,7 @@ recuperar segons un camp:
 llista_informacio=["Nom","Cognom","Numero Telefon","Correu","Usuari Telegram"]
 def comprovaFitxer(llista):
 	try:
-		with open ("Agenda.txt","r") as f:
+		with open ("Agenda.txt","r") as f:	
 			for linia in f:
 				if llista[3] in linia and llista[3]!="":
 					return "01"
@@ -101,7 +101,7 @@ def Alta():
 
 def modifica():
 		try:
-			with open ("Agenda.txt","r") as f:
+			with open ("Agenda.txt","r") as f:	
 				lineas=f.readlines()
 				for i in range (len(lineas)):
 					print("\n",i," ",lineas[i])
@@ -131,12 +131,12 @@ def modifica():
 			print("Error desconegut")
 def elimina(linea=-1,For_user=True):
 	try:
-		with open ("Agenda.txt","r") as f:
+		with open ("Agenda.txt","r") as f:	
 			lineas=f.readlines()
-			if For_user==True:
-				for i in range (len(lineas)):
-					print("\n",i," ",lineas[i])
-				linea=int(input("Línea a Esborrar: "))
+		if For_user==True:
+			for i in range (len(lineas)):
+				print("\n",i," ",lineas[i])
+			linea=int(input("Línea a Esborrar: "))
 		lineas.pop(linea)		
 		with open ("Agenda.txt","w") as fi:
 			fi.writelines(lineas)
@@ -154,7 +154,7 @@ def elimina(linea=-1,For_user=True):
 def Consulta(camp,For_User=True):
 	i=0
 	try:
-		with open ("Agenda.txt","r") as f:
+		with open ("Agenda.txt","r") as f:	
 			for el in f:
 				i+=1
 				if camp in el and For_User==True:
@@ -189,10 +189,20 @@ def printMenu():
 	imprimir+="==================================================\n"+"\n░█████╗░░██████╗░███████╗███╗░░██╗██████╗░░█████╗░\n"+"██╔══██╗██╔════╝░██╔════╝████╗░██║██╔══██╗██╔══██╗\n"+"██╔══██║██║░░╚██╗██╔══╝░░██║╚████║██║░░██║██╔══██║\n"+"██║░░██║╚██████╔╝███████╗██║░╚███║██████╔╝██║░░██║\n"+"╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░╚══╝╚═════╝░╚═╝░░╚═╝\n"+"==================================================\n"
 	print(imprimir)
 	print("1: Alta\n"+"2: Modifica\n"+"3: Elimina\n"+"4: Consulta\n"+"5: Sortir\n")
-	
+
+def ComprovaPrincipi():
+	try:
+		with open ("Agenda.txt","r") as f:
+			pass
+	except FileNotFoundError:
+		with open ("Agenda.txt","w") as f:
+			pass
+
+
 acabat=False
 while acabat is not True:
 	try:
+		ComprovaPrincipi()
 		printMenu()
 		User_input=int(input("Opció a elegir: "))
 		acabat=ProgramaPrincipal(User_input)
