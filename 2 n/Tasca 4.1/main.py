@@ -1,5 +1,0 @@
-"""
-
-Programa principal
-
-"""
