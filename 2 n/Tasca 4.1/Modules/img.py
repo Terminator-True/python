@@ -22,11 +22,12 @@ def format(img):
 def matrix(img):
     return img[1]
 def img(matrix):
+    L=False
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
             if (0,0,0)==matrix[i][j] or (255,255,255)==matrix[i][j]:
                 bn=True
-            elif matrix[i][j][0]==matrix[i][j][1] and matrix[i][j][1]==matrix[i][j][2]:
+            elif matrix[i][j][0]==matrix[i][j][1]==matrix[i][j][2]:
                 L=True
             else:
                 return "RGB",matrix
@@ -45,6 +46,6 @@ def get_h(img):
 
 
 matriu=[[(255,255,255),(255,255,255),(255,255,255),(255,255,255)],
-        [(0,0,0),(255,255,255),(255,255,255),(255,255,255)]]
+        [(140,140,140),(255,255,255),(255,255,255),(255,255,255)]]
 
 print(img(matriu))
