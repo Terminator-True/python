@@ -25,15 +25,15 @@ def img(matrix):
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
             if (0,0,0)==matrix[i][j] or (255,255,255)==matrix[i][j]:
-                blanc_negre=True
-            elif matrix[i][j][0]==matrix[i][j][1]==matrix[i][j][2]:
-                gris=True
+                bn=True
+            elif matrix[i][j][0]==matrix[i][j][1] and matrix[i][j][1]==matrix[i][j][2]:
+                L=True
             else:
                 return "RGB",matrix
             
-    if blanc_negre and gris:
+    if bn and L:
         return "L",matrix
-    elif blanc_negre:
+    elif bn:
         return "1",matrix
 
 def get_w(img):
