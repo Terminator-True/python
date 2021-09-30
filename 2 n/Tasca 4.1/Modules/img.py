@@ -3,7 +3,6 @@ El m`odul cont ́e les operacions prim`aries pel treball amb imatges, ja siguin 
 d’escala de grisos o de blanc i negre.
 """
 from PIL import Image, ImageChops, ImageEnhance, ImageOps
-import funcio_scale
 
 def null():
     return ('NULL',None)
@@ -17,11 +16,11 @@ def white_grey(w,h):
     return ("L",[[(255,255,255)]*w]*h)
 def white_bw(w,h):
     return ("1",[[(255,255,255)]*w]*h)
-def format(img):
-    return img[0]
-def matrix(img):
-    return img[1]
-def img(matrix):
+def format(i):
+    return i[0]
+def matrix(i):
+    return i[1]
+def i(matrix):
     L=False
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
@@ -37,17 +36,9 @@ def img(matrix):
     elif bn:
         return "1",matrix
 
-def get_w(img):
-    return len(img[1][0])
-def get_h(img):
-    return len(img[1])
-
-def subimg(img,ow,oh,w,h):
-    return [img[0],[img[1][i][j] for i in range(oh,h) for j in range(ow,w)]]
-
-
-
-matriu=[[(2,255,255),(3,3,3),(255,255,255),(255,255,255)],
-        [(0,0,0),(255,255,255),(255,255,255),(255,255,255)]]
-
-print(subimg(img(matriu),0,0,1,2))
+def get_w(i):
+    return len(i[1][0])
+def get_h(i):
+    return len(i[1])
+def subimg(i,ow,oh,w,h):
+    return [i[0],[i[1][j][k] for j in range(oh,h) for k in range(ow,w)]]
