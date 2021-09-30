@@ -42,10 +42,12 @@ def get_w(img):
 def get_h(img):
     return len(img[1])
 
-#def subimg(img,ow,oh,w,h):
+def subimg(img,ow,oh,w,h):
+    return [img[0],[img[1][i][j] for i in range(oh,h) for j in range(ow,w)]]
 
 
-matriu=[[(255,255,255),(255,255,255),(255,255,255),(255,255,255)],
-        [(140,140,140),(255,255,255),(255,255,255),(255,255,255)]]
 
-print(img(matriu))
+matriu=[[(2,255,255),(3,3,3),(255,255,255),(255,255,255)],
+        [(0,0,0),(255,255,255),(255,255,255),(255,255,255)]]
+
+print(subimg(img(matriu),0,0,1,2))
