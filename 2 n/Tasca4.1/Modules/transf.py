@@ -30,6 +30,30 @@ def vtrim(img):
             return None
 
 def htrim(img):
+    """Fa una feina similar a la funci ́o vtrim() per`o en la direcci ́o horitzontal."""
+    i=0
+    j=0
+    fi=len(img[1][0][1])
+    fj=len(img[1])
+    VI=False
+    VF=False
+    while not VI and not VF:
+        if img[1][j][i] == (0,0,0):
+            oh=0
+            ow=i-1
+            VI=True
+
+        if img[1][fj][fi] == (0,0,0):
+            h=len(img[1])
+            w=i-1
+            VF=True
+
+        j+=1
+        i+=1
+        fi-=1
+        fj-=1
+    return subimg(img,ow,oh,w,h)
+    """
     for i in range(len(img[1])): 
         wp = 0
     for j in range(len(img[1][j])):
@@ -49,8 +73,8 @@ def htrim(img):
                 return subimg(img,ow,oh,w,h)
 
     if not detectat:
-        return None                
-
+        return None   
+    """             
 def scale(src, h):
     """
     Escala la imatge a l'alçada `h` conservant l'aspect ratio
