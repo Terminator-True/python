@@ -12,18 +12,19 @@ def load_patterns(prefix):
     llegir s’anomenaran: patro_0.jpeg, patro_1.jpeg, . . . , patro_9.jpeg."""   
     path="2 n/Tasca4.1/patrons"
     content = os.listdir(path)
-    i=0
-    acabat=False
-    for el in content:
-        archiu=el.split("_")
+    for i in range(len(content)):
+        archiu=content[i].split("_")
         archiu[0]=prefix
-        while not acabat:
-            i+=1
-            if archiu[2]
+        os.rename(path+"/"+content[i],path+"/"+"_".join(archiu))
+    for i in range(len(content)-1):
+        print(content[i])
+        if content[i].split("_")[1]=="gruixut":
+            try:
+                if content[i].split("_")[2]>content[i+1].split("_")[2]:
+                    content[i],content[i+1]=content[i+1],content[i]
+            except:
+                pass
+    return content
 
-        os.rename(path+"/"+el,path+"/"+"_".join(archiu))
-
-    content = os.listdir(path)
-
-    print(content)
-load_patterns(prefix="patron")
+def match(img,patlst):
+    

@@ -53,28 +53,7 @@ def htrim(img):
         fi-=1
         fj-=1
     return subimg(img,ow,oh,w,h)
-    """
-    for i in range(len(img[1])): 
-        wp = 0
-    for j in range(len(img[1][j])):
-        if img[1][j][i]==(0,0,0):
-            oh = 0
-            ow = j-1
-            #Una vegada que es detecta un píxel negre, fa que la vegada que es detecti una línea completament blanca
-            #Es retalli el caracter
-            detectat = True
-        elif img[1][j][i]==(255,255,255):
-            #White pixel o wp, compta els píxels blancs en una línea
-            wp += 1
-            #Si tota la línea es de píxels blancs, vol dir que el caracter ja ha terminat, així que ho retallem
-            if wp == len(img[1][j]) and detectat:
-                w=j
-                h=len(img[1])
-                return subimg(img,ow,oh,w,h)
-
-    if not detectat:
-        return None   
-    """             
+            
 def scale(src, h):
     """
     Escala la imatge a l'alçada `h` conservant l'aspect ratio
