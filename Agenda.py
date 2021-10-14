@@ -208,6 +208,7 @@ while acabat is not True:
 		acabat=ProgramaPrincipal(User_input)
 	except ValueError:
 		print("Ha de ser un número")
+
 	except KeyboardInterrupt:
 		print("Adeu!")
 		acabat=True
