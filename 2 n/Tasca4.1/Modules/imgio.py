@@ -50,7 +50,7 @@ def save(i,nomf):
     image.save(nomf)
 
 if __name__=="__main__":
-	image = Image.open("2 n\Tasca4.1\matricules\matricula1.jpeg")
+	image = Image.open("/home/joel/Escritorio/python/2 n/Tasca4.1/matricules/matricula1.jpeg")
 	pix = image.load()
 	X = image.size[0]
 	Y = image.size[1]

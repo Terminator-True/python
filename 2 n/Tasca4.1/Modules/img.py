@@ -22,7 +22,6 @@ def matrix(i):
     return i[1]
 def i(matrix,tipe=""):
     L=False
-    print(matrix)
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
             if not type(matrix[i][j])=="tuple":
