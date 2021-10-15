@@ -13,7 +13,7 @@ def luminance_img(i):
     """
     mat = img.matrix(i)
     matlum = [[rgb_to_lum(p) for p in F] for F in mat]
-    return img.img(matlum, 'L')
+    return img.i(matlum, 'L')
 
 def histogram(i):
     """
@@ -77,4 +77,4 @@ def rgb_to_bn(i):
     matl = img.matrix(L)
     matbw = [[(0 if greyval < discr else 255) for greyval in f] for f in matl]
 #    bw_mean(BW)
-    return img.img(matbw, '1')
+    return img.i(matbw, '1')

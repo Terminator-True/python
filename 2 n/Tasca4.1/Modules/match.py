@@ -4,7 +4,7 @@ Es el m`odul que s’encarrega de determinar a quina xifra representa una imatge
 
 from img import subimg
 import os
-
+from imgio import read_bn
 def load_patterns(prefix):
     """Aquesta funci ́o rep com a par`ametre el prefix dels noms dels fitxers que contenen els patrons
     dels d ́ıgits i retorna la llista d’imatges corresponent als patrons dels d ́ıgits ordenats de 0 a 9.
@@ -24,5 +24,13 @@ def load_patterns(prefix):
             except:
                 pass
     return content
-print(load_patterns(prefix="patro"))
-#def match(img,patlst):
+def match(img,patlst):
+    """Donada una llista de patrons patlst i una imatge img retorna un enter que correspon amb el
+    dıgit mes semblant d’acord amb els conjunt de patrons usat. La imatge img ha de tenir la
+    mateixa alçada que els patrons."""
+    for el in patlst:
+        comparation=read_bn(el)
+        if len(comparation[0])>len(img[0]):
+            for i in range(len(img)):
+                for j in range(len(img[i])):
+                    

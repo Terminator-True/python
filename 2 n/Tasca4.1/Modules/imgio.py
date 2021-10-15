@@ -14,7 +14,7 @@ def read_rgb(nomf):
     X = image.size[0]
     Y = image.size[1]
     data = [[pix[x,y] for x in range(X)] for y in range(Y)]
-    return img.img(data, 'RGB')
+    return img.i(data, 'RGB')
 
 
 def read_bn(nomf):
@@ -27,7 +27,7 @@ def read_bn(nomf):
     X = image.size[0]
     Y = image.size[1]
     data = [[pix[x,y] for x in range(X)] for y in range(Y)]
-    return img.img(data, '1')
+    return img.i(data, '1')
 
 
 def show(i):
@@ -50,15 +50,14 @@ def save(i,nomf):
     image.save(nomf)
 
 if __name__=="__main__":
-	image = Image.open("matricules/matricula1.jpeg")
+	image = Image.open("2 n\Tasca4.1\matricules\matricula1.jpeg")
 	pix = image.load()
 	X = image.size[0]
 	Y = image.size[1]
 	data = [[pix[x,y] for x in range(X)] for y in range(Y)]
-	imatge=img.img(data)
+	imatge=img.i(data)
 	imatge_bn=discret.rgb_to_bn(imatge)
 	data=img.matrix(imatge_bn)
 	show(('L',data))
 	save(('L',data),"prova.jpeg")
 	print(data)
-
