@@ -12,13 +12,13 @@ def vtrim(img):
     for i in range(len(img[1])): 
         wp = 0
         for j in range(len(img[1][j])):
-            if img[1][i][j]==(0,0,0):
+            if img[1][i][j]==0:
                 ow = 0
                 oh = i-1
                 #Una vegada que es detecta un píxel negre, fa que la vegada que es detecti una línea completament blanca
                 #Es retalli el caracter
                 detectat = True
-            elif img[1][i][j]==(255,255,255):
+            elif img[1][i][j]==255:
                 #White pixel o wp, compta els píxels blancs en una línea
                 wp += 1
                 #Si tota la línea es de píxels blancs, vol dir que el caracter ja ha terminat, així que ho retallem
@@ -38,12 +38,12 @@ def htrim(img):
     VI=False
     VF=False
     while not VI and not VF:
-        if img[1][j][i] == (0,0,0):
+        if img[1][j][i] == 0:
             oh=0
             ow=i-1
             VI=True
 
-        if img[1][fj][fi] == (0,0,0):
+        if  img[1][fj][fi] == 0:
             h=len(img[1])
             w=i-1
             VF=True

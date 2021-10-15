@@ -13,25 +13,27 @@ def is_null(i):
 def white_rgb(w,h):
     return ("RGB",[[(255,255,255)]*w]*h)
 def white_grey(w,h):
-    return ("L",[[(255,255,255)]*w]*h)
+    return ("L",[[255]*w]*h)
 def white_bw(w,h):
-    return ("1",[[(255,255,255)]*w]*h)
+    return ("1",[[255]*w]*h)
 def format(i):
     return i[0]
 def matrix(i):
     return i[1]
-def i(matrix):
+def i(matrix,tipe=""):
     L=False
+    print(matrix)
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
-            if (0,0,0)==matrix[i][j] or (255,255,255)==matrix[i][j]:
-                bn=True
-            elif matrix[i][j][0]==matrix[i][j][1]==matrix[i][j][2]:
-                L=True
+            if not type(matrix[i][j])=="tuple":
+                if 0==matrix[i][j] or 255==matrix[i][j]:
+                    bn=True
+                else:
+                    L=True
             else:
                 return "RGB",matrix
             
-    if bn and L:
+    if L:
         return "L",matrix
     elif bn:
         return "1",matrix
