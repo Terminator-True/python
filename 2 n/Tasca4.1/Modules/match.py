@@ -17,7 +17,6 @@ def load_patterns(prefix):
         archiu[0]=prefix
         os.rename(path+"/"+content[i],path+"/"+"_".join(archiu))
     for i in range(len(content)-1):
-        print(content[i])
         if content[i].split("_")[1]=="gruixut":
             try:
                 if content[i].split("_")[2]>content[i+1].split("_")[2]:
@@ -25,6 +24,5 @@ def load_patterns(prefix):
             except:
                 pass
     return content
-
-def match(img,patlst):
-    
+print(load_patterns(prefix="patro"))
+#def match(img,patlst):
