@@ -4,7 +4,9 @@ Es el m`odul que s’encarrega de determinar a quina xifra representa una imatge
 
 from img import subimg
 import os
-from imgio import read_bn
+from imgio import read_bn,show,read_rgb
+from transf import scale,vtrim
+from discret import rgb_to_bn
 def load_patterns(prefix="patro"):
     def ordena(elem):
         return elem.split("_")[2][0]
@@ -32,6 +34,12 @@ def match(img,patlst):
     for z in range(len(patlst)):
         pi=0
         comparation=read_bn("2 n/Tasca4.1/patrons/"+patlst[z])
+        #show(comparation)
+        img=vtrim(img)
+        if len(comparation[1])<len(img[1]):
+            img=scale(img,len(comparation[1]))
+        else:
+            comparation=scale(comparation,len(img[1]))
         if len(comparation[1][0])>len(img[1][0]):
             columnes=len(comparation[1])
             files=len(comparation[1][0])
@@ -47,11 +55,12 @@ def match(img,patlst):
         for i in range(files):
             for k in range(i,i+files-alterFiles+1):
                 for j in range(columnes):
-                        if longer[j][k]==shorter[j][k]:
-                            pi=pi+1
+                    if longer[j][k]==shorter[j][k]:
+                        pi+=1
+
         similituds.append((patlst[z].split("_")[len(patlst[z].split("_"))-1][0],pi))
     similituds.sort(key=ordena,reverse=True)
     print(similituds)
     return similituds[0][0]
 
-print(match(read_bn("2 n\Tasca4.1\sortida\digit_2.jpeg"),load_patterns()))
+print(match(read_bn("2 n\Tasca4.1\sortida\digit_3.jpeg"),load_patterns()))

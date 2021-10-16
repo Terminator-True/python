@@ -31,7 +31,6 @@ def i(matrix,tipe=""):
                     L=True
             else:
                 return "RGB",matrix
-            
     if L:
         return "L",matrix
     elif bn:
@@ -42,4 +41,4 @@ def get_w(i):
 def get_h(i):
     return len(i[1])
 def subimg(i,ow,oh,w,h):
-    return [i[0],[i[1][j][k] for j in range(oh,h) for k in range(ow,w)]]
+    return [i[0],[[i[1][j][k] for k in range(ow,w)] for j in range(oh,h)]]

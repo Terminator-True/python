@@ -5,44 +5,47 @@ retallar,  ́es a dir per reduir una imatge fins que nom ́es cont ́e els d ́�
 """
 
 from PIL import Image as img
-
+import img 
 from img import subimg
+from imgio import read_bn,show
 
 def vtrim(img):
+    detectat=False
     for i in range(len(img[1])): 
         wp = 0
-        for j in range(len(img[1][j])):
-            if img[1][i][j]==0:
+        for j in range(len(img[1][i])):
+            if img[1][i][j]==0 and not detectat:
+                detectat = True
                 ow = 0
-                oh = i-1
+                oh = i
                 #Una vegada que es detecta un píxel negre, fa que la vegada que es detecti una línea completament blanca
                 #Es retalli el caracter
-                detectat = True
             elif img[1][i][j]==255:
                 #White pixel o wp, compta els píxels blancs en una línea
                 wp += 1
                 #Si tota la línea es de píxels blancs, vol dir que el caracter ja ha terminat, així que ho retallem
-                if wp == len(img[1][j]) and detectat:
-                    w=len(img[1][j])
-                    h=i
-                    return subimg(img,ow,oh,w,h)
-        if not detectat:
-            return None
-
+            if wp == len(img[1][j]) and detectat or i==len(img[1])-1 and detectat:
+                w=len(img[1][j])
+                h=i
+                return subimg(img,ow,oh,w,h)
+          
+       # if not detectat:
+        #   return None
 def htrim(img):
     """Fa una feina similar a la funci ́o vtrim() per`o en la direcci ́o horitzontal."""
     i=0
     j=0
-    fi=len(img[1][0][1])
-    fj=len(img[1])
+    fi=len(img[1][0])-1
+    fj=len(img[1])-1
     VI=False
     VF=False
     while not VI and not VF:
         if img[1][j][i] == 0:
+            print("hola")
             oh=0
             ow=i-1
             VI=True
-
+        
         if  img[1][fj][fi] == 0:
             h=len(img[1])
             w=i-1
@@ -74,4 +77,6 @@ def scale(src, h):
     dst = [ [sm[int(round(fh*h))][int(round(fh*w))] for w in range(dst_w)] 
             for h in range(dst_h)]             
 
-    return img.img(dst, '1')
+    return img.i(dst, '1')
+
+#show(vtrim(read_bn("2 n\Tasca4.1\sortida\digit_3.jpeg")))
