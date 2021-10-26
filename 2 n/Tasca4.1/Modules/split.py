@@ -7,6 +7,7 @@ from img import null, subimg
 from transf import vtrim,htrim
 
 def split_digit(img):
+    detectat=False
     for i in range(len(img[1])): 
         wp = 0
     for j in range(len(img[1][i])):
