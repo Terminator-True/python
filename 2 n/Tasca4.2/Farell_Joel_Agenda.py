@@ -23,7 +23,7 @@ L'aplicació principal ha de mostrar el següent menú:
 
 """
 
-class client(object):
+class client:
     def __init__(self):
         self.nom,self.cognoms,self.data_naixement,self.telefon = "","","","",""
         self.dades={}
@@ -44,32 +44,40 @@ class client(object):
     def mostra_telefon(self):  
         return self.telefon
     def afegeix_dades(self):
-        self.dades=dict(zip(["nom","cognoms","data_naixement","telefon"],[client.definir_nom(),client.definir_cognoms(),client.definir_data_naixement(),client.definir_telefon()]))
+        self.dades=dict(zip(["nom","cognoms","data_naixement","telefon"],[client.mostra_nom(),client.mostra_cognoms(),client.mostra_data_naixement(),client.mostra_telefon()]))
     def __str__(self) -> str:
         return " ,".join(['{0} : {1}'.format(key,self.dades[key]) for key in self.dades])
 
 def inputValors():
     n = input("Nom:")
     c = input("Cognoms:")
-    d = input("data_naixement:")
+    d = input("data naixement:")
     t = input("teléfon:")
     return n,c,d,t
 
-def ComprovaPrincipi():
+def ComprovaArchiu(Arxiu):
 	try:
-		with open ("Agenda.txt","r") as f:
-			pass
+		with open (Arxiu,"r") as f:
+                    return True
 	except FileNotFoundError:
-		with open ("Agenda.txt","w") as f:
-			pass
+                    return False
+
 
 def ProgramaPrincipal(User_input):
+    dades_client = client
 	if User_input==5:
 		return True
 	elif User_input==1:
 		valors=inputValors()
+        dades_client.definir_nom(valors[0])
+        dades_client.definir_cognoms(valors[1])
+        dades_client.definir_data_naixement(valors[2])
+        dades_client.definir_telefon(valors[3])
+        dades_client.afegeix_dades()
 	elif User_input==2:
-		pass
+		Arxiu = input("Ruta del archiu: ")
+        if ComprovaArchiu(Arxiu):
+            pass
 	elif User_input==3:
 		pass
 	elif User_input==4:
@@ -78,11 +86,9 @@ def ProgramaPrincipal(User_input):
 		print("Opció no existent")
 		return False
 if __name__=="__main__":
-
     acabat=False
     while acabat is not True:
         try:
-            ComprovaPrincipi()
             print("==================================================\n"+"\n░█████╗░░██████╗░███████╗███╗░░██╗██████╗░░█████╗░\n"+"██╔══██╗██╔════╝░██╔════╝████╗░██║██╔══██╗██╔══██╗\n"+"██╔══██║██║░░╚██╗██╔══╝░░██║╚████║██║░░██║██╔══██║\n"+"██║░░██║╚██████╔╝███████╗██║░╚███║██████╔╝██║░░██║\n"+"╚═╝░░╚═╝░╚═════╝░╚══════╝╚═╝░░╚══╝╚═════╝░╚═╝░░╚═╝\n"+"==================================================\n",
                 "1: Introdueix dades a l'agenda.\n",
                 "2: Importa agenda de l'arxiu desitjat.\n",
@@ -93,7 +99,6 @@ if __name__=="__main__":
             acabat=ProgramaPrincipal(User_input)
         except ValueError:
             print("Ha de ser un número")
-
         except KeyboardInterrupt:
             print("Adeu!")
             acabat=True
