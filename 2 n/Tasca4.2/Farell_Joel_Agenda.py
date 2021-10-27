@@ -44,7 +44,9 @@ class client:
     def mostra_telefon(self):  
         return self.telefon
     def afegeix_dades(self):
-        self.dades=dict(zip(["nom","cognoms","data_naixement","telefon"],[client.mostra_nom(),client.mostra_cognoms(),client.mostra_data_naixement(),client.mostra_telefon()]))
+        self.dades=dict(zip(["nom","cognoms","data_naixement","telefon"],[self.mostra_nom(self),self.mostra_cognoms(self),self.mostra_data_naixement(self),self.mostra_telefon(self)]))
+    def mostra_dades(self):
+        return " ,".join(['{0} : {1}'.format(key,self.dades[key]) for key in self.dades])
     def __str__(self) -> str:
         return " ,".join(['{0} : {1}'.format(key,self.dades[key]) for key in self.dades])
 
@@ -56,36 +58,41 @@ def inputValors():
     return n,c,d,t
 
 def ComprovaArchiu(Arxiu):
-	try:
-		with open (Arxiu,"r") as f:
-                    return True
-	except FileNotFoundError:
-                    return False
-
-
-def ProgramaPrincipal(User_input):
+    try:
+        with open (Arxiu,"r") as f:
+            print("Correcte")
+            return True
+    except FileNotFoundError:
+        return False
+def programaPrincipal(User_input,agenda):
     dades_client = client
-	if User_input==5:
-		return True
-	elif User_input==1:
-		valors=inputValors()
-        dades_client.definir_nom(valors[0])
-        dades_client.definir_cognoms(valors[1])
-        dades_client.definir_data_naixement(valors[2])
-        dades_client.definir_telefon(valors[3])
-        dades_client.afegeix_dades()
-	elif User_input==2:
-		Arxiu = input("Ruta del archiu: ")
+    if User_input==5:
+        return True
+    elif User_input==1:
+        valors=inputValors()
+        dades_client.definir_nom(dades_client,valors[0])
+        dades_client.definir_cognoms(dades_client,valors[1])
+        dades_client.definir_data_naixement(dades_client,valors[2])
+        dades_client.definir_telefon(dades_client,valors[3])
+        dades_client.afegeix_dades(dades_client)
+        print(dades_client)
+        agenda.append(dades_client.mostra_dades(dades_client)+"\n")
+    elif User_input==2:
+        Arxiu = input("Ruta del archiu: ")
         if ComprovaArchiu(Arxiu):
-            pass
-	elif User_input==3:
-		pass
-	elif User_input==4:
-		pass
-	else:
-		print("Opció no existent")
-		return False
+            with open (Arxiu,"r") as f:
+                agenda=f.readlines()
+    elif User_input==3:
+        print("\n","".join(agenda))
+    elif User_input==4:
+        Arxiu = input("Ruta del archiu: ")
+        with open (Arxiu,"w") as f:
+            f.writelines(agenda)
+    else:
+        print("Opció no existent")
+        return False
 if __name__=="__main__":
+    agenda = []
     acabat=False
     while acabat is not True:
         try:
@@ -96,7 +103,7 @@ if __name__=="__main__":
                 "4: Exporta l'agenda actual a l'arxiu desitjat.\n",
                 "5: Sortir\n")
             User_input=int(input("Opció a elegir: "))
-            acabat=ProgramaPrincipal(User_input)
+            acabat = programaPrincipal(User_input,agenda)
         except ValueError:
             print("Ha de ser un número")
         except KeyboardInterrupt:
