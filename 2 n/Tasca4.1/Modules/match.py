@@ -34,7 +34,6 @@ def match(img,patlst):
     for z in range(len(patlst)):
         pi=0
         comparation=read_bn("2 n/Tasca4.1/patrons/"+patlst[z])
-        #show(comparation)
         img=vtrim(img)
         if len(comparation[1])<len(img[1]):
             img=scale(img,len(comparation[1]))
@@ -55,12 +54,14 @@ def match(img,patlst):
         for i in range(files):
             for k in range(i,i+files-alterFiles+1):
                 for j in range(columnes):
-                    if longer[j][k]==shorter[j][k]:
-                        pi+=1
-
+                    try:
+                        if longer[j][k]==shorter[j][k]:
+                            pi+=1
+                    except:
+                        pass
         similituds.append((patlst[z].split("_")[len(patlst[z].split("_"))-1][0],pi))
     similituds.sort(key=ordena,reverse=True)
     print(similituds)
     return similituds[0][0]
 
-print(match(read_bn("2 n\Tasca4.1\sortida\digit_3.jpeg"),load_patterns()))
+print(match(read_bn("2 n\Tasca4.1\sortida\digit_2.jpeg"),load_patterns()))

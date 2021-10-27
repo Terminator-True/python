@@ -39,9 +39,9 @@ def htrim(img):
     fj=len(img[1])-1
     VI=False
     VF=False
-    while not VI and not VF:
+    acabat=False
+    while not acabat:
         if img[1][j][i] == 0:
-            print("hola")
             oh=0
             ow=i-1
             VI=True
@@ -55,6 +55,8 @@ def htrim(img):
         i+=1
         fi-=1
         fj-=1
+        if VI==False and VF==False:
+            acabat=True
     return subimg(img,ow,oh,w,h)
             
 def scale(src, h):
@@ -79,4 +81,4 @@ def scale(src, h):
 
     return img.i(dst, '1')
 
-#show(vtrim(read_bn("2 n\Tasca4.1\sortida\digit_3.jpeg")))
+#show(htrim(read_bn("2 n\Tasca4.1\sortida\digit_3.jpeg")))
