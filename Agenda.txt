@@ -1,2 +1,2 @@
-nom : Joel ,cognoms : Farell Cabrera ,data_naixement : 19/09/01 ,telefon : 627601619
-nom : Jordi ,cognoms : Oliveda ,data_naixement : 19/09/01 ,telefon : 627601617
+nom : Joel ,cognoms : Farell Cabrera ,data_naixement : 19/09/01 ,telefon : 627601618
+nom : Jordi ,cognoms : Oliveda ,data_naixement : 19/09/01 ,telefon : 543212332
