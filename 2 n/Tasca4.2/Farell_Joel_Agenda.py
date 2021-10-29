@@ -60,7 +60,6 @@ def inputValors():
 def ComprovaArchiu(Arxiu):
     try:
         with open (Arxiu,"r") as f:
-            print("Correcte")
             return True
     except FileNotFoundError:
         return False
