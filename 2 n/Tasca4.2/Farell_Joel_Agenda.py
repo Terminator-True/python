@@ -69,6 +69,8 @@ def programaPrincipal(User_input,agenda):
         if ComprovaArchiu(Arxiu):
             with open (Arxiu,"r") as f:
                 agenda.extend(f.readlines())
+        else:
+            print("No existeix l'arxiu")
     elif User_input==3:
         print("\n","".join(agenda))
     elif User_input==4:
