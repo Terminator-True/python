@@ -20,12 +20,12 @@ Com a mínim, heu d'implementar les següents classes: class Tauler(), class Vai
 
 class Casella():
     def __init__(self):
-        self.x,self.y=10,10
+        pass
 class Tauler():
     def __init__(self):
-        self.lletres,self.flota,self.taulell = 10,10,["A","B","C","D","E","F","G","H","I","J"],[5,4,4,3,3,3,2,2],[]
+        self.x,self.y,self.lletres,self.taulell = 10,10["A","B","C","D","E","F","G","H","I","J"],[] 
     def creaTauler(self):
-        self.taulell=[[[False,"~"] for j in range(10)] for i in range(10)]
+        self.taulell=[[[False,"~"] for j in range(self.x)] for i in range(self.y)]
     def imprimeixTauler(self,dev=False):
         s= " "
         print("  ",end="")  
@@ -41,3 +41,4 @@ class Tauler():
                 else:
                     print(self.taulell[j][k][1],end=s)   
             print() 
+    
