@@ -16,12 +16,12 @@ Opció en català, anglès i alguna altra llengua.
 Cal que puguis jugar diverses partides simultànies (diferents taulells). El jugador ha de poder anar canviant entre les diverses partides i reprendre on l'ha deixat.
 Cal fer-ho amb OOP i, per tant, primer cal definir els objectes i les estructures de dades i decidir com utilitzar-les en el codi principal. 
 Com a mínim, heu d'implementar les següents classes: class Tauler(), class Vaixell() i class Casella()."""
-
+import random
 class Vaixell():
     def __init__(self):
-        self.vaixells={"portaavions":4,"cuirassats":3,"fragates":2,"patrulleres":1}
-    def RetornaVaixell(self,vaixell):
-        return self.vaixells[vaixell]
+        self.Flota=[5,4,4,3,3,3,2,2]
+    def RetornaFlota(self):
+        return self.Flota
     def comprovaAreaH(m,f,c,mida):
         principi=c
         final=mida
@@ -70,6 +70,21 @@ class Vaixell():
                 if m[i][j][1]!="~":
                     return False
         return True
+    def colocaVaixellVertical(self,tauler,f,c,mida):
+        if self.comprovaAreaV(tauler,f,c,mida):
+            for i in range(f,f+mida):
+                tauler[i][c][1]="@"  
+        else:
+            return False
+        return True
+    def colocaVaixellHoritzontal(self,tauler,f,c,mida):
+        if self.comprovaAreaH(tauler,f,c,mida):
+            for i in range(c,c+mida):
+                tauler[f][i][1]="@"  
+        else:
+            return False
+        return True
+
 class Casella():
     def __init__(self):
         self.lletres=["A","B","C","D","E","F","G","H","I","J"]
@@ -83,7 +98,9 @@ class Casella():
                 return int(f),int(i)
 class Tauler():
     def __init__(self):
-        self.x,self.y,self.lletres,self.taulell = 10,10,["A","B","C","D","E","F","G","H","I","J"],[] 
+        self.x,self.y,self.lletres,self.taulell = 10,10,["A","B","C","D","E","F","G","H","I","J"],[]
+    def RetornaLletres(self):
+        return self.lletres 
     def creaTauler(self):
         self.taulell=[[Casella.RetornaCasellaBuida() for j in range(self.x)] for i in range(self.y)]
     def imprimeixTauler(self,dev=False):
@@ -101,7 +118,144 @@ class Tauler():
                 else:
                     print(self.taulell[j][k][1],end=s)   
             print() 
+    def colocaFlota(self,m,flota):
+        for el in flota:
+            VvsH=random.randint(0,1)
+            if VvsH==1 :
+                acabat=False
+                while not acabat:
+                    f=random.randint(0,9)
+                    c=random.choice(self.RetornaLletres())
+                    f,c=Casella.tradueixIndex(f,c)
+                    if Casella.aigua(m,f,c):
+                        acabat=Vaixell.colocaVaixellHoritzontal(m,f,c,el)
+            
+            elif VvsH==0:
+                acabat=False
+                while not acabat:
+                    f=random.randint(0,9)
+                    c=random.choice(self. RetornaLletres())
+                    f,c=Casella.tradueixIndex(f,c)
+                    if Casella.aigua(m,f,c):
+                        acabat=Vaixell.colocaVaixellVertical(m,f,c,el)
+class Partida():
+    def tret(self,idioma,missatges,m,f,c):
+        m[f][c][0]=True
+        if Casella.aigua(m,f,c):
+            imprimir=("~  "*6)+"\n"+"    "+missatges[idioma]["aigua"]+"    "+"\n"+("~  "*6)    
+        else:
+            if  m[f][c][1]=="X":
+                imprimir="Aquesta posició ja ha estat elegida"
+            elif m[f][c][1]=="#":
+                imprimir="Aquest vaixell ja ha estat enfonsat"
+            else:
+                m[f][c][1]="X"
+                if self.tocatIEnfonsat(m,f,c):
+                    imprimir=("=  "*6)+"\n"+"     ENFONSAT    "+"\n"+("=  "*6)
+                else:
+                    imprimir=("-  "*6)+"\n"+"     "+missatges[idioma]["tocat"]+"   "+"\n"+("-  "*6)
+        print(imprimir)
+    def tocatIEnfonsat(self,m,f,c):
+        tocats=0
+        if self.orientacio(m,f,c):
+            x,y=self.troba1acasellaH(m,f,c)
+            vaixell=self.trobaVaixellH(m,x,y)
+            for i in range (vaixell[1],(vaixell[1]+vaixell[2])):
+                if m[x][i][1]=="X":
+                    tocats+=1
+            if tocats==vaixell[2]:
+                for i in range (vaixell[1],(vaixell[1]+vaixell[2])):
+                    m[x][i][1]="#"
+                return True
+            else:
+                return False
+        else:
+            x,y=self.troba1acasellaV(m,f,c)
+            vaixell=self.trobaVaixellV(m,x,y)
+            for i in range (vaixell[0],(vaixell[0]+vaixell[2])):
+                if m[i][y][1]=="X":
+                    tocats+=1
+            if tocats==vaixell[2]:
+                for i in range (vaixell[0],(vaixell[0]+vaixell[2])):
+                    m[i][y][1]="#"
+                return True
+            else:
+                return False
+    def troba1acasellaH(m,x,y):
+        principi=y
+        final=-1
+        for i in range(principi,final,-1):
+            if m[x][i][1]=="~":
+                return x,i+1
+            elif i==0:
+                return x,i
+
+    def trobaVaixellH(m,x,y):
+        mida=0
+        principi=y
+        final=len(m[x])
+        for i in range(principi,final):
+            if m[x][i][1]=="@" or m[x][i][1]=="X":
+                mida+=1
+            elif m[x][i][1]=="~":
+                return x,y,mida
+            elif i==final:
+                mida+=1
+                return x,y,mida
+
+    def troba1acasellaV(m,x,y):
+        principi=x
+        final=-1
+        for i in range(principi,final,-1):
+            if m[i][y][1]=="~":
+                return i+1,y
+            elif i==0:
+                return i,y
+
+    def trobaVaixellV(m,x,y):
+        mida=0
+        principi=x
+        final=len(m[x])
+        for i in range(principi,final):
+            if m[i][y][1]=="@" or m[i][y][1]=="X" :
+                mida+=1
+            elif m[i][y][1]=="~":
+                return x,y,mida
+            elif i==final:
+                mida+=1
+                return x,y,mida
+    #Funció que retorna true si el vaixell és horitzontal o False si es vertical. Va comparant l'alrededor de
+    #la posició f,c pero saber-ho
+    def orientacio(m,f,c):
+        return c==0 and not Casella.aigua(m,f,c+1) or c==9 and not Casella.aigua(m,f,c-1) or (c!=0 and c!=9) and (not Casella.aigua(m,f,c-1) or not Casella.aigua(m,f,c+1))
     
+    def tocatIEnfonsat(self,m,f,c):
+        tocats=0
+        if self.orientacio(m,f,c):
+            x,y=self.troba1acasellaH(m,f,c)
+            vaixell=self.trobaVaixellH(m,x,y)
+            for i in range (vaixell[1],(vaixell[1]+vaixell[2])):
+                if m[x][i][1]=="X":
+                    tocats+=1
+            if tocats==vaixell[2]:
+                for i in range (vaixell[1],(vaixell[1]+vaixell[2])):
+                    m[x][i][1]="#"
+                return True
+            else:
+                return False
+        else:
+            x,y=self.troba1acasellaV(m,f,c)
+            vaixell=self.trobaVaixellV(m,x,y)
+            for i in range (vaixell[0],(vaixell[0]+vaixell[2])):
+                if m[i][y][1]=="X":
+                    tocats+=1
+            if tocats==vaixell[2]:
+                for i in range (vaixell[0],(vaixell[0]+vaixell[2])):
+                    m[i][y][1]="#"
+                return True
+            else:
+                return False
+
 if __name__=="__main__":
     missatges = {
         "ca": {
@@ -109,18 +263,21 @@ if __name__=="__main__":
             "introdueix fila": "Introdueix fila: ",
             "introdueix columna": "Introdueix columna: ",
             "tocat": "tocat! segueix així...",
+            "aigua":"Aigua",
         },
         "es": {
             "benvinguts": "Bienvenidos a la Batalla Naval!",
             "introdueix fila": "Introduce fila: ",
             "introdueix columna": "Introduce columna: ",
             "tocat": "Tocado! sigue así...",
+            "aigua":"Agua"
         },
         "en": {
             "benvinguts": "Welcome to Naval Wars!",
             "introdueix fila": "Insert row: ",
             "introdueix columna": "Insert column: ",
             "tocat": "Boum! Well done, keep it up...",
+            "aigua":"Miss"
         },
     }
     acabat=False
