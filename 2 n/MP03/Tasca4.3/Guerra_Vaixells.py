@@ -17,9 +17,9 @@ Cal que puguis jugar diverses partides simultànies (diferents taulells). El jug
 Cal fer-ho amb OOP i, per tant, primer cal definir els objectes i les estructures de dades i decidir com utilitzar-les en el codi principal. 
 Com a mínim, heu d'implementar les següents classes: class Tauler(), class Vaixell() i class Casella()."""
 import random
-class Vaixell():
-    def __init__(self):
-        self.Flota=[5,4,4,3,3,3,2,2]
+class Vaixell(object):
+    def __init__(self,flota):
+        self.Flota=flota
     def RetornaFlota(self):
         return self.Flota
     def comprovaAreaH(m,f,c,mida):
@@ -85,7 +85,7 @@ class Vaixell():
             return False
         return True
 
-class Casella():
+class Casella(object):
     def __init__(self):
         self.lletres=["A","B","C","D","E","F","G","H","I","J"]
     def RetornaCasellaBuida():
@@ -96,14 +96,14 @@ class Casella():
         for i in range(len(self.lletres)):
             if self.lletres[i]==c:
                 return int(f),int(i)
-class Tauler():
-    def __init__(self):
-        self.x,self.y,self.lletres,self.taulell = 10,10,["A","B","C","D","E","F","G","H","I","J"],[]
+class Tauler(object):
+    def __init__(self,x,y,lletres,taulell):
+        self.x,self.y,self.lletres,self.taulell = x,y,lletres,taulell
     def RetornaLletres(self):
         return self.lletres 
     def creaTauler(self):
         self.taulell=[[Casella.RetornaCasellaBuida() for j in range(self.x)] for i in range(self.y)]
-    def imprimeixTauler(self,dev=False):
+    def imprimeixTauler(self,dev=True):
         s= " "
         print("  ",end="")  
         for i in range(len(self.taulell)):
@@ -138,23 +138,23 @@ class Tauler():
                     f,c=Casella.tradueixIndex(f,c)
                     if Casella.aigua(m,f,c):
                         acabat=Vaixell.colocaVaixellVertical(m,f,c,el)
-class Partida():
+class Partida(object):
     def tret(self,idioma,missatges,m,f,c):
         m[f][c][0]=True
         if Casella.aigua(m,f,c):
-            imprimir=("~  "*6)+"\n"+"    "+missatges[idioma]["aigua"]+"    "+"\n"+("~  "*6)    
+            imprimir=("~  "*6)+"\n"+"     "+missatges[idioma]["aigua"]+"    "+"\n"+("~  "*6)    
         else:
             if  m[f][c][1]=="X":
-                imprimir="Aquesta posició ja ha estat elegida"
+                imprimir=missatges[idioma]["posuse"]
             elif m[f][c][1]=="#":
-                imprimir="Aquest vaixell ja ha estat enfonsat"
+                imprimir=missatges[idioma]["shipuse"]
             else:
                 m[f][c][1]="X"
                 if self.tocatIEnfonsat(m,f,c):
-                    imprimir=("=  "*6)+"\n"+"     ENFONSAT    "+"\n"+("=  "*6)
+                    imprimir=("=  "*6)+"\n"+"     "+missatges[idioma]["enfonsat"]+"     "+"\n"+("=  "*6)
                 else:
                     imprimir=("-  "*6)+"\n"+"     "+missatges[idioma]["tocat"]+"   "+"\n"+("-  "*6)
-        print(imprimir)
+        print(imprimir) 
     def tocatIEnfonsat(self,m,f,c):
         tocats=0
         if self.orientacio(m,f,c):
@@ -224,6 +224,13 @@ class Partida():
             elif i==final:
                 mida+=1
                 return x,y,mida
+    def partidaAcabada(m):
+        Quantitat=0
+        for fila in m:
+            for el in fila:
+                if el[1]=="#":
+                    Quantitat+=1
+        return Quantitat==sum(Vaixell.RetornaFlota())
     #Funció que retorna true si el vaixell és horitzontal o False si es vertical. Va comparant l'alrededor de
     #la posició f,c pero saber-ho
     def orientacio(m,f,c):
@@ -263,23 +270,40 @@ if __name__=="__main__":
             "introdueix fila": "Introdueix fila: ",
             "introdueix columna": "Introdueix columna: ",
             "tocat": "tocat! segueix així...",
-            "aigua":"Aigua",
+            "aigua": "aigua",
+            "enfonsat": "enfonsat",
+            "posuse": "Aquesta posició ja ha estat elegida",
+            "shipuse": "Aquest vaixell ja ha estat enfonsat",
         },
         "es": {
             "benvinguts": "Bienvenidos a la Batalla Naval!",
             "introdueix fila": "Introduce fila: ",
             "introdueix columna": "Introduce columna: ",
             "tocat": "Tocado! sigue así...",
-            "aigua":"Agua"
+            "aigua": "agua",
+            "enfonsat": "hundido",
+            "pos": "Esta posición ya ha sido elegida",
+            "shipuse": "Este barco ya ha sido hundido",
         },
         "en": {
             "benvinguts": "Welcome to Naval Wars!",
             "introdueix fila": "Insert row: ",
             "introdueix columna": "Insert column: ",
             "tocat": "Boum! Well done, keep it up...",
-            "aigua":"Miss"
+            "aigua": "miss",
+            "enfonsat": "sunk",
+            "pos": "This position has already been chosen",
+            "shipuse": "This ship has already been sunk",
         },
     }
     acabat=False
-    while not acabat:
-        pass
+    print(missatges[input("Language: (ca,es,en): ")]["benvinguts"])
+    Taulell = Tauler(10,10,["A","B","C","D","E","F","G","H","I","J"],[])
+    flota = Vaixell([5,4,4,3,3,3,2,2])
+    taulell1=Taulell.creaTauler()
+    Taulell.imprimeixTauler()
+    Taulell.colocaFlota(taulell1,flota.RetornaFlota())
+    Taulell.imprimeixTauler()
+
+    #while not acabat:
+
