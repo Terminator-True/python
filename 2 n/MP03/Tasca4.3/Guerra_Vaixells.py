@@ -17,131 +17,152 @@ Cal que puguis jugar diverses partides simultànies (diferents taulells). El jug
 Cal fer-ho amb OOP i, per tant, primer cal definir els objectes i les estructures de dades i decidir com utilitzar-les en el codi principal. 
 Com a mínim, heu d'implementar les següents classes: class Tauler(), class Vaixell() i class Casella()."""
 import random
-class Vaixell(object):
-    def __init__(self,flota):
+
+#OBJECTES------------------------------------------------------
+class Tauler:
+    def __init__(self,x=10,y=10,lletres=["A","B","C","D","E","F","G","H","I","J"],m=[]):
+        self.x,self.y,self.lletres,self.m = x,y,lletres,m
+    def GetTaulell(self):
+        return self.m
+    def GetX(self):
+        return self.x
+    def GetY(self):
+        return self.Y
+    def SetTaulell(self,m):
+        self.m=m
+
+class Vaixell(Tauler):
+    def __init__(self,m,flota=[5,4,4,3,3,3,2,2]):
+        Tauler.__init__(self,m)
         self.Flota=flota
-    def RetornaFlota(self):
+    def GetFlota(self):
         return self.Flota
-    def comprovaAreaH(m,f,c,mida):
-        principi=c
-        final=mida
-        voltes=3
-        if c+mida>10:
-            return False
-        if c+mida<=9:
-            final=mida+1
-        else:
-            final=mida
-        if f!=0:
-            f-=1
-        else:
-            voltes=2
-        if c!=0:
-            principi=c-1
-        for i in range(voltes):
-            for j in range(principi,c+final):
-                if m[f][j][1]!="~":
-                    return False
-            f+=1
-            if f>=10:
-                return True
-        return True
-    def comprovaAreaV(m,f,c,mida):
-        if f+mida>9:
-            return False
-        if c!=0:
-            voltesP=c-1
-        else:
-            voltesP=c
-        if voltesP+2<=9:
-            voltesF=c+2
-        else:
-            voltesF=c+1
-        if f!=0:
-            principi=f-1
-        else:
-            principi=f
-        if f+mida<=9:
-            final=f+mida+1
-        else:
-            final=f+mida
-        for i in range(principi,final):
-            for j in range(voltesP,voltesF):
-                if m[i][j][1]!="~":
-                    return False
-        return True
-    def colocaVaixellVertical(self,tauler,f,c,mida):
-        if self.comprovaAreaV(tauler,f,c,mida):
-            for i in range(f,f+mida):
-                tauler[i][c][1]="@"  
-        else:
-            return False
-        return True
-    def colocaVaixellHoritzontal(self,tauler,f,c,mida):
-        if self.comprovaAreaH(tauler,f,c,mida):
-            for i in range(c,c+mida):
-                tauler[f][i][1]="@"  
-        else:
-            return False
-        return True
 
-class Casella(object):
-    def __init__(self):
-        self.lletres=["A","B","C","D","E","F","G","H","I","J"]
-    def RetornaCasellaBuida():
+class Casella(Tauler):
+    def __init__(self,lletres):
+        Tauler.__init__(self,lletres)
+    def GetCasellaBuida():
         return [False,"~"]
-    def aigua(m,f,c):
-        return m[f][c][1]=="~"  
-    def tradueixIndex(self,f,c):
-        for i in range(len(self.lletres)):
-            if self.lletres[i]==c:
-                return int(f),int(i)
-class Tauler(object):
-    def __init__(self,x,y,lletres,taulell):
-        self.x,self.y,self.lletres,self.taulell = x,y,lletres,taulell
-    def RetornaLletres(self):
-        return self.lletres 
-    def creaTauler(self):
-        self.taulell=[[Casella.RetornaCasellaBuida() for j in range(self.x)] for i in range(self.y)]
-    def imprimeixTauler(self,dev=True):
-        s= " "
-        print("  ",end="")  
-        for i in range(len(self.taulell)):
-            print(self.lletres[i],end=s)
-        print()
+    def Getlletres(self):
+        return self.lletres
 
-        for j in range(len(self.taulell)):
-            print(j,end=s)
-            for k in range(len(self.taulell[0])):
-                if self.taulell[j][k][0] == False and not dev:
-                    print("·",end=s)
-                else:
-                    print(self.taulell[j][k][1],end=s)   
-            print() 
-    def colocaFlota(self,m,flota):
-        for el in flota:
-            VvsH=random.randint(0,1)
-            if VvsH==1 :
-                acabat=False
-                while not acabat:
-                    f=random.randint(0,9)
-                    c=random.choice(self.RetornaLletres())
-                    f,c=Casella.tradueixIndex(f,c)
-                    if Casella.aigua(m,f,c):
-                        acabat=Vaixell.colocaVaixellHoritzontal(m,f,c,el)
-            
-            elif VvsH==0:
-                acabat=False
-                while not acabat:
-                    f=random.randint(0,9)
-                    c=random.choice(self. RetornaLletres())
-                    f,c=Casella.tradueixIndex(f,c)
-                    if Casella.aigua(m,f,c):
-                        acabat=Vaixell.colocaVaixellVertical(m,f,c,el)
-class Partida(object):
-    def tret(self,idioma,missatges,m,f,c):
+#FUNCIONS-------------------------------------------------------
+def creaTauler(x,y):
+    return [[[False,"~"] for j in range(y)] for i in range(x)]
+def imprimeixTauler(lletres,m,dev=True):
+    s= " "
+    print("  ",end="")  
+    for i in range(len(m)):
+        print(lletres[i],end=s)
+    print()
+
+    for j in range(len(m)):
+        print(j,end=s)
+        for k in range(len(m[0])):
+            if m[j][k][0] == False and not dev:
+                print("·",end=s)
+            else:
+                print(m[j][k][1],end=s)   
+        print() 
+def tradueixIndex(f,c,lletres):
+    for i in range(len(lletres)):
+        if lletres[i]==c:
+            return int(f),int(i)
+
+def aigua(m,f,c):
+        return m[f][c][1]=="~"
+
+def comprovaAreaH(m,f,c,mida):
+    principi=c
+    final=mida
+    voltes=3
+    if c+mida>10:
+        return False
+    if c+mida<=9:
+        final=mida+1
+    else:
+        final=mida
+    if f!=0:
+        f-=1
+    else:
+        voltes=2
+    if c!=0:
+        principi=c-1
+    for i in range(voltes):
+        for j in range(principi,c+final):
+            if m[f][j][1]!="~":
+                return False
+        f+=1
+        if f>=10:
+            return True
+    return True
+
+def colocaVaixellHoritzontal(tauler,f,c,mida):
+    if comprovaAreaH(tauler,f,c,mida):
+      for i in range(c,c+mida):
+          tauler[f][i][1]="@"  
+    else:
+        return False
+    return True
+
+def comprovaAreaV(m,f,c,mida):
+    if f+mida>9:
+        return False
+    if c!=0:
+        voltesP=c-1
+    else:
+        voltesP=c
+    if voltesP+2<=9:
+        voltesF=c+2
+    else:
+        voltesF=c+1
+    if f!=0:
+        principi=f-1
+    else:
+        principi=f
+    if f+mida<=9:
+        final=f+mida+1
+    else:
+        final=f+mida
+    for i in range(principi,final):
+        for j in range(voltesP,voltesF):
+            if m[i][j][1]!="~":
+                return False
+    return True
+
+def colocaVaixellVertical(tauler,f,c,mida):
+    if comprovaAreaV(tauler,f,c,mida):
+      for i in range(f,f+mida):
+          tauler[i][c][1]="@"  
+    else:
+        return False
+    return True
+
+def colocaFlota(m,flota,lletres):
+    for el in flota:
+        VvsH=random.randint(0,1)
+        if VvsH==1 :
+            acabat=False
+            while not acabat:
+                f=random.randint(0,9)
+                c=random.choice(lletres)
+                f,c=tradueixIndex(f,c)
+                if aigua(m,f,c):
+                    acabat=colocaVaixellHoritzontal(m,f,c,el)
+        
+        elif VvsH==0:
+            acabat=False
+            while not acabat:
+                f=random.randint(0,9)
+                c=random.choice(lletres)
+                f,c=tradueixIndex(f,c)
+                if aigua(m,f,c):
+                    acabat=colocaVaixellVertical(m,f,c,el)
+    return m
+
+def tret(idioma,missatges,m,f,c):
         m[f][c][0]=True
-        if Casella.aigua(m,f,c):
+        if aigua(m,f,c):
             imprimir=("~  "*6)+"\n"+"     "+missatges[idioma]["aigua"]+"    "+"\n"+("~  "*6)    
         else:
             if  m[f][c][1]=="X":
@@ -150,119 +171,110 @@ class Partida(object):
                 imprimir=missatges[idioma]["shipuse"]
             else:
                 m[f][c][1]="X"
-                if self.tocatIEnfonsat(m,f,c):
+                if tocatIEnfonsat(m,f,c):
                     imprimir=("=  "*6)+"\n"+"     "+missatges[idioma]["enfonsat"]+"     "+"\n"+("=  "*6)
                 else:
                     imprimir=("-  "*6)+"\n"+"     "+missatges[idioma]["tocat"]+"   "+"\n"+("-  "*6)
         print(imprimir) 
-    def tocatIEnfonsat(self,m,f,c):
-        tocats=0
-        if self.orientacio(m,f,c):
-            x,y=self.troba1acasellaH(m,f,c)
-            vaixell=self.trobaVaixellH(m,x,y)
+
+def troba1acasellaH(m,x,y):
+    principi=y
+    final=-1
+    for i in range(principi,final,-1):
+        if m[x][i][1]=="~":
+            return x,i+1
+        elif i==0:
+            return x,i
+
+def trobaVaixellH(m,x,y):
+    mida=0
+    principi=y
+    final=len(m[x])
+    for i in range(principi,final):
+        if m[x][i][1]=="@" or m[x][i][1]=="X":
+            mida+=1
+        elif m[x][i][1]=="~":
+            return x,y,mida
+        elif i==final:
+            mida+=1
+            return x,y,mida
+
+def troba1acasellaV(m,x,y):
+    principi=x
+    final=-1
+    for i in range(principi,final,-1):
+        if m[i][y][1]=="~":
+            return i+1,y
+        elif i==0:
+            return i,y
+
+def trobaVaixellV(m,x,y):
+    mida=0
+    principi=x
+    final=len(m[x])
+    for i in range(principi,final):
+        if m[i][y][1]=="@" or m[i][y][1]=="X" :
+            mida+=1
+        elif m[i][y][1]=="~":
+            return x,y,mida
+        elif i==final:
+            mida+=1
+            return x,y,mida
+#Funció que retorna true si el vaixell és horitzontal o False si es vertical. Va comparant l'alrededor de
+#la posició f,c pero saber-ho
+def orientacio(m,f,c):
+    return c==0 and not aigua(m,f,c+1) or c==9 and not aigua(m,f,c-1) or (c!=0 and c!=9) and (not aigua(m,f,c-1) or not aigua(m,f,c+1))
+        
+def tocatIEnfonsat(m,f,c):
+    tocats=0
+    if orientacio(m,f,c):
+        x,y=troba1acasellaH(m,f,c)
+        vaixell=trobaVaixellH(m,x,y)
+        for i in range (vaixell[1],(vaixell[1]+vaixell[2])):
+            if m[x][i][1]=="X":
+                tocats+=1
+        if tocats==vaixell[2]:
             for i in range (vaixell[1],(vaixell[1]+vaixell[2])):
-                if m[x][i][1]=="X":
-                    tocats+=1
-            if tocats==vaixell[2]:
-                for i in range (vaixell[1],(vaixell[1]+vaixell[2])):
-                    m[x][i][1]="#"
-                return True
-            else:
-                return False
+                m[x][i][1]="#"
+            return True
         else:
-            x,y=self.troba1acasellaV(m,f,c)
-            vaixell=self.trobaVaixellV(m,x,y)
+            return False
+    else:
+        x,y=troba1acasellaV(m,f,c)
+        vaixell=trobaVaixellV(m,x,y)
+        for i in range (vaixell[0],(vaixell[0]+vaixell[2])):
+            if m[i][y][1]=="X":
+                tocats+=1
+        if tocats==vaixell[2]:
             for i in range (vaixell[0],(vaixell[0]+vaixell[2])):
-                if m[i][y][1]=="X":
-                    tocats+=1
-            if tocats==vaixell[2]:
-                for i in range (vaixell[0],(vaixell[0]+vaixell[2])):
-                    m[i][y][1]="#"
-                return True
-            else:
-                return False
-    def troba1acasellaH(m,x,y):
-        principi=y
-        final=-1
-        for i in range(principi,final,-1):
-            if m[x][i][1]=="~":
-                return x,i+1
-            elif i==0:
-                return x,i
-
-    def trobaVaixellH(m,x,y):
-        mida=0
-        principi=y
-        final=len(m[x])
-        for i in range(principi,final):
-            if m[x][i][1]=="@" or m[x][i][1]=="X":
-                mida+=1
-            elif m[x][i][1]=="~":
-                return x,y,mida
-            elif i==final:
-                mida+=1
-                return x,y,mida
-
-    def troba1acasellaV(m,x,y):
-        principi=x
-        final=-1
-        for i in range(principi,final,-1):
-            if m[i][y][1]=="~":
-                return i+1,y
-            elif i==0:
-                return i,y
-
-    def trobaVaixellV(m,x,y):
-        mida=0
-        principi=x
-        final=len(m[x])
-        for i in range(principi,final):
-            if m[i][y][1]=="@" or m[i][y][1]=="X" :
-                mida+=1
-            elif m[i][y][1]=="~":
-                return x,y,mida
-            elif i==final:
-                mida+=1
-                return x,y,mida
-    def partidaAcabada(m):
-        Quantitat=0
-        for fila in m:
-            for el in fila:
-                if el[1]=="#":
-                    Quantitat+=1
-        return Quantitat==sum(Vaixell.RetornaFlota())
-    #Funció que retorna true si el vaixell és horitzontal o False si es vertical. Va comparant l'alrededor de
-    #la posició f,c pero saber-ho
-    def orientacio(m,f,c):
-        return c==0 and not Casella.aigua(m,f,c+1) or c==9 and not Casella.aigua(m,f,c-1) or (c!=0 and c!=9) and (not Casella.aigua(m,f,c-1) or not Casella.aigua(m,f,c+1))
-    
-    def tocatIEnfonsat(self,m,f,c):
-        tocats=0
-        if self.orientacio(m,f,c):
-            x,y=self.troba1acasellaH(m,f,c)
-            vaixell=self.trobaVaixellH(m,x,y)
-            for i in range (vaixell[1],(vaixell[1]+vaixell[2])):
-                if m[x][i][1]=="X":
-                    tocats+=1
-            if tocats==vaixell[2]:
-                for i in range (vaixell[1],(vaixell[1]+vaixell[2])):
-                    m[x][i][1]="#"
-                return True
-            else:
-                return False
+                m[i][y][1]="#"
+            return True
         else:
-            x,y=self.troba1acasellaV(m,f,c)
-            vaixell=self.trobaVaixellV(m,x,y)
-            for i in range (vaixell[0],(vaixell[0]+vaixell[2])):
-                if m[i][y][1]=="X":
-                    tocats+=1
-            if tocats==vaixell[2]:
-                for i in range (vaixell[0],(vaixell[0]+vaixell[2])):
-                    m[i][y][1]="#"
-                return True
-            else:
-                return False
+            return False
+#Va sumant els # dels vaixells enfonsats i quan la suma d'aquests és igual
+#a la suma de totes les mides de la flota sencera, retorna True
+def partidaAcabada(flota,m):
+    Quantitat=0
+    for fila in m:
+        for el in fila:
+            if el[1]=="#":
+                Quantitat+=1
+    return Quantitat==sum(flota)
 
+def partida(m):
+    acabat=False
+    while partidaAcabada(m) is not True or acabat is not True:
+        imprimeixTauler(m)
+        print("Coordenades del tret")
+        f=input("Fila: ")
+        c=input("Columna: ")
+        if f == "quit" or c == "quit":
+            break
+        f,c=tradueixIndex(f,c)
+        tret(m,f,c)
+    imprimeixTauler(m)
+    imprimir=("$  "*6)+"\n"+"\tGOOD ENDING \n YOU WON    "+"\n"+("$  "*6)    
+    print(imprimir)
 if __name__=="__main__":
     missatges = {
         "ca": {
@@ -274,6 +286,9 @@ if __name__=="__main__":
             "enfonsat": "enfonsat",
             "posuse": "Aquesta posició ja ha estat elegida",
             "shipuse": "Aquest vaixell ja ha estat enfonsat",
+            "menu":"0: Crear nou tauler \n 1: Carregar tauler \n 2: Sortir ",
+            "avis" : "Per sortir, escriure quit",
+            "escull" : "Escull tauler"
         },
         "es": {
             "benvinguts": "Bienvenidos a la Batalla Naval!",
@@ -287,7 +302,7 @@ if __name__=="__main__":
         },
         "en": {
             "benvinguts": "Welcome to Naval Wars!",
-            "introdueix fila": "Insert row: ",
+            "intro  dueix fila": "Insert row: ",
             "introdueix columna": "Insert column: ",
             "tocat": "Boum! Well done, keep it up...",
             "aigua": "miss",
@@ -296,14 +311,28 @@ if __name__=="__main__":
             "shipuse": "This ship has already been sunk",
         },
     }
-    acabat=False
-    print(missatges[input("Language: (ca,es,en): ")]["benvinguts"])
-    Taulell = Tauler(10,10,["A","B","C","D","E","F","G","H","I","J"],[])
-    flota = Vaixell([5,4,4,3,3,3,2,2])
-    taulell1=Taulell.creaTauler()
-    Taulell.imprimeixTauler()
-    Taulell.colocaFlota(taulell1,flota.RetornaFlota())
-    Taulell.imprimeixTauler()
+    partides = []
+    acabat = False
+    idioma=input("Language: (ca,es,en): ")
+    print(missatges[idioma]["benvinguts"])
+    while acabat is not True:
+        opcio = int(input(missatges[idioma]["menu"]))
+        if opcio == 0:
+            partides.append(Tauler)
+            tauler=partides[len(partides)-1]
+            tauler.SetTaulell(colocaFlota(tauler.GetTaulell(Tauler),Vaixell.GetFlota(),Casella.Getlletres()))
+            partida(tauler.GetTaulell())
+        elif opcio == 1:
+            if partides:
+                for el in partides:
+                    imprimeixTauler(Casella.Getlletres(),el,dev=False)
+                tauler = partides[int(input(missatges[idioma]["escull"]))]
+                partida(tauler.GetTaulell())
 
-    #while not acabat:
+            else:
+                print("No hi ha taulers creats")
+        elif opcio == 2:
+            acabat=True
+        
+
 
