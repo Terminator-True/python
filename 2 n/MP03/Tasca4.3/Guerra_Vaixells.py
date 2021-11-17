@@ -19,16 +19,19 @@ Com a mínim, heu d'implementar les següents classes: class Tauler(), class Vai
 import random
 
 #OBJECTES------------------------------------------------------
-class Tauler:
-    def __init__(self,x=10,y=10,lletres=["A","B","C","D","E","F","G","H","I","J"],m=[]):
-        self.x,self.y,self.lletres,self.m = x,y,lletres,m
-    def GetTaulell(self):
+class Tauler(object):
+    def __init__(self):
+        self.x=10
+        self.y=10
+        self.lletres=["A","B","C","D","E","F","G","H","I","J"]
+        self.m=[]
+    def GetTauler(self):
         return self.m
     def GetX(self):
         return self.x
     def GetY(self):
         return self.Y
-    def SetTaulell(self,m):
+    def SetTauler(self,m):
         self.m=m
 
 class Vaixell(Tauler):
@@ -286,7 +289,7 @@ if __name__=="__main__":
             "enfonsat": "enfonsat",
             "posuse": "Aquesta posició ja ha estat elegida",
             "shipuse": "Aquest vaixell ja ha estat enfonsat",
-            "menu":"0: Crear nou tauler \n 1: Carregar tauler \n 2: Sortir ",
+            "menu":" 0: Crear nou tauler \n 1: Carregar tauler \n 2: Sortir \n",
             "avis" : "Per sortir, escriure quit",
             "escull" : "Escull tauler"
         },
@@ -320,14 +323,14 @@ if __name__=="__main__":
         if opcio == 0:
             partides.append(Tauler)
             tauler=partides[len(partides)-1]
-            tauler.SetTaulell(colocaFlota(tauler.GetTaulell(Tauler),Vaixell.GetFlota(),Casella.Getlletres()))
-            partida(tauler.GetTaulell())
+            tauler.SetTauler(colocaFlota(tauler.GetTauler(tauler),Vaixell.GetFlota(),Casella.Getlletres()))
+            partida(tauler.GetTauler())
         elif opcio == 1:
             if partides:
                 for el in partides:
                     imprimeixTauler(Casella.Getlletres(),el,dev=False)
                 tauler = partides[int(input(missatges[idioma]["escull"]))]
-                partida(tauler.GetTaulell())
+                partida(tauler.GetTauler())
 
             else:
                 print("No hi ha taulers creats")
