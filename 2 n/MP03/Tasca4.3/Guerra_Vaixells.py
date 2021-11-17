@@ -20,30 +20,30 @@ import random
 
 #OBJECTES------------------------------------------------------
 class Tauler(object):
-    def __init__(self):
-        self.x=10
-        self.y=10
-        self.lletres=["A","B","C","D","E","F","G","H","I","J"]
-        self.m=[]
+    def __init__(self,x,y,lletres,m):
+        self.x=x
+        self.y=y
+        self.lletres=lletres
+        self.m=m
     def GetTauler(self):
         return self.m
     def GetX(self):
         return self.x
     def GetY(self):
-        return self.Y
+        return self.y
     def SetTauler(self,m):
         self.m=m
 
 class Vaixell(Tauler):
-    def __init__(self,m,flota=[5,4,4,3,3,3,2,2]):
-        Tauler.__init__(self,m)
-        self.Flota=flota
+    def __init__(self,flota,m):
+        super().__init__(self,m)
+        self.flota=flota
     def GetFlota(self):
-        return self.Flota
+        return self.flota
 
 class Casella(Tauler):
     def __init__(self,lletres):
-        Tauler.__init__(self,lletres)
+        super().__init__(self,lletres)
     def GetCasellaBuida():
         return [False,"~"]
     def Getlletres(self):
@@ -316,14 +316,16 @@ if __name__=="__main__":
     }
     partides = []
     acabat = False
+    vaixell = Vaixell([5,4,4,3,3,3,2,2],[])
+    casella = Casella
     idioma=input("Language: (ca,es,en): ")
     print(missatges[idioma]["benvinguts"])
     while acabat is not True:
         opcio = int(input(missatges[idioma]["menu"]))
         if opcio == 0:
-            partides.append(Tauler)
+            partides.append(Tauler(10,10,["A","B","C","D","E","F","G","H","I","J"],[]))
             tauler=partides[len(partides)-1]
-            tauler.SetTauler(colocaFlota(tauler.GetTauler(tauler),Vaixell.GetFlota(),Casella.Getlletres()))
+            tauler.SetTauler(colocaFlota(tauler.GetTauler(),vaixell.GetFlota(),casella.Getlletres()))
             partida(tauler.GetTauler())
         elif opcio == 1:
             if partides:
