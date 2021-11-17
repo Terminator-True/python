@@ -19,12 +19,21 @@ Com a mínim, heu d'implementar les següents classes: class Tauler(), class Vai
 import random
 
 #OBJECTES------------------------------------------------------
+<<<<<<< HEAD
 class Tauler:
     def __init__(self,x,y,m):
         self.x=x
         self.y=y
         self.m=m
 
+=======
+class Tauler(object):
+    def __init__(self,x,y,lletres,m):
+        self.x=x
+        self.y=y
+        self.lletres=lletres
+        self.m=m
+>>>>>>> 5e78533574ef6a484a400190f38b92abe95a05f1
     def GetTauler(self):
         return self.m
     def GetX(self):
@@ -34,15 +43,25 @@ class Tauler:
     def SetTauler(self,m):
         self.m=m
 
+<<<<<<< HEAD
 class Vaixell:
     def __init__(self,flota):
+=======
+class Vaixell(Tauler):
+    def __init__(self,flota,m):
+        super().__init__(self,m)
+>>>>>>> 5e78533574ef6a484a400190f38b92abe95a05f1
         self.flota=flota
     def GetFlota(self):
         return self.flota
 
 class Casella:
     def __init__(self,lletres):
+<<<<<<< HEAD
         self.lletres=lletres
+=======
+        super().__init__(self,lletres)
+>>>>>>> 5e78533574ef6a484a400190f38b92abe95a05f1
     def GetCasellaBuida():
         return [False,"~"]
     def Getlletres(self):
@@ -321,23 +340,39 @@ if __name__=="__main__":
     }
     partides = []
     acabat = False
+<<<<<<< HEAD
     vaixell = Vaixell([5,4,4,3,3,3,2,2])
+=======
+    vaixell = Vaixell([5,4,4,3,3,3,2,2],[])
+    casella = Casella
+>>>>>>> 5e78533574ef6a484a400190f38b92abe95a05f1
     idioma=input("Language: (ca,es,en): ")
     print(missatges[idioma]["benvinguts"])
     while acabat is not True:
         opcio = int(input(missatges[idioma]["menu"]))
         if opcio == 0:
+<<<<<<< HEAD
             partides.append(Tauler(10,10,[]))
             tauler=partides[len(partides)-1]
             tauler.SetTauler(creaTauler(tauler.GetX(),tauler.GetY()))
             tauler.SetTauler(colocaFlota(tauler.GetTauler(),vaixell.GetFlota(),casella.Getlletres()))
             partida(vaixell.flota,tauler.GetTauler())
+=======
+            partides.append(Tauler(10,10,["A","B","C","D","E","F","G","H","I","J"],[]))
+            tauler=partides[len(partides)-1]
+            tauler.SetTauler(colocaFlota(tauler.GetTauler(),vaixell.GetFlota(),casella.Getlletres()))
+            partida(tauler.GetTauler())
+>>>>>>> 5e78533574ef6a484a400190f38b92abe95a05f1
         elif opcio == 1:
             if partides:
                 for el in partides:
                     imprimeixTauler(casella.Getlletres(),el.GetTauler(),dev=False)
                 tauler = partides[int(input(missatges[idioma]["escull"]))]
+<<<<<<< HEAD
                 partida(vaixell.flota,tauler.GetTauler())
+=======
+                partida(tauler.GetTauler())
+>>>>>>> 5e78533574ef6a484a400190f38b92abe95a05f1
 
             else:
                 print("No hi ha taulers creats")
