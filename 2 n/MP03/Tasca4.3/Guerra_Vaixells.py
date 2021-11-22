@@ -9,6 +9,7 @@ Hi col·locarem aleatòriament els següents vaixells ( no es poden tocar entre 
 2 cuirassats de 3 caselles.
 3 fragates de 2 caselles.
 4 patrulleres d'1 casella.
+[4,3,3,2,2,2,1,1,1,1]
 A cada pas es mostrarà la matriu indicant les cel·les ocultes, tocades i buides.
 L'usuari introduirà fila i columna.
 Quan s'enfonsin tots els vaixells la partida s'acaba i sortim del programa (amb un missatge de congratulations!).
@@ -264,8 +265,7 @@ def partidaAcabada(flota,m):
     return Quantitat==sum(flota)
 
 def partida(missatges,idioma,flota,m):
-    acabat=False
-    while partidaAcabada(flota,m) is not True or acabat is not True:
+    while partidaAcabada(flota,m) is not True:
         imprimeixTauler(casella.Getlletres(),m)
         print("Coordenades del tret")
         f=input("Fila: ")
@@ -322,7 +322,7 @@ if __name__=="__main__":
         }
         partides = []
         acabat = False
-        vaixell = Vaixell([5,4,4,3,3,3,2,2])
+        vaixell = Vaixell([4,3,3,2,2,2,1,1,1,1])
         idioma=input("Language: (ca,es,en): ")
         print(missatges[idioma]["benvinguts"])
         while acabat is not True:
@@ -336,12 +336,12 @@ if __name__=="__main__":
             elif opcio == 1:
                 if partides:
                     for el in partides:
-                        imprimeixTauler(casella.Getlletres(),el.GetTauler(),dev=False)
+                        imprimeixTauler(casella.Getlletres(),el.GetTauler())
                     tauler = partides[int(input(missatges[idioma]["escull"]+": "))]
                     partida(vaixell.flota,tauler.GetTauler())
 
                 else:
-                    print("No hi ha taulers creats")
+                    print("No hi ha taulers creats \n")
             elif opcio == 2:
                 acabat=True
     #except:

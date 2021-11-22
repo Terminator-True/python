@@ -4,3 +4,4 @@ with MongoClient('localhost', 27017) as client:
     col = mydb.cataleg
     for el in col.find():
         print(el)
+
