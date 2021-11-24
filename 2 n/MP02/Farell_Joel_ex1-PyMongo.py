@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 #Obrim conexió amb el mongo db
-with MongoClient('localhost', 27017) as client:
+with MongoClient('localhost',27017,username='Joel_r',password='Admin@123',authSource='JoelFarell') as client:
 
     #Llistat d'objectes de la práctica anterior
     objectes = [{"estudiant":"lluis","nota":5,"tipus":"examen"},
@@ -24,9 +24,9 @@ with MongoClient('localhost', 27017) as client:
     for el in mycol.find():
         print(el)
     #Modifiquem tots els que tenen un 5 de nota a un 10
-    mycol.update_many({"nota":5},{"$set": {"nota":10}})
+    mycol.update_many({"nota":10},{"$set": {"nota":5}})
     print("")
-    for el in mycol.find({"nota":10}):
+    for el in mycol.find({"nota":5}):
         print(el)
 
     mycol.delete_one({"estudiant":"Francesc"})
