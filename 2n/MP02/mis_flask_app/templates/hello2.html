@@ -47,17 +47,11 @@
 <body>
 
 <div class="form">
-    <form class="login-form">
-      <input type="text" placeholder="usuari"/><br>
-      <input type="password" placeholder="contrasenya"/><br>
+    <form class="login-form" action="http://localhost:5000/login" method="post">
+      <input type="text" placeholder="usuari" name="user"/><br>
+      <input type="password" placeholder="contrasenya" name="psswd"/><br>
       <button>login</button>
       <p class="message">Not estas registrat? <a href="#">Crear un nou compte</a></p>
-      <p><!doctype html>
-	<title>Hello from Flask</title>	
-	{% if name %}
-  	<h1>Hello {{ name }}!</h1>
-	{% endif %}
-      </p>
     </form>
   </div>
 

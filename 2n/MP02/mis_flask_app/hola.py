@@ -1,10 +1,29 @@
-from flask import Flask,render_template
-from pymongo import MongoClient
+from flask import Flask,render_template,request,redirect,url_for
+from flask_pymongo import PyMongo
+
 app = Flask(__name__)
-@app.route('/')
-@app.route('/<name>')
-def hello(name=None):
-    with MongoClient('localhost',27017,username='admin',password='Admin@123',authSource='JoelFarell') as client:
-        mydb = client.JoelFarell
-        mycol = mydb.estudiants
-    return render_template('hello.html', list=mycol.find())
+app.config["MONGO_URI"] = "mongodb://localhost:27017/usuaris"
+mongo = PyMongo(app)
+
+@app.route('/login')
+def form(name=None):
+    return render_template('hello2.html')
+
+@app.route('/success/<name>')
+def success(name=None):
+   return render_template('success.html',name=name)
+
+@app.route('/failure')
+def failure():
+   return render_template('failure.html')
+
+@app.route('/login',methods = ['POST', 'GET'])
+def login():
+    user = request.form['user']
+    password = request.form['psswd']
+
+    if user == mongo.db.usuaris.find_one({"user":user}):
+        if password == mongo.db.usuaris.find_one({"password":password}):
+            return redirect(url_for('success',name = user))
+    else:
+        return redirect(url_for('failure'))
