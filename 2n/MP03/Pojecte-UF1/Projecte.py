@@ -44,7 +44,6 @@ def init():
             os.system("mpc add directori"+'/'+info[0])
             os.system('mpc seek'+info[1].split("(")[1].replace(")",""))
             os.system("mpc volume 30")
-
     return albums
 
 def Play_Pause():
