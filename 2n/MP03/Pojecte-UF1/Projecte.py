@@ -56,11 +56,33 @@ def Next():
 def Anterior():
     os.system("mpc prev")
 
-def ValumeMas(num):
-    os.system("mpc volume + "+num)
+def ValumeMas():
+    os.system("mpc volume + 5")
 
-def ValumeMenos(num):
-    os.system("mpc volume - "+num)
+def ValumeMenos():
+    os.system("mpc volume - 5")
+
+def programa_principal(menu):
+    if menu == 1:
+        Play_Pause()
+    elif menu ==2:
+        Next()
+    elif menu==3:
+        Anterior()
+    elif menu==4:
+        ValumeMas()
+    elif menu==5:
+        ValumeMenos()
+    elif menu==6:
+        pass
+    elif menu==7:
+        pass
+    elif menu==8:
+        pass
+    elif menu==9:
+        sortir()
+    elif menu==10:
+        reset()
 
 def reset():
     os.system("rm -r "+directori+"/playlist/")
@@ -79,6 +101,7 @@ if __name__=="__main__":
     while menu != 9:
         try:
             menu=int(input("1. Reproduir/pausar.\n2. Cançó següent.\n3. Cançó anterior.\n4. Augmentar volum.\n5. Disminuir volum.\n6. Editar àlbums. Afegir o eliminar cançons\n7. Reproduir una llista de reproducció.\n8. Crear llistes de reproducció\n9. Sortir.\n10.Reset.\n"))
+            programa_principal(menu)
         except ValueError:
             print("Entrada no valida")
         except:
