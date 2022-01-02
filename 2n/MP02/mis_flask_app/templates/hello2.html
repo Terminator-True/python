@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+
+<style>
+      body{
+        background-color: rgb(212, 241, 167);
+      }
+      .form{
+        background-color: white;
+        width: 500px;
+        margin-left: 700px;
+        margin-top: 300px;
+        box-shadow:1px 1px 5px black;
+      }
+      .login-form{
+        padding: 50px;
+      }
+      .login-form input{
+        background-color: rgb(240, 240, 240);
+        border: hidden;
+        width: 92%;
+        padding:15px;
+        margin: 5px;
+      }
+      .message{
+        text-align: center;
+        color: rgb(172, 172, 172);
+      }
+      .message a{
+        text-decoration: none;
+        color: green;
+      }
+      button{
+        text-transform: uppercase;
+        background-color: green;
+        color: white;
+        border: none;
+        width: 100%;
+        margin: 5px;
+        padding: 15px;
+      }
+</style>
+</head>
+
+<body>
+
+<div class="form">
+    <form class="login-form" action="http://localhost:5000/login" method="post">
+      <input type="text" placeholder="usuari" name="user"/><br>
+      <input type="password" placeholder="contrasenya" name="psswd"/><br>
+      <button>login</button>
+      <p class="message">Not estas registrat? <a href="#">Crear un nou compte</a></p>
+    </form>
+  </div>
+
+  </body>
+</html>

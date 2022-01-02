@@ -20,36 +20,35 @@ import random
 
 #OBJECTES------------------------------------------------------
 class Tauler:
-    def __init__(self,x,y,m):
-        self.x=x
-        self.y=y
-        self.m=m
-    def GetTauler(self):
+    def __init__(self,x=10,y=10,lletres=["A","B","C","D","E","F","G","H","I","J"],m=[]):
+        self.x,self.y,self.lletres,self.m = x,y,lletres,m
+    def GetTaulell(self):
         return self.m
     def GetX(self):
         return self.x
     def GetY(self):
-        return self.y
-    def SetTauler(self,m):
+        return self.Y
+    def SetTaulell(self,m):
         self.m=m
 
-class Vaixell:
-    def __init__(self,flota):
-        self.flota=flota
+class Vaixell(Tauler):
+    def __init__(self,m,flota=[5,4,4,3,3,3,2,2]):
+        Tauler.__init__(self,m)
+        self.Flota=flota
     def GetFlota(self):
-        return self.flota
+        return self.Flota
 
-class Casella:
+class Casella(Tauler):
     def __init__(self,lletres):
-        self.lletres=lletres
+        Tauler.__init__(self,lletres)
     def GetCasellaBuida():
         return [False,"~"]
     def Getlletres(self):
         return self.lletres
+
 #FUNCIONS-------------------------------------------------------
-casella = Casella(["A","B","C","D","E","F","G","H","I","J"])
 def creaTauler(x,y):
-    return [[Casella.GetCasellaBuida() for j in range(y)] for i in range(x)]
+    return [[[False,"~"] for j in range(y)] for i in range(x)]
 def imprimeixTauler(lletres,m,dev=True):
     s= " "
     print("  ",end="")  
@@ -147,7 +146,7 @@ def colocaFlota(m,flota,lletres):
             while not acabat:
                 f=random.randint(0,9)
                 c=random.choice(lletres)
-                f,c=tradueixIndex(f,c,casella.Getlletres())
+                f,c=tradueixIndex(f,c)
                 if aigua(m,f,c):
                     acabat=colocaVaixellHoritzontal(m,f,c,el)
         
@@ -156,7 +155,7 @@ def colocaFlota(m,flota,lletres):
             while not acabat:
                 f=random.randint(0,9)
                 c=random.choice(lletres)
-                f,c=tradueixIndex(f,c,casella.Getlletres())
+                f,c=tradueixIndex(f,c)
                 if aigua(m,f,c):
                     acabat=colocaVaixellVertical(m,f,c,el)
     return m
@@ -262,21 +261,22 @@ def partidaAcabada(flota,m):
                 Quantitat+=1
     return Quantitat==sum(flota)
 
-def partida(missatges,idioma,flota,m):
+def partida(m):
     acabat=False
-    while partidaAcabada(flota,m) is not True or acabat is not True:
-        imprimeixTauler(casella.Getlletres(),m)
+    while partidaAcabada(m) is not True or acabat is not True:
+        imprimeixTauler(m)
         print("Coordenades del tret")
         f=input("Fila: ")
         c=input("Columna: ")
         if f == "quit" or c == "quit":
             break
-        f,c=tradueixIndex(f,c,casella.Getlletres())
-        tret(idioma,missatges,m,f,c)
-    imprimeixTauler(casella.Getlletres(),m)
+        f,c=tradueixIndex(f,c)
+        tret(m,f,c)
+    imprimeixTauler(m)
     imprimir=("$  "*6)+"\n"+"\tGOOD ENDING \n YOU WON    "+"\n"+("$  "*6)    
     print(imprimir)
 if __name__=="__main__":
+<<<<<<< HEAD
     try:
         missatges = {
             "ca": {
@@ -345,3 +345,66 @@ if __name__=="__main__":
                 acabat=True
     except:
         print("Error")
+=======
+    missatges = {
+        "ca": {
+            "benvinguts": "Benviguts a la Batalla Naval!",
+            "introdueix fila": "Introdueix fila: ",
+            "introdueix columna": "Introdueix columna: ",
+            "tocat": "tocat! segueix així...",
+            "aigua": "aigua",
+            "enfonsat": "enfonsat",
+            "posuse": "Aquesta posició ja ha estat elegida",
+            "shipuse": "Aquest vaixell ja ha estat enfonsat",
+            "menu":"0: Crear nou tauler \n 1: Carregar tauler \n 2: Sortir ",
+            "avis" : "Per sortir, escriure quit",
+            "escull" : "Escull tauler"
+        },
+        "es": {
+            "benvinguts": "Bienvenidos a la Batalla Naval!",
+            "introdueix fila": "Introduce fila: ",
+            "introdueix columna": "Introduce columna: ",
+            "tocat": "Tocado! sigue así...",
+            "aigua": "agua",
+            "enfonsat": "hundido",
+            "pos": "Esta posición ya ha sido elegida",
+            "shipuse": "Este barco ya ha sido hundido",
+        },
+        "en": {
+            "benvinguts": "Welcome to Naval Wars!",
+            "intro  dueix fila": "Insert row: ",
+            "introdueix columna": "Insert column: ",
+            "tocat": "Boum! Well done, keep it up...",
+            "aigua": "miss",
+            "enfonsat": "sunk",
+            "pos": "This position has already been chosen",
+            "shipuse": "This ship has already been sunk",
+        },
+    }
+    partides = []
+    acabat = False
+    idioma=input("Language: (ca,es,en): ")
+    print(missatges[idioma]["benvinguts"])
+    while acabat is not True:
+        opcio = int(input(missatges[idioma]["menu"]))
+        if opcio == 0:
+            partides.append(Tauler)
+            tauler=partides[len(partides)-1]
+            tauler.SetTaulell(colocaFlota(tauler.GetTaulell(Tauler),Vaixell.GetFlota(),Casella.Getlletres()))
+            partida(tauler.GetTaulell())
+        elif opcio == 1:
+            if partides:
+                for el in partides:
+                    imprimeixTauler(Casella.Getlletres(),el,dev=False)
+                tauler = partides[int(input(missatges[idioma]["escull"]))]
+                partida(tauler.GetTaulell())
+
+            else:
+                print("No hi ha taulers creats")
+        elif opcio == 2:
+            acabat=True
+        
+
+
+
+>>>>>>> b813cad3fe4ca4eb12a9ef53b42cdc330353579d

@@ -1,0 +1,31 @@
+Es demana entregar un programa escrit en Python, anomenat exUF3.py, 
+que accepta un argument que serà el nom d’un arxiu de tipus text, 
+i que mostri un menú principal on l’usuari pugui escollir les opcions 
+que es detallen a continuació. Hi haurà un control de les excepcions 
+en el tractament de fitxers. El codi s’haurà d’entregar degudament comentat.
+
+Fes una funció en Python llegirN que llegeixi les n primeres línies d’un arxiu, 
+que passem com a paràmetre i les imprimeixi per la pantalla. 
+Si l’arxiu no existeix, o hi ha hagut algun problema a l’hora d’obrir-lo, 
+informarà del problema. Si es demanen més línies de les que té l’arxiu s’imprimirà sencer.
+
+Afegeix una nova funcionalitatl programa que llegeixi les 5 últimes línies d’un arxiu, 
+hauràs d’utilitzar la mateixa funció que en el l’apartat anterior, 
+però amb un nou paràmetre top que per defecte serà True 
+(en aquest cas el comportament és el de l’exercici 1, i si el paràmetre té
+el valor False llegirà les 5 darreres línies i les imprimeixi per la pantalla.
+
+Feu una nova funcionalitat que farà una nova versió de l’arxiu que li passem
+com a argument, anomenada nom_arxiu-numerat.extensio on nom_arxiu 
+i extensio són el nom i l’extensió de l’arxiu. Aquesta versió afegirà el num 
+de línia al principi de cada línia de text, començant per 1 seguit d’un punt i un espai. 
+
+Afegeix una nova funcionalitat al programa que farà un petit informe mirant diferents 
+aspectes de l’arxiu original i el mostrarà per pantalla i generarà un arxiu informe.txt. 
+Les dades que ha de contenir l’informe són:
+
+el nombre de línies
+el nombre de paraules (utiltzant espai com a separador)
+el nombre de caràcters (inclosos els espais i els salt de línia)
+el nombre de vocals (accentuades i no accentuades)
+la paraula més llarga i la paraula més curta (si n’hi ha més d’una les mostrem totes)
