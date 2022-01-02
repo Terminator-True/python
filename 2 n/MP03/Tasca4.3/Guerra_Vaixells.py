@@ -24,7 +24,6 @@ class Tauler:
         self.x=x
         self.y=y
         self.m=m
-
     def GetTauler(self):
         return self.m
     def GetX(self):
@@ -278,7 +277,7 @@ def partida(missatges,idioma,flota,m):
     imprimir=("$  "*6)+"\n"+"\tGOOD ENDING \n YOU WON    "+"\n"+("$  "*6)    
     print(imprimir)
 if __name__=="__main__":
-    #try:
+    try:
         missatges = {
             "ca": {
                 "benvinguts": "Benviguts a la Batalla Naval!",
@@ -344,5 +343,5 @@ if __name__=="__main__":
                     print("No hi ha taulers creats")
             elif opcio == 2:
                 acabat=True
-    #except:
-        #print("Error")
+    except:
+        print("Error")
