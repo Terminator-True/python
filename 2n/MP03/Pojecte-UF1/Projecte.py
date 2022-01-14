@@ -1,6 +1,9 @@
 #Joel Farell i Jordi Oliveda
 import os
+<<<<<<< HEAD
 from time import sleep
+=======
+>>>>>>> 928d8276548631654610d6b819584b0eee3f0ab9
 directori="/home/joel/Escritorio/python/2n/MP03/Pojecte-UF1"
 albums={}
 
@@ -9,7 +12,11 @@ class album:
         self.ruta,self.cançons,self.genere,self.any,self.autor,self.numero_cops=ruta,cançons,genere,any,autor,numero_cops
     
     def mostra(self):
+<<<<<<< HEAD
         return ",".join((self.ruta,"|".join(self.cançons),self.genere,str(self.any),self.autor,str(self.numero_cops)))
+=======
+        return self.ruta,self.cançons,self.genere,self.any,self.autor,self.numero_cops
+>>>>>>> 928d8276548631654610d6b819584b0eee3f0ab9
     
     def get_cançons(self):
         return self.cançons
@@ -33,17 +40,28 @@ def ComprovaArchiu(Arxiu):
         return False
 
 def init_dir():
+<<<<<<< HEAD
     for base, dirs, files in os.walk(directori+'/music',topdown=True):#"base" Recorre els directoris, "files" els arxius. De la ruta amb walk
         if files:
             song=[file for file in files if file.split(".")[1]=="mp3"]#Un list comprension de tots els arxius amb un split per identificar l'extensió mp3
+=======
+    for base, dirs, files in os.walk(directori+'/music'):#"base" Recorre els directoris, "files" els arxius. De la ruta amb walk
+        if files:
+            song=[file for file in files if file.split(".")[1]=="mp3"]#Un list comprencion de tots els arxius amb un split per identificar l'extensió mp3
+>>>>>>> 928d8276548631654610d6b819584b0eee3f0ab9
             if ComprovaArchiu(base+"/info.txt"):
                 with open (base+"/info.txt","r") as f:
                     info=f.read()
                     albums[base]=album(base,song,info.split(":")[0],info.split(":")[2],info.split(":")[1],0)#Creem en un diccionari, la clau és la ruta del album per si hi ha dos àlbums iguals. split de ":" perquè està separat amb ":" en info.txt
+<<<<<<< HEAD
     with open (directori+"/backups.txt","w") as f:
         #for key in albums:
             #print(albums[key].mostra())
         f.writelines(":".join(['{0}:{1}'.format(key,albums[key].mostra()) for key in albums]))#guardem el diccionari
+=======
+    with open (directori+"/music/backups.txt","w") as f:
+        f.writelines(" : ".join(['{0} : {1}'.format(key,albums[key].mostra()) for key in albums]))#guardem el diccionari
+>>>>>>> 928d8276548631654610d6b819584b0eee3f0ab9
 
 def init():
     if ComprovaArchiu(directori+"/backups.txt"):
