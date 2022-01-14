@@ -276,6 +276,76 @@ def partida(m):
     imprimir=("$  "*6)+"\n"+"\tGOOD ENDING \n YOU WON    "+"\n"+("$  "*6)    
     print(imprimir)
 if __name__=="__main__":
+<<<<<<< HEAD
+    try:
+        missatges = {
+            "ca": {
+                "benvinguts": "Benviguts a la Batalla Naval!",
+                "introdueix fila": "Introdueix fila: ",
+                "introdueix columna": "Introdueix columna: ",
+                "tocat": "tocat! segueix així...",
+                "aigua": "aigua",
+                "enfonsat": "enfonsat",
+                "posuse": "Aquesta posició ja ha estat elegida",
+                "shipuse": "Aquest vaixell ja ha estat enfonsat",
+                "menu":" 0: Crear nou tauler \n 1: Carregar tauler \n 2: Sortir \n",
+                "avis" : "Per sortir, escriure quit",
+                "escull" : "Escull tauler"
+            },
+            "es": {
+                "benvinguts": "Bienvenidos a la Batalla Naval!",
+                "introdueix fila": "Introduce fila: ",
+                "introdueix columna": "Introduce columna: ",
+                "tocat": "Tocado! sigue así...",
+                "aigua": "agua",
+                "enfonsat": "hundido",
+                "posuse": "Esta posición ya ha sido elegida",
+                "shipuse": "Este barco ya ha sido hundido",
+                "menu":" 0: Crear nuevo tablero \n 1: Cargar tablero \n 2: Salida \n",
+                "avis" : "Para salir, escribir quit",
+                "escull" : "elige tablero"
+            },
+            "en": {
+                "benvinguts": "Welcome to Naval Wars!",
+                "introdueix fila": "Insert row: ",
+                "introdueix columna": "Insert column: ",
+                "tocat": "Boum! Well done, keep it up...",
+                "aigua": "miss",
+                "enfonsat": "sunk",
+                "posuse": "This position has already been chosen",
+                "shipuse": "This ship has already been sunk",
+                "menu":" 0: Create new board \n 1: Upload board \n 2: Exit \n",
+                "avis" : "To go out, write quit",
+                "escull" : "Choose board"
+            },
+        }
+        partides = []
+        acabat = False
+        vaixell = Vaixell([5,4,4,3,3,3,2,2])
+        idioma=input("Language: (ca,es,en): ")
+        print(missatges[idioma]["benvinguts"])
+        while acabat is not True:
+            opcio = int(input(missatges[idioma]["menu"]))
+            if opcio == 0:
+                partides.append(Tauler(10,10,[]))
+                tauler=partides[len(partides)-1]
+                tauler.SetTauler(creaTauler(tauler.GetX(),tauler.GetY()))
+                tauler.SetTauler(colocaFlota(tauler.GetTauler(),vaixell.GetFlota(),casella.Getlletres()))
+                partida(missatges,idioma,vaixell.flota,tauler.GetTauler())
+            elif opcio == 1:
+                if partides:
+                    for el in partides:
+                        imprimeixTauler(casella.Getlletres(),el.GetTauler(),dev=False)
+                    tauler = partides[int(input(missatges[idioma]["escull"]+": "))]
+                    partida(vaixell.flota,tauler.GetTauler())
+
+                else:
+                    print("No hi ha taulers creats")
+            elif opcio == 2:
+                acabat=True
+    except:
+        print("Error")
+=======
     missatges = {
         "ca": {
             "benvinguts": "Benviguts a la Batalla Naval!",
@@ -337,3 +407,4 @@ if __name__=="__main__":
 
 
 
+>>>>>>> b813cad3fe4ca4eb12a9ef53b42cdc330353579d
