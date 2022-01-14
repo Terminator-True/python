@@ -1,4 +1,0 @@
-album1/album2/album5/Outlaw-Adam-Jensen.mp3
-[paused]  #1/8   0:00/3:19 (0%)
-volume: n/a   repeat: off   random: off   single: off   consume: on 
-ERROR: Failed to enable output "MPD" (jack); Failed to connect to JACK server, status=17
