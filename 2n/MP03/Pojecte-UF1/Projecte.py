@@ -1,6 +1,5 @@
 #Joel Farell i Jordi Oliveda
 import os
-from time import sleep
 directori="/home/joel/Escritorio/python/2n/MP03/Pojecte-UF1"
 albums={}
 
@@ -60,9 +59,10 @@ def init():
     if ComprovaArchiu(directori+"/estat_reproductor.txt"):
         with open (directori+"/estat_reproductor.txt","r") as f:
             info=f.readlines()#Oh llegeix per línies, la primera per la cançó la segona pel percentatge de volum
-            os.system("mpc add "+directori+'/music/'+info[0])
-            os.system('mpc seek '+info[1].split("(")[1].replace(")",""))
-            os.system("mpc volume 30")
+            if len(info)>1:
+                os.system("mpc add "+directori+'/music/'+info[0])
+                os.system('mpc seek '+info[1].split("(")[1].replace(")",""))
+                os.system("mpc volume 30")
 
 def Play_Pause():
     os.system("mpc toggle")
@@ -144,7 +144,7 @@ def crear_llistes(param):
         print("no existeix la opcio")
 
 def sortir():
-    text="mpc status"+' > '+directori+"estat_reproductor.txt"
+    text="mpc status"+' > '+directori+"/estat_reproductor.txt"
     os.system(text)
     init_dir()
     
