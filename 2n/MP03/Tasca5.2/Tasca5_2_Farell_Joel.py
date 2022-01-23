@@ -18,7 +18,7 @@ Després de tokenitzar, tindrem els següents elements (en una llista).
 Un cop tinguem aquesta llista d'elements clau, amb una cua i una pila hem de comprovar que s'obren i es tanquen tots els tags correctament. 
 En cas contrari, mostrar un error.
 """
-import re
+
 class Cua:
     def __init__(self,cua=[]):
         self.cua=cua
@@ -53,7 +53,29 @@ def token_html(string):
         else:
             paraula+=char
     return final
+
+def validate(html):
+    cua = Cua([])
+    pila= Pila([])
+    x=""
+    for el in html:
+        if el == "<" or el ==">" or el =="/":
+            x+=el
+        if el==">":
+            cua.encuar(x)
+            x=""
+    print(cua.cua)
+    while not cua.esbuida():
+        char=cua.desencuar()
+        if char=='<>':
+            pila.apila(char)
+        else:
+            if not pila.esbuida():
+                pila.desapila()
+
+    return True if pila.esbuida() and cua.esbuida() else False
+
 if __name__=="__main__":
     html="<html><head><title>Exemple</title></head><body><h1>Hola món</h1></body></html>"
     processed_html=token_html(html)
-    print(processed_html)
+    print(validate(processed_html))
