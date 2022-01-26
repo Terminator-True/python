@@ -52,6 +52,7 @@ def token_html(string):
         else:
             paraula+=char
     return final
+<<<<<<< HEAD:2n/MP03/Tasca5.2/main.py
 def html_correcte(str):
     cua = Cua([])
     pila = Pila([])
@@ -75,3 +76,31 @@ if __name__=="__main__":
     html="<html><head><title>Exemple</title></head><body><h1>Hola món</h1></body></html>"
     processed_html=token_html(html)
     html_correcte(processed_html)
+=======
+
+def validate(html):
+    cua = Cua([])
+    pila= Pila([])
+    x=""
+    for el in html:
+        if el == "<" or el ==">" or el =="/":
+            x+=el
+        if el==">":
+            cua.encuar(x)
+            x=""
+    print(cua.cua)
+    while not cua.esbuida():
+        char=cua.desencuar()
+        if char=='<>':
+            pila.apila(char)
+        else:
+            if not pila.esbuida():
+                pila.desapila()
+
+    return True if pila.esbuida() and cua.esbuida() else False
+
+if __name__=="__main__":
+    html="<html><head><title>Exemple</title></head><body><h1>Hola món</h1></body></html>"
+    processed_html=token_html(html)
+    print(validate(processed_html))
+>>>>>>> 603c3191ea29ac39f15374b3d0665bc0890369b9:2n/MP03/Tasca5.2/Tasca5_2_Farell_Joel.py
