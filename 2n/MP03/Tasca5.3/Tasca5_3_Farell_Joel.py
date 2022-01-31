@@ -23,14 +23,16 @@ def crea_diccionari(nums=[2,3,4,5,6,7,8,9],lletres="ABCDEFGHIJKLMNOPRSTUVWXY"):
     return dic
 
 def llistar_mnemonics(res,len,nums,dic=crea_diccionari()):
-    tecla = dic[int(nums[len])]
-    cadena = ""
-    for x in tecla:
-        if len>0:
-            cadena+= x+llistar_mnemonics("",len-1,nums,dic)
-            return cadena
+    if len == -1:
+        return res+" "
+    else:
+        cadena = ""
+        for x in dic[int(nums[len])]:
+            cadena+=llistar_mnemonics(res+x,len-1,nums,dic)
+        return cadena
 
 
 if __name__=="__main__":
-    print(llistar_mnemonics("",2,"723"))
-    #print(crea_diccionari())
+    val = input("Valor: ")
+    len = len(val)-1
+    print(llistar_mnemonics("",len,val))
