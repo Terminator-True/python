@@ -41,18 +41,48 @@
         margin: 5px;
         padding: 15px;
       }
+            /* The alert message box */
+      .alert {
+        padding: 20px;
+        background-color: #f44336; /* Red */
+        color: white;
+        margin-bottom: 15px;
+      }
+
+      /* The close button */
+      .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      /* When moving the mouse over the close button */
+      .closebtn:hover {
+        color: black;
+      }
 </style>
 </head>
 
 <body>
 
 <div class="form">
-    <form class="login-form" action="http://127.0.0.1:5000/in" method="post">
-      <input type="text" placeholder="usuari" name="user"/><br>
-      <input type="password" placeholder="contrasenya" name="psswd"/><br>
+    <form class="login-form" action="http://127.0.0.1:5000" method="post">
+      <input type="text" placeholder="usuari" name="user_login"/><br>
+      <input type="password" placeholder="contrasenya" name="psswd_login"/><br>
       <button type="submit">login</button>
       <p class="message">Not estas registrat? <a href="http://127.0.0.1:5000/signin">Crear un nou compte</a></p>
     </form>
+    {% if error %}
+    <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      {{error}}
+    </div>
+    {% endif %}
   </div>
 
   </body>

@@ -41,6 +41,30 @@
         margin: 5px;
         padding: 15px;
       }
+            /* The alert message box */
+      .alert {
+        padding: 20px;
+        background-color: #f44336; /* Red */
+        color: white;
+        margin-bottom: 15px;
+      }
+
+      /* The close button */
+      .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      /* When moving the mouse over the close button */
+      .closebtn:hover {
+        color: black;
+      }
 </style>
 </head>
 
@@ -48,10 +72,17 @@
 
 <div class="form">
     <form class="login-form" method="post">
-      <input type="text" placeholder="usuari" name="user"/><br>
-      <input type="password" placeholder="contrasenya" name="psswd"/><br>
+      <input type="text" placeholder="Usuari" name="user"/><br>
+      <input type="password" placeholder="Contrasenya" name="psswd"/><br>
       <button type="submit">Crear usuari </button>
     </form>
+
+    {% if error %}
+    <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      {{error}}
+    </div>
+    {% endif %}
   </div>
   </body>
 </html>
