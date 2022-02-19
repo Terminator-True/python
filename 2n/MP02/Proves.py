@@ -1,7 +1,6 @@
 from pymongo import MongoClient
-with MongoClient('localhost', 27017) as client:
-    mydb = client.Tasca4_3
-    col = mydb.cataleg
-    for el in col.find():
-        print(el)
+with MongoClient('localhost',27017,username='Joel_r',password='Admin@123') as client:
+    mydb = client.admin
+    print(mydb)
+
 
