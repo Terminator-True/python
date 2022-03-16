@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 #Obrim conexió amb el mongo db
-with MongoClient('localhost',27017,username='Joel_r',password='Admin@123',authSource='JoelFarell') as client:
+with MongoClient('localhost',27017,username='Joel_r',password='Admin@123') as client:
 
     #Llistat d'objectes de la práctica anterior
     objectes = [{"estudiant":"lluis","nota":5,"tipus":"examen"},

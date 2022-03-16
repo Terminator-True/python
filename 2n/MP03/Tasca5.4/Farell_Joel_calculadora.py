@@ -19,7 +19,7 @@ class Calculadora:
         self.buttons=[Button(master, text=char,width=9,height=1,command=lambda char=char:self.click(char)) for char in "123*456/789-.0+C="]
         self.posicionar()
         self.calcul=""
-
+        
     #Posiciona els botons a la finestra
     def posicionar(self):
         i=0
