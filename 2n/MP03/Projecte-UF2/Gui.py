@@ -7,15 +7,22 @@ class Reproductor(ttk.Frame):
         #Configuració de la finestra
         self.master = master     
         master.title("SoundGround")
+        master.geometry('700x700')
         #Listar música
-        self.treeview = ttk.Treeview(self)
-        item = self.treeview.insert("", tk.END, text="Elemento 1")
-        subitem = self.treeview.insert(item,tk.END, text="Subelemento 1")
-        self.treeview.insert(subitem, tk.END, text="Otro elemento")
+        self.treeview = ttk.Treeview(self,height = 30)
+        self.treeview.place(x=0,y=0 )
+    def Crea_llista(self):
+        albums=init()
+        for album in albums:
+            print(album)
+            itemtree = self.treeview.insert("", tk.END, text=album.split("/")[-1])
+            songs=albums[album].cançons
+            for song in songs:
+                self.treeview.insert(itemtree, tk.END, text=song)
         self.treeview.pack()
         self.pack()
 
-    
+
 
 
         
