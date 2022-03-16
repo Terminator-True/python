@@ -1,0 +1,2 @@
+volume: n/a   repeat: off   random: off   single: off   consume: on 
+ERROR: Failed to enable output "MPD" (jack); Failed to connect to JACK server, status=17
