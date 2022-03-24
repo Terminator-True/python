@@ -1,6 +1,6 @@
 #Joel Farell i Jordi Oliveda
 import os
-directori="/home/joel/Escritorio/python/2n/MP03/Pojecte-UF1"
+directori="/home/joel/Escritorio/python/2n/MP03/Projecte-UF2"
 albums={}
 
 class album:
@@ -98,51 +98,51 @@ def Editar_albums():
                     albums[key].set_cançons(llistaSongs)
                 else:
                     print("Cançó no existent")
-def Reproduir():
-    os.system("ls "+directori+"/playlist")
-    nom=input("Quin vols reproduir?(nom) ")
+def Reproduir(nom):
     os.system("mpc load "+nom)
 
-def crear_llistes(param):
+def crear_llistes(param,pers=False):
+    #Passem per parámetre una llista de totes les cançóns que volem afegir a la llista de reproducció 
+    #Si pers no es fals, es creará una llista de reproducció per: génere,autor,anys o vegades de reproducció
     os.system("mpc clear")
-    if param==1:
-        genero=input("Genere: ")
-        for key in albums:
-            if albums[key].genere.lower() == genero.lower():#filtre per genere
-                print(albums[key].genere.lower()+"\n")
-                print(albums[key].cançons)
-                albums[key].set_numero_cops(albums[key].get_numero_cops()+1)#Actualitza el album, afegint-hi +1 al contador de cops de reproducció
-                for cancion in albums[key].cançons:
-                    os.system("mpc add "+key+"/"+cancion)#crea la playlist
-        os.system("mpc save "+genero)
-            
-    elif param==2:
-        autor=input("Autor: ")
-        for key in albums:
-            if albums[key].autor.lower() == autor.lower():
-                albums[key].set_numero_cops(albums[key].get_numero_cops()+1)
-                for cancion in albums[key].cançons:
-                    os.system("mpc add "+albums[key].ruta+"/"+cancion)
-        os.system("mpc save "+autor)
-            
-    elif param==3:
-        anys=input("Anys: ")
-        for key in albums:
-            if int(albums[key].any) >= int(anys.split(" ")[0]) and int(albums[key].any) <= int(anys.split(" ")[1]):
-                albums[key].set_numero_cops(albums[key].get_numero_cops()+1)
-                for cancion in albums[key].cançons:
-                    os.system("mpc add "+albums[key].ruta+"/"+cancion)
-        os.system("mpc save "+"_".join(anys.split(" ")))
-    
-    elif param==4:
-        cops=input("Cops: ")
-        for key in albums:
-            if int(albums[key].numero_cops) >= int(cops.split(" ")[0]) and int(albums[key].numero_cops) <= int(cops.split(" ")[1]):
-                for cancion in albums[key].cançons:
-                    os.system("mpc add "+albums[key].ruta+"/"+cancion)
-        os.system("mpc save "+"_".join(cops.split(" ")))
-    else:
-        print("no existeix la opcio")
+    if not pers:
+        if param==1:
+            for key in albums:
+                if albums[key].genere.lower() == genero.lower():#filtre per genere
+                    print(albums[key].genere.lower()+"\n")
+                    print(albums[key].cançons)
+                    albums[key].set_numero_cops(albums[key].get_numero_cops()+1)#Actualitza el album, afegint-hi +1 al contador de cops de reproducció
+                    for cancion in albums[key].cançons:
+                        os.system("mpc add "+key+"/"+cancion)#crea la playlist
+            os.system("mpc save "+genero)
+                
+        elif param==2:
+            autor=input("Autor: ")
+            for key in albums:
+                if albums[key].autor.lower() == autor.lower():
+                    albums[key].set_numero_cops(albums[key].get_numero_cops()+1)
+                    for cancion in albums[key].cançons:
+                        os.system("mpc add "+albums[key].ruta+"/"+cancion)
+            os.system("mpc save "+autor)
+                
+        elif param==3:
+            anys=input("Anys: ")
+            for key in albums:
+                if int(albums[key].any) >= int(anys.split(" ")[0]) and int(albums[key].any) <= int(anys.split(" ")[1]):
+                    albums[key].set_numero_cops(albums[key].get_numero_cops()+1)
+                    for cancion in albums[key].cançons:
+                        os.system("mpc add "+albums[key].ruta+"/"+cancion)
+            os.system("mpc save "+"_".join(anys.split(" ")))
+        
+        elif param==4:
+            cops=input("Cops: ")
+            for key in albums:
+                if int(albums[key].numero_cops) >= int(cops.split(" ")[0]) and int(albums[key].numero_cops) <= int(cops.split(" ")[1]):
+                    for cancion in albums[key].cançons:
+                        os.system("mpc add "+albums[key].ruta+"/"+cancion)
+            os.system("mpc save "+"_".join(cops.split(" ")))
+        else:
+            print("no existeix la opcio")
 
 def sortir():
     text="mpc status"+' > '+directori+"/estat_reproductor.txt"
