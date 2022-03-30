@@ -115,7 +115,6 @@ def crear_llistes(param,pers=False):
                     for cancion in albums[key].cançons:
                         os.system("mpc add "+key+"/"+cancion)#crea la playlist
             os.system("mpc save "+genero)
-                
         elif param==2:
             autor=input("Autor: ")
             for key in albums:
