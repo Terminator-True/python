@@ -1,6 +1,10 @@
 #Joel Farell i Jordi Oliveda
 import os
+<<<<<<< HEAD
+directori="2n\MP03\Projecte-UF2"
+=======
 directori="/home/joel/Escritorio/python/2n/MP03/Projecte-UF2"
+>>>>>>> 8e15fea5dcb3f371927ab73e36f18f1484dc3250
 albums={}
 
 class album:
