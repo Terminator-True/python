@@ -1,2 +1,3 @@
+album1/album4/halestorm-i_miss_the_misery.mp3
+[paused]  #1/6   0:00/3:10 (0%)
 volume: n/a   repeat: off   random: off   single: off   consume: on 
-ERROR: Failed to enable output "MPD" (jack); Failed to connect to JACK server, status=17

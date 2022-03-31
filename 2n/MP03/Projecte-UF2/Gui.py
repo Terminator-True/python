@@ -1,9 +1,25 @@
 from doctest import master
 from function import *
 import tkinter as tk
-from tkinter import LEFT, ttk
+from tkinter import LEFT, Button, Entry, Label, Toplevel, ttk
 from tkinter import filedialog
 
+#Classe que fa el popup per a demanar el album 
+#on s'afegirá la cançó
+class album_window(object):
+    def __init__(self,master,albums):
+        self.albums=albums
+        top=self.top=Toplevel(master)
+        self.l=Label(top,text="Album on afegir la cançó")
+        self.l.pack()
+        self.combo=ttk.Combobox(top,state="readonly",values=self.albums)
+        self.combo.pack()
+        self.b=Button(top,text='Ok',command=self.cleanup)
+        self.b.pack()
+    def cleanup(self):
+        self.value=self.combo.get()
+        self.top.destroy()
+        
 class Reproductor(ttk.Frame):
     def __init__(self, master):
         super().__init__()
@@ -17,7 +33,6 @@ class Reproductor(ttk.Frame):
         #Tag para registrar el evento 
         self.treeview.tag_bind("Seleccionado", "<<TreeviewSelect>>",
                                self.item_selected)
-        #Listar toda la música en una treeview
         #Menu
         menubar = tk.Menu(master)
 
@@ -35,24 +50,33 @@ class Reproductor(ttk.Frame):
             label="Crear llista de reproducció",
             menu=sub_menu
         )        
-        filemenu.add_command(label="Modificar album")
+        filemenu.add_command(label="Eliminar cançó")
         filemenu.add_command(label="Afegir cançó", command=self.open)
 
         menubar.add_cascade(label="Options", menu=filemenu)
 
         master.config(menu=menubar)
         #RadioButton per el crear llistes de reproducció
-        self.radioValue = tk.IntVar() 
         self.tree_list()
+        #albums
+        self.albums=init()
     def item_selected(self, event):
         curItem = self.treeview.focus()
         print(self.treeview.item(curItem)["text"])
-
+    #Obre un dialog per reguntar archiu en questió, seguidament pregunta al album on es vol afegir y l'afegeix
     def open(self):
-        print(filedialog.askopenfilename(initialdir = "/",title = "Open file",filetypes = (("Sound files","*.mp3"),("All files","*.*"))))
+        path=filedialog.askopenfilename(initialdir = "/",title = "Afegir cançó",filetypes = (("Sound files","*.mp3"),("All files","*.*")))
+        self.popup()
+        album_path=self.entryValue()
+        for el in self.albums:
+            if album_path == el.split("/")[-1]:
+                album_path=el
+                break
+        aggregate(path,album_path)
+
     def tree_songs(self):
         self.treeview.delete(*self.treeview.get_children())
-        albums=init()
+        albums=self.albums
         for album in albums:
             print(album)
             itemtree = self.treeview.insert("", tk.END, text=album.split("/")[-1],tags=("Seleccionado",))
@@ -69,3 +93,11 @@ class Reproductor(ttk.Frame):
             self.treeview.insert("", tk.END, text=el.split(".")[0],tags=("Seleccionado",))
         self.treeview.pack()
         self.pack()
+    #Popup que demana el album per a la funció open
+    def popup(self):
+        albums=[el.split("/")[-1] for el in self.albums.keys()]
+        self.album=album_window(self.master,albums)
+        self.master.wait_window(self.album.top)
+    #retorna el valor de el popup anterior  
+    def entryValue(self):
+        return self.album.value

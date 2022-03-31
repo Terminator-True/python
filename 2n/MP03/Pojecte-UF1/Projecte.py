@@ -182,6 +182,7 @@ if __name__=="__main__":
     os.system("clear")
     init()
     menu=0
+    print(albums)
     while menu != 9:
         try:
             menu=int(input("\n1. Reproduir/pausar.\n2. Cançó següent.\n3. Cançó anterior.\n4. Augmentar volum.\n5. Disminuir volum.\n6. Editar àlbums. Afegir o eliminar cançons\n7. Reproduir una llista de reproducció.\n8. Crear llistes de reproducció\n9. Sortir.\n10.Reset.\n"))

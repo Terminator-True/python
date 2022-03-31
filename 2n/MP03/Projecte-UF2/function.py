@@ -80,28 +80,10 @@ def ValumeMas():
 def ValumeMenos():
     os.system("mpc volume -5")
 
-def Editar_albums():
-    print("|".join([el.split("/")[-1] for el in albums.keys()]))#Per mostrar els àlbums fem el split per "/" i mostrem l'última posició de ñes keys que son el path del directori
-    albu=input("Quin album vols editar? ")
-    for key in albums:
-        if key.split("/")[-1].lower()==albu.lower():
-            opcio=int(input("1. Afegir cançons\n2. Eliminar cançons\n"))
-            if opcio==1:
-                path=input("Direcció de cançó a afegir: ")
-                os.system("mv "+path+" "+directori+"albu")
-            elif opcio==2:
-                print("\n".join(albums[key].get_cançons()))
-                cancion=input("Cançó a eliminar: ")
-                llistaSongs=albums[key].get_cançons()
-                if cancion in llistaSongs:
-                    llistaSongs.remove(cancion)
-                    albums[key].set_cançons(llistaSongs)
-                else:
-                    print("Cançó no existent")
 def Reproduir(nom):
     os.system("mpc load "+nom)
 
-def crear_llistes(param,pers=False):
+def crear_llistes(param,songs,pers=False):
     #Passem per parámetre una llista de totes les cançóns que volem afegir a la llista de reproducció 
     #Si pers no es fals, es creará una llista de reproducció per: génere,autor,anys o vegades de reproducció
     os.system("mpc clear")
@@ -155,6 +137,6 @@ def reset():
     os.system("mpc update")
     init()
 
-init_dir()
-for key in albums:
-    print(albums[key].cançons)
+
+def aggregate(path,path_album):
+    os.system("mv "+path+" "+path_album)
