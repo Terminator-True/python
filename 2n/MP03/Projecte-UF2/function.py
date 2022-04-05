@@ -1,16 +1,11 @@
 #Joel Farell i Jordi Oliveda
 import os
-<<<<<<< HEAD
-directori="2n\MP03\Projecte-UF2"
-=======
-directori="/home/joel/Escritorio/python/2n/MP03/Projecte-UF2"
->>>>>>> 8e15fea5dcb3f371927ab73e36f18f1484dc3250
+directori="2n/MP03/Projecte-UF2"
 albums={}
 
 class album:
     def __init__(self,ruta,cançons,genere,any,autor,numero_cops):
         self.ruta,self.cançons,self.genere,self.any,self.autor,self.numero_cops=ruta,cançons,genere,any,autor,numero_cops
-    
     def mostra(self):
         return ",".join((self.ruta,"|".join(self.cançons),self.genere,str(self.any),self.autor,str(self.numero_cops)))
     
@@ -87,39 +82,35 @@ def ValumeMenos():
 def Reproduir(nom):
     os.system("mpc load "+nom)
 
-def crear_llistes(param,songs,pers=False):
+def crear_llistes(param,songs=[],pers=False):
     #Passem per parámetre una llista de totes les cançóns que volem afegir a la llista de reproducció 
     #Si pers no es fals, es creará una llista de reproducció per: génere,autor,anys o vegades de reproducció
     os.system("mpc clear")
     if not pers:
-        if param==1:
+        if param[0]=="genere":
             for key in albums:
-                if albums[key].genere.lower() == genero.lower():#filtre per genere
-                    print(albums[key].genere.lower()+"\n")
-                    print(albums[key].cançons)
+                if albums[key].genere.lower() == param[1].lower():#filtre per genere
                     albums[key].set_numero_cops(albums[key].get_numero_cops()+1)#Actualitza el album, afegint-hi +1 al contador de cops de reproducció
                     for cancion in albums[key].cançons:
                         os.system("mpc add "+key+"/"+cancion)#crea la playlist
-            os.system("mpc save "+genero)
-        elif param==2:
-            autor=input("Autor: ")
+            os.system("mpc save "+param[1])
+        elif param[0]=="autor":
             for key in albums:
-                if albums[key].autor.lower() == autor.lower():
+                if albums[key].autor.lower() == param[1].lower():
                     albums[key].set_numero_cops(albums[key].get_numero_cops()+1)
                     for cancion in albums[key].cançons:
                         os.system("mpc add "+albums[key].ruta+"/"+cancion)
-            os.system("mpc save "+autor)
+            os.system("mpc save "+param[1])
                 
-        elif param==3:
-            anys=input("Anys: ")
+        elif param[0]=="anys":
             for key in albums:
-                if int(albums[key].any) >= int(anys.split(" ")[0]) and int(albums[key].any) <= int(anys.split(" ")[1]):
+                if int(albums[key].any) >= int(param[1][0]) and int(albums[key].any) <= int(param[1][1]):
                     albums[key].set_numero_cops(albums[key].get_numero_cops()+1)
                     for cancion in albums[key].cançons:
                         os.system("mpc add "+albums[key].ruta+"/"+cancion)
-            os.system("mpc save "+"_".join(anys.split(" ")))
+            os.system("mpc save "+"_".join(param[1]))
         
-        elif param==4:
+        elif param[0]=="cops":
             cops=input("Cops: ")
             for key in albums:
                 if int(albums[key].numero_cops) >= int(cops.split(" ")[0]) and int(albums[key].numero_cops) <= int(cops.split(" ")[1]):
@@ -131,7 +122,7 @@ def crear_llistes(param,songs,pers=False):
 
 def sortir():
     text="mpc status"+' > '+directori+"/estat_reproductor.txt"
-    os.system(text)
+    #os.system(text)
     init_dir()
     
 def reset():
@@ -140,7 +131,6 @@ def reset():
     os.system("/etc/init.d/mpd restart")
     os.system("mpc update")
     init()
-
 
 def aggregate(path,path_album):
     os.system("mv "+path+" "+path_album)

@@ -19,6 +19,30 @@ class album_window(object):
     def cleanup(self):
         self.value=self.combo.get()
         self.top.destroy()
+
+class list_window(object):
+    def __init__(self,master,params):
+        self.params=params
+        top=self.top=Toplevel(master)
+        self.l=Label(top,text=self.params[0])
+        self.l.pack()
+        print(params)
+        if params[0]=="Anys" or params[0]=="Cops":
+            self.entry1 = tk.Entry (top) 
+            self.entry2 = tk.Entry (top) 
+            self.entry1.pack()
+            self.entry2.pack()
+        else:
+            self.combo=ttk.Combobox(top,state="readonly",values=list(set(self.params[1])))
+            self.combo.pack()
+        self.b=Button(top,text='Ok',command=self.cleanup)
+        self.b.pack()
+    def cleanup(self):
+        try:
+            self.value=(self.entry1.get(),self.entry2.get())
+        except:
+            self.value=self.combo.get()
+        self.top.destroy()
         
 class Reproductor(ttk.Frame):
     def __init__(self, master):
@@ -39,10 +63,10 @@ class Reproductor(ttk.Frame):
         filemenu = tk.Menu(menubar, tearoff=0)
         # add a submenu
         sub_menu = tk.Menu(filemenu, tearoff=0)
-        sub_menu.add_command(label='Autor')
-        sub_menu.add_command(label='Génere')
-        sub_menu.add_command(label='Anys')
-        sub_menu.add_command(label='Cops')
+        sub_menu.add_command(label='Autor',command=lambda type="autor":self.do_list(type))
+        sub_menu.add_command(label='Génere',command=lambda type="genere":self.do_list(type))
+        sub_menu.add_command(label='Anys',command=lambda type="anys":self.do_list(type))
+        sub_menu.add_command(label='Cops',command=lambda type="cops":self.do_list(type))
         sub_menu.add_command(label='Personalitzada',command=self.tree_songs)
 
         # add the File menu to the menubar
@@ -66,14 +90,42 @@ class Reproductor(ttk.Frame):
     #Obre un dialog per reguntar archiu en questió, seguidament pregunta al album on es vol afegir y l'afegeix
     def open(self):
         path=filedialog.askopenfilename(initialdir = "/",title = "Afegir cançó",filetypes = (("Sound files","*.mp3"),("All files","*.*")))
-        self.popup()
+        self.popup_afegir()
         album_path=self.entryValue()
         for el in self.albums:
             if album_path == el.split("/")[-1]:
                 album_path=el
                 break
         aggregate(path,album_path)
+    #Popup que demana el album per a la funció open
+    def popup_afegir(self):
+        albums=[el.split("/")[-1] for el in self.albums.keys()]
+        self.album=album_window(self.master,albums)
+        self.master.wait_window(self.album.top)
+    #retorna el valor de el popup anterior  
+    def entryValue(self):
+        return self.album.value
 
+    #
+    def do_list(self,type):
+        list_param=self.popup_list(type)
+        print(list_param)
+        crear_llistes((type,list_param))
+    #Popup que demana el album per a la funció do_list
+    def popup_list(self,type):
+        if type=="autor":
+            params=["Autor",[self.albums[key].mostra().split(",")[4] for key in albums]]
+        elif type == "genere":
+            params=["Génere",[self.albums[key].mostra().split(",")[2] for key in albums]]
+        elif type == "anys":
+            params=["Anys",[self.albums[key].mostra().split(",")[3] for key in albums]]
+        elif type == "cops":
+            params=["Cops",[self.albums[key].mostra().split(",")[5] for key in albums]]
+        self.list=list_window(self.master,params)
+        self.master.wait_window(self.list.top)
+        return self.list.value
+
+    #----------------------------------#
     def tree_songs(self):
         self.treeview.delete(*self.treeview.get_children())
         albums=self.albums
@@ -93,11 +145,3 @@ class Reproductor(ttk.Frame):
             self.treeview.insert("", tk.END, text=el.split(".")[0],tags=("Seleccionado",))
         self.treeview.pack()
         self.pack()
-    #Popup que demana el album per a la funció open
-    def popup(self):
-        albums=[el.split("/")[-1] for el in self.albums.keys()]
-        self.album=album_window(self.master,albums)
-        self.master.wait_window(self.album.top)
-    #retorna el valor de el popup anterior  
-    def entryValue(self):
-        return self.album.value
