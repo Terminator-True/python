@@ -134,3 +134,6 @@ def reset():
 
 def aggregate(path,path_album):
     os.system("mv "+path+" "+path_album)
+
+def deleteSong(path):
+    os.system("rm "+path)

@@ -50,7 +50,11 @@ class Reproductor(ttk.Frame):
         #Configuració de la finestra
         self.master = master     
         master.title("SoundGround")
-        master.geometry('700x700')
+        master.geometry('650x300')
+
+        #Fem que la finestra no es pugi redimensionar
+        master.resizable(width=0, height=0)
+
         #Listar música
         self.treeview = ttk.Treeview(self,height = 10,selectmode=tk.BROWSE)
         self.treeview.grid(row=0,column=0,columnspan=2,padx=0,pady=0)
@@ -74,7 +78,7 @@ class Reproductor(ttk.Frame):
             label="Crear llista de reproducció",
             menu=sub_menu
         )        
-        filemenu.add_command(label="Eliminar cançó")
+        filemenu.add_command(label="Eliminar cançó",command=self.eliminar)
         filemenu.add_command(label="Afegir cançó", command=self.open)
 
         menubar.add_cascade(label="Options", menu=filemenu)
@@ -84,6 +88,15 @@ class Reproductor(ttk.Frame):
         self.tree_list()
         #albums
         self.albums=init()
+
+        #buttons
+        Button(master, text="◄◄",width=5,command=Anterior()).place(x=0,y=270)
+        Button(master, text="Reproduir/pausar",width=15,command=Play_Pause()).place(x=65,y=270)
+        Button(master, text="►►",width=5,command=Next()).place(x=200,y=270)
+        Button(master, text="+",width=3,command=ValumeMas()).place(x=260,y=270)
+        Button(master, text="-",width=3,command=ValumeMenos()).place(x=305,y=270)
+        Button(master, text="Reset",width=15).place(x=500,y=270)
+
     def item_selected(self, event):
         curItem = self.treeview.focus()
         print(self.treeview.item(curItem)["text"])
@@ -97,6 +110,8 @@ class Reproductor(ttk.Frame):
                 album_path=el
                 break
         aggregate(path,album_path)
+        self.tree_list()
+
     #Popup que demana el album per a la funció open
     def popup_afegir(self):
         albums=[el.split("/")[-1] for el in self.albums.keys()]
@@ -111,6 +126,8 @@ class Reproductor(ttk.Frame):
         list_param=self.popup_list(type)
         print(list_param)
         crear_llistes((type,list_param))
+        self.tree_list()
+
     #Popup que demana el album per a la funció do_list
     def popup_list(self,type):
         if type=="autor":
@@ -124,6 +141,12 @@ class Reproductor(ttk.Frame):
         self.list=list_window(self.master,params)
         self.master.wait_window(self.list.top)
         return self.list.value
+
+    #eliminar 
+    def eliminar(self):
+        path=filedialog.askopenfilename(initialdir = "2n/MP03/Projecte-UF2/music",title = "eliminar cançó",filetypes = (("Sound files","*.mp3"),("All files","*.*")))
+        deleteSong(path)
+
 
     #----------------------------------#
     def tree_songs(self):
@@ -141,6 +164,7 @@ class Reproductor(ttk.Frame):
     def tree_list(self):
         self.treeview.delete(*self.treeview.get_children())
         llistes=os.popen("ls "+directori+"/playlist").read()
+        print(llistes)
         for el in llistes.split("\n"):
             self.treeview.insert("", tk.END, text=el.split(".")[0],tags=("Seleccionado",))
         self.treeview.pack()
