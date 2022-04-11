@@ -55,9 +55,10 @@ class Reproductor(ttk.Frame):
         #Fem que la finestra no es pugi redimensionar
         master.resizable(width=0, height=0)
 
-        #Listar música
+        #Listar llistes de reproducció
         self.treeview = ttk.Treeview(self,height = 10,selectmode=tk.BROWSE)
         self.treeview.grid(row=0,column=0,columnspan=2,padx=0,pady=0)
+        self.llista_reproduccio=""
         #Tag para registrar el evento 
         self.treeview.tag_bind("Seleccionado", "<<TreeviewSelect>>",
                                self.item_selected)
@@ -90,16 +91,18 @@ class Reproductor(ttk.Frame):
         self.albums=init()
 
         #buttons
-        Button(master, text="◄◄",width=5,command=Anterior()).place(x=0,y=270)
-        Button(master, text="Reproduir/pausar",width=15,command=Play_Pause()).place(x=65,y=270)
-        Button(master, text="►►",width=5,command=Next()).place(x=200,y=270)
-        Button(master, text="+",width=3,command=ValumeMas()).place(x=260,y=270)
-        Button(master, text="-",width=3,command=ValumeMenos()).place(x=305,y=270)
-        Button(master, text="Reset",width=15).place(x=500,y=270)
+        Button(master, text="◄◄",width=5,command=lambda: Anterior()).place(x=0,y=270)
+        Button(master, text="Reproduir/pausar",width=15,command= lambda:Play_Pause()).place(x=65,y=270)
+        Button(master, text="►►",width=5,command=lambda: Next()).place(x=200,y=270)
+        Button(master, text="+",width=3,command=lambda: ValumeMas()).place(x=260,y=270)
+        Button(master, text="-",width=3,command=lambda: ValumeMenos()).place(x=305,y=270)
+        Button(master, text="Reset",width=10, command=lambda: self.reset()).place(x=550,y=270)
+        Button(master, text="Carregar llista",width=10, command=lambda list=self.llista_reproduccio:carrega(list)).place(x=450,y=270)
+        
 
     def item_selected(self, event):
         curItem = self.treeview.focus()
-        print(self.treeview.item(curItem)["text"])
+        self.llista_reproduccio=self.treeview.item(curItem)["text"]
     #Obre un dialog per reguntar archiu en questió, seguidament pregunta al album on es vol afegir y l'afegeix
     def open(self):
         path=filedialog.askopenfilename(initialdir = "/",title = "Afegir cançó",filetypes = (("Sound files","*.mp3"),("All files","*.*")))
@@ -137,14 +140,14 @@ class Reproductor(ttk.Frame):
         elif type == "anys":
             params=["Anys",[self.albums[key].mostra().split(",")[3] for key in albums]]
         elif type == "cops":
-            params=["Cops",[self.albums[key].mostra().split(",")[5] for key in albums]]
+            params=["Cops"]
         self.list=list_window(self.master,params)
         self.master.wait_window(self.list.top)
         return self.list.value
 
     #eliminar 
     def eliminar(self):
-        path=filedialog.askopenfilename(initialdir = "2n/MP03/Projecte-UF2/music",title = "eliminar cançó",filetypes = (("Sound files","*.mp3"),("All files","*.*")))
+        path=filedialog.askopenfilename(initialdir = directori+"/music",title = "eliminar cançó",filetypes = (("Sound files","*.mp3"),("All files","*.*")))
         deleteSong(path)
 
 
@@ -164,8 +167,12 @@ class Reproductor(ttk.Frame):
     def tree_list(self):
         self.treeview.delete(*self.treeview.get_children())
         llistes=os.popen("ls "+directori+"/playlist").read()
-        print(llistes)
+        #aprint(llistes)
         for el in llistes.split("\n"):
             self.treeview.insert("", tk.END, text=el.split(".")[0],tags=("Seleccionado",))
         self.treeview.pack()
         self.pack()
+        
+    def reset(self):
+        reset()
+        self.tree_list()

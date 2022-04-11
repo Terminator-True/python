@@ -1,6 +1,6 @@
 #Joel Farell i Jordi Oliveda
 import os
-directori="2n/MP03/Projecte-UF2"
+directori="/home/joel/Escritorio/python/2n/MP03/Projecte-UF2"
 albums={}
 
 class album:
@@ -111,12 +111,12 @@ def crear_llistes(param,songs=[],pers=False):
             os.system("mpc save "+"_".join(param[1]))
         
         elif param[0]=="cops":
-            cops=input("Cops: ")
+            cops=param
             for key in albums:
-                if int(albums[key].numero_cops) >= int(cops.split(" ")[0]) and int(albums[key].numero_cops) <= int(cops.split(" ")[1]):
+                if int(albums[key].numero_cops) >= int(cops[1][0]) and int(albums[key].numero_cops) <= int(cops[1][1    ]):
                     for cancion in albums[key].cançons:
                         os.system("mpc add "+albums[key].ruta+"/"+cancion)
-            os.system("mpc save "+"_".join(cops.split(" ")))
+            os.system("mpc save "+"_".join(cops[1]))
         else:
             print("no existeix la opcio")
 
@@ -137,3 +137,7 @@ def aggregate(path,path_album):
 
 def deleteSong(path):
     os.system("rm "+path)
+    
+def carrega(list):
+    print(list)
+    os.system("mpc load "+list)
