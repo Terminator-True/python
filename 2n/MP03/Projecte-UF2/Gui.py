@@ -1,3 +1,4 @@
+#Imports necessaris
 from doctest import master
 from function import *
 import tkinter as tk
@@ -19,7 +20,8 @@ class album_window(object):
     def cleanup(self):
         self.value=self.combo.get()
         self.top.destroy()
-
+#Classe que crea el popup per a la creació de llistes de reproducció
+#Depenent del que passem per parámetre, obre un tipus de diálog o un altre
 class list_window(object):
     def __init__(self,master,params):
         self.params=params
@@ -43,7 +45,8 @@ class list_window(object):
         except:
             self.value=self.combo.get()
         self.top.destroy()
-        
+
+#Classe principal del programa
 class Reproductor(ttk.Frame):
     def __init__(self, master):
         super().__init__()
@@ -58,7 +61,7 @@ class Reproductor(ttk.Frame):
         #Listar llistes de reproducció
         self.treeview = ttk.Treeview(self,height = 10,selectmode=tk.BROWSE)
         self.treeview.grid(row=0,column=0,columnspan=2,padx=0,pady=0)
-        self.llista_reproduccio=""
+        self.llista_reproduccio=self.item_selected()
         #Tag para registrar el evento 
         self.treeview.tag_bind("Seleccionado", "<<TreeviewSelect>>",
                                self.item_selected)
@@ -99,10 +102,10 @@ class Reproductor(ttk.Frame):
         Button(master, text="Reset",width=10, command=lambda: self.reset()).place(x=550,y=270)
         Button(master, text="Carregar llista",width=10, command=lambda list=self.llista_reproduccio:carrega(list)).place(x=450,y=270)
         
-
+    #Detecta on s'ha fet click de la treeView y ho retorna
     def item_selected(self, event):
         curItem = self.treeview.focus()
-        self.llista_reproduccio=self.treeview.item(curItem)["text"]
+        return self.treeview.item(curItem)["text"]
     #Obre un dialog per reguntar archiu en questió, seguidament pregunta al album on es vol afegir y l'afegeix
     def open(self):
         path=filedialog.askopenfilename(initialdir = "/",title = "Afegir cançó",filetypes = (("Sound files","*.mp3"),("All files","*.*")))
@@ -120,18 +123,20 @@ class Reproductor(ttk.Frame):
         albums=[el.split("/")[-1] for el in self.albums.keys()]
         self.album=album_window(self.master,albums)
         self.master.wait_window(self.album.top)
-    #retorna el valor de el popup anterior  
+    #Retorna el valor de el popup anterior  
     def entryValue(self):
         return self.album.value
 
-    #
+    #Funció principal on es fan les llistes de reproducció
     def do_list(self,type):
         list_param=self.popup_list(type)
-        print(list_param)
+        #print(list_param)
         crear_llistes((type,list_param))
         self.tree_list()
 
     #Popup que demana el album per a la funció do_list
+    #Depenent de l'opció que escollim al menú, obre una finestra
+    #amb unas característiques o unes altres
     def popup_list(self,type):
         if type=="autor":
             params=["Autor",[self.albums[key].mostra().split(",")[4] for key in albums]]
@@ -145,13 +150,15 @@ class Reproductor(ttk.Frame):
         self.master.wait_window(self.list.top)
         return self.list.value
 
-    #eliminar 
+    #S'obre un dialog al directori de música
+    # i s'elimina la cançó escollida 
     def eliminar(self):
         path=filedialog.askopenfilename(initialdir = directori+"/music",title = "eliminar cançó",filetypes = (("Sound files","*.mp3"),("All files","*.*")))
         deleteSong(path)
 
 
     #----------------------------------#
+    #Llista totes les cançóns dividides per albums
     def tree_songs(self):
         self.treeview.delete(*self.treeview.get_children())
         albums=self.albums
@@ -163,7 +170,7 @@ class Reproductor(ttk.Frame):
                 self.treeview.insert(itemtree, tk.END, text=song,tags=("Seleccionado",))
         self.treeview.pack()
         self.pack()
-
+    #Llista totes les llistes de reproducció
     def tree_list(self):
         self.treeview.delete(*self.treeview.get_children())
         llistes=os.popen("ls "+directori+"/playlist").read()
@@ -172,7 +179,8 @@ class Reproductor(ttk.Frame):
             self.treeview.insert("", tk.END, text=el.split(".")[0],tags=("Seleccionado",))
         self.treeview.pack()
         self.pack()
-        
+    #Fa el reset de el mpc i de la llista de llistes
+    #de reproducció
     def reset(self):
         reset()
         self.tree_list()
