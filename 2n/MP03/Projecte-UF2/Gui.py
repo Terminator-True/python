@@ -1,8 +1,7 @@
 #Imports necessaris
-from doctest import master
 from function import *
 import tkinter as tk
-from tkinter import LEFT, Button, Entry, Label, Toplevel, ttk
+from tkinter import Button, Label, Toplevel, ttk
 from tkinter import filedialog
 
 #Classe que fa el popup per a demanar el album 
@@ -93,7 +92,7 @@ class Reproductor(ttk.Frame):
         #albums
         self.albums=init()
 
-        #buttons
+        #Botons necessaris
         Button(master, text="◄◄",width=5,command=lambda: Anterior()).place(x=0,y=270)
         Button(master, text="Reproduir/pausar",width=15,command= lambda:Play_Pause()).place(x=65,y=270)
         Button(master, text="►►",width=5,command=lambda: Next()).place(x=200,y=270)
