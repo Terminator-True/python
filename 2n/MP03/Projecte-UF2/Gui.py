@@ -72,7 +72,7 @@ class Reproductor(ttk.Frame):
         sub_menu.add_command(label='Génere',command=lambda type="genere":self.do_list(type))
         sub_menu.add_command(label='Anys',command=lambda type="anys":self.do_list(type))
         sub_menu.add_command(label='Cops',command=lambda type="cops":self.do_list(type))
-        sub_menu.add_command(label='Personalitzada',command=self.tree_songs)
+        #sub_menu.add_command(label='Personalitzada',command=self.tree_songs)
 
         # add the File menu to the menubar
         filemenu.add_cascade(
@@ -97,12 +97,12 @@ class Reproductor(ttk.Frame):
         Button(master, text="+",width=3,command=lambda: ValumeMas()).place(x=260,y=270)
         Button(master, text="-",width=3,command=lambda: ValumeMenos()).place(x=305,y=270)
         Button(master, text="Reset",width=10, command=lambda: self.reset()).place(x=550,y=270)
-        Button(master, text="Carregar llista",width=10, command=lambda list=self.llista_reproduccio:carrega(list)).place(x=450,y=270)
+        Button(master, text="Carregar llista",width=10, command=lambda:carrega(self.llista_reproduccio)).place(x=450,y=270)
         
-
     def item_selected(self, event):
         curItem = self.treeview.focus()
         self.llista_reproduccio=self.treeview.item(curItem)["text"]
+        print(self.llista_reproduccio)
     #Obre un dialog per reguntar archiu en questió, seguidament pregunta al album on es vol afegir y l'afegeix
     def open(self):
         path=filedialog.askopenfilename(initialdir = "/",title = "Afegir cançó",filetypes = (("Sound files","*.mp3"),("All files","*.*")))
@@ -127,7 +127,7 @@ class Reproductor(ttk.Frame):
     #
     def do_list(self,type):
         list_param=self.popup_list(type)
-        print(list_param)
+        #print(list_param)
         crear_llistes((type,list_param))
         self.tree_list()
 
@@ -167,7 +167,6 @@ class Reproductor(ttk.Frame):
     def tree_list(self):
         self.treeview.delete(*self.treeview.get_children())
         llistes=os.popen("ls "+directori+"/playlist").read()
-        #aprint(llistes)
         for el in llistes.split("\n"):
             self.treeview.insert("", tk.END, text=el.split(".")[0],tags=("Seleccionado",))
         self.treeview.pack()
